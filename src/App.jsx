@@ -6,7 +6,6 @@ import NewsListPage from "./pages/NewsListPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import SeriesListPage from "./pages/SeriesListPage";
 import UserSpacePage from "./pages/UserSpacePage";
-import ExportPage from "./pages/ExportPage";
 import "@fontsource/anton";
 
 function App() {
@@ -21,7 +20,6 @@ function App() {
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/user-space" element={<UserSpacePage />} />
-          <Route path="/export" element={<ExportPage />} />
           <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
         </Routes>
       </main>
