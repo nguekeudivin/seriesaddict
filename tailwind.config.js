@@ -3,7 +3,16 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+      borderRadius: {
+        "2xl": "24px",
+        "3xl": "32px",
+      },
       colors: {
+        "wallet-green": "#2D4B37", // Vert foncé des boutons
+        "wallet-bg": "#E2E8D4", // Fond beige/vert clair
+        "wallet-card": "#F7F9F2", // Fond des cartes blanches
+        "wallet-accent": "#92A676", // Accents de texte/bordures
+        "wallet-dark": "#1A1C19",
         brand: {
           primary: {
             DEFAULT: "#841D4F", // 👈 important

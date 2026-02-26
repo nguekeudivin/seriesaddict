@@ -436,7 +436,7 @@ function NewReleasesSection() {
 
   return (
     <section className="bg-black  py-10 text-white">
-      <div className="mx-auto max-w-[1700px]">
+      <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -640,7 +640,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-black text-white">
       {/* Top bar */}
       <header className="relative z-20 bg-black/50">
-        <div className="mx-auto flex max-w-[1700px] items-center justify-between px-5 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
           <button className="rounded-full p-2 text-white/85 hover:bg-brand-cyan/15">
             <IconBurger className="h-6 w-6" />
           </button>
@@ -681,7 +681,7 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 absolute inset-0 bg-gradient-to-b from-brand-wine/30 via-black/30 to-black" />
         <div className="absolute inset-0">
-          <div className="mx-auto flex h-full bg-transparent max-w-[1700px] flex-col items-center justify-center px-5 text-center">
+          <div className="mx-auto flex h-full bg-transparent max-w-7xl flex-col items-center justify-center px-5 text-center">
             <p className="text-xl font-extrabold uppercase tracking-wide md:text-3xl">
               STRANGER THINGS REVIENT AVEC SA SAISON 5 !
             </p>
@@ -715,7 +715,7 @@ export default function HomePage() {
       </section>
 
       {/* Content */}
-      <main className="mx-auto max-w-[1700px] space-y-14 px-5 py-10">
+      <main className="mx-auto max-w-7xl space-y-14 px-5 py-10">
         {/* Actus séries */}
         <section>
           <SectionHeader title="ACTUS SÉRIES" rightLabel="TOUTES LES ACTUS" />
@@ -824,7 +824,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="pb-10">
-        <div className="mx-auto max-w-[1700px] px-5 text-center">
+        <div className="mx-auto max-w-7xl px-5 text-center">
           <div className="select-none text-2xl font-black tracking-widest">
             <span className="text-white">SERIE</span>
             <span
