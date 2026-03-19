@@ -14,10 +14,14 @@ import {
   MemberSeriesLibraryPage,
 } from "./UserSpaceElements";
 import NotFoundPage from "./NotFoundPage";
+import ArticlePage from "./ArticlePage";
 
 export default function DesignPage() {
   return (
     <ul className="space-y-8">
+      <li>
+        <ArticlePage />
+      </li>
       <li>
         <TrailersPage />
       </li>

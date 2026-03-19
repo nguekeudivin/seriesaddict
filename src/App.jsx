@@ -23,6 +23,7 @@ import DesignPage from "./pages/DesignPage";
 import LoginPage from "./pages/LoginPage";
 import PasswordForget from "./pages/PasswordForget";
 import NotFoundPage from "./pages/NotFoundPage";
+import ArticlePage from "./pages/ArticlePage";
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
           <Route path="/" element={<Navigate to={DEFAULT_ROUTE} replace />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/news" element={<NewsListPage />} />
+
+          <Route path="/article" element={<ArticlePage />} />
+
           <Route path="/series" element={<SeriesListPage />} />
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
