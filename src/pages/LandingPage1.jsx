@@ -14,69 +14,69 @@ import { useState, useEffect } from "react";
 export default function SovereignFiscalLandingPage() {
   const steps = [
     {
-      title: "Fondation ITIN",
+      title: "Nous lançons votre base ITIN",
       description:
-        "Établissez votre identité numérique basée aux États-Unis pour un traitement des transactions sans frontières.",
+        "Nous posons votre base administrative pour que votre dossier existe proprement dans le système américain dès le départ.",
       icon: BadgeCheck,
     },
     {
-      title: "Banque de Tier 1",
+      title: "Nous structurons votre présence bancaire",
       description:
-        "Activez des lignes de crédit à plafond élevé et des comptes de gestion privée auprès de prêteurs premium.",
+        "Nous ouvrons la bonne trajectoire bancaire pour installer une présence crédible et cohérente avec votre objectif.",
       icon: Landmark,
     },
     {
-      title: "Data Seeding",
+      title: "Nous construisons votre profil de crédit",
       description:
-        "Programmez la perception algorithmique de votre profil financier pour commander les taux les plus bas.",
+        "Nous mettons en place les bons signaux, dans le bon ordre, pour rendre votre profil lisible, solide et finançable.",
       icon: BarChart3,
     },
     {
-      title: "Capital de Croissance",
+      title: "Nous préparons votre accès au financement",
       description:
-        "Tirez parti de votre souveraineté structurelle pour obtenir des liquidités destinées à l'acquisition d'actifs.",
+        "Nous transformons cette base en vraie capacité de crédit, puis en options de financement plus larges.",
       icon: TrendingUp,
     },
   ];
 
   const successStories = [
     {
-      quote: "“DE REFUSÉ À 75 000 $ DE CRÉDIT EN 90 JOURS.”",
+      quote: "“De refusé à 75 000 $ de crédit en 90 jours.”",
       name: "ALEJANDRO M.",
       role: "FONDATEUR E-COM",
     },
     {
-      quote: "“AMEX PLATINUM OBTENUE SANS SSN EN 4 MOIS.”",
+      quote: "“Amex platinum obtenue sans ssn en 4 mois.”",
       name: "SARAH K.",
       role: "ARCHITECTE SAAS",
     },
     {
-      quote: "“PASSÉ À 250 000 $ DE FINANCEMENT VIA UNE LLC.”",
+      quote: "“Passé à 250 000 $ de financement via une llc.”",
       name: "DMITRI V.",
       role: "GROWTH MARKETER",
     },
     {
-      quote: "“LIBERTÉ FINANCIÈRE TOTALE DEPUIS L'EXTÉRIEUR DES USA.”",
+      quote: "“Liberté financière totale depuis l'extérieur des usa.”",
       name: "JEAN-PAUL B.",
       role: "INVESTISSEUR IMMO",
     },
     {
-      quote: "“120 000 $ DÉBLOQUÉS EN LIGNES BUSINESS HAUTE LIMITE.”",
+      quote: "“120 000 $ débloqués en lignes business haute limite.”",
       name: "MARCO L.",
       role: "PROPRIÉTAIRE D'AGENCE",
     },
     {
-      quote: "“LE SYSTÈME FONCTIONNE EXACTEMENT COMME PRÉVU.”",
+      quote: "“Le système fonctionne exactement comme prévu.”",
       name: "SOFIA R.",
       role: "CONSULTANTE GLOBALE",
     },
     {
-      quote: "“D'AUCUNE PRÉSENCE AUX USA À UN SCORE PARFAIT DE 750.”",
+      quote: "“D'aucune présence aux usa à un score parfait de 750.”",
       name: "ERIK H.",
       role: "DÉV LOGICIEL",
     },
     {
-      quote: "“LE CHEMIN FINANCIER LE PLUS ROBUSTE QUE J'AI VU.”",
+      quote: "“Le chemin financier le plus robuste que j'ai vu.”",
       name: "CARLOS P.",
       role: "CEO LOGISTIQUE",
     },
@@ -84,23 +84,23 @@ export default function SovereignFiscalLandingPage() {
 
   const faqs = [
     {
-      q: "EST-CE UNE BANQUE ?",
+      q: "Est-ce une banque ?",
       a: "Non, nous sommes un cabinet de conseil stratégique. Nous vous aidons à naviguer correctement les exigences des institutions financières américaines.",
     },
     {
-      q: "COMBIEN DE TEMPS PREND LE PROCESSUS ITIN ?",
+      q: "Combien de temps prend le processus itin ?",
       a: "Généralement de 6 à 12 semaines, selon les délais de traitement de l'IRS.",
     },
     {
-      q: "PUIS-JE LE FAIRE SANS LLC ?",
+      q: "Puis-je le faire sans llc ?",
       a: "Oui, un ITIN vous permet d'ouvrir des comptes personnels, bien qu'une LLC offre des avantages commerciaux supplémentaires par la suite.",
     },
     {
-      q: "GARANTISSEZ-VOUS L'OBTENTION D'UNE CARTE DE CRÉDIT ?",
+      q: "Garantissez-vous l'obtention d'une carte de crédit ?",
       a: "Nous garantissons le processus et la documentation. L'approbation reste à la discrétion de la banque, mais suivre notre architecture maximise vos chances.",
     },
     {
-      q: "DE QUELS DOCUMENTS AURAI-JE BESOIN ?",
+      q: "De quels documents aurai-je besoin ?",
       a: "Principalement un passeport valide et une preuve d'adresse étrangère. Nous fournissons une liste complète pour chaque niveau.",
     },
   ];
@@ -462,11 +462,12 @@ export default function SovereignFiscalLandingPage() {
         <section id="roadmap" className="bg-[#eef0f3] px-6 py-20 lg:px-8">
           <div className="mx-auto max-w-5xl">
             <h2 className="text-4xl text-center font-bold tracking-[-0.04em] text-black md:text-6xl">
-              La séquence d'Autorité
+              Comment nous construisons votre accès au crédit américain
             </h2>
             <p className="mt-4 text-xl text-center text-slate-700">
-              Notre methode qui fait toute la differente : une exécution
-              linéaire précise pour un resultant optimale
+              Nous ne brûlons pas les étapes : nous posons d&apos;abord votre
+              base, nous installons votre crédibilité bancaire, puis nous vous
+              faisons monter vers le crédit et le financement.
             </p>
 
             <div className="mt-12 grid gap-6 grid-cols-1 lg:grid-cols-2">
@@ -476,7 +477,7 @@ export default function SovereignFiscalLandingPage() {
                   className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.05)]"
                   {...fadeUp(0.08 + index * 0.05)}
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-red-600">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-[#1dc38e]">
                     <item.icon className="h-9 w-9" strokeWidth={2.1} />
                   </div>
                   <h3 className="mt-6 text-2xl font-bold tracking-[-0.03em] text-[#10192f]">
@@ -501,7 +502,7 @@ export default function SovereignFiscalLandingPage() {
                 L'Investissement
               </div>
               <h2 className="mx-auto mt-5 max-w-4xl text-5xl font-bold tracking-[-0.05em] md:text-7xl">
-                Votre chemin vers un financement americain
+                Le chemin vers votre financement americain
               </h2>
             </div>
 
@@ -542,18 +543,20 @@ export default function SovereignFiscalLandingPage() {
               className="mx-auto mt-24 max-w-3xl rounded-[28px] border border-white/5 bg-white/[0.04] px-8 py-12 text-center shadow-[0_30px_100px_rgba(255,255,255,0.04)]"
             >
               <h3 className="text-4xl font-bold md:text-5xl">
-                Changez votre future
-                <span className="block text-[#1dc38e]">financier</span>
+                Votre accès au crédit
+                <span className="block text-[#1dc38e]">
+                  ne se joue pas au hasard
+                </span>
               </h3>
-              <p className="mx-auto mt-6 max-w-2xl text-lg  text-slate-400">
-                Investissement unique pour une souveraineté structurelle à vie.
-                Places limitées.
+              <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-400">
+                Si votre objectif est sérieux, nous vous montrons la séquence
+                exacte pour devenir crédible aux yeux des banques.
               </p>
               <a
                 href="#"
                 className="mt-10 inline-flex min-w-[340px] max-w-full items-center justify-center rounded-sm bg-[#20c48d] px-10 py-6 text-xl font-semibold text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:brightness-110"
               >
-                Sécurisez votre access
+                Accéder à la méthode
               </a>
             </div>
           </div>
@@ -562,16 +565,20 @@ export default function SovereignFiscalLandingPage() {
         <section className="bg-[#f4f5f7] px-6 py-24 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="text-center">
-              <div className="text-xs uppercase tracking-[0.4em] text-slate-400">
-                Records etablis
-              </div>
               <div className="mt-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#1ac98d]">
-                Protocoles eprouvés
+                Protocoles éprouvés
               </div>
-              <h2 className="mt-4 text-5xl font-black  text-[#09142c] md:text-7xl">
-                Briefings de
-                <br />
-                Réussite
+              <p className="mx-auto mt-6 max-w-3xl text-2xl leading-7 text-slate-800 font-bold">
+                <strong className="font-bold text-[#1ac98d]">50</strong> cas
+                documentés, avec des montants observés de{" "}
+                <strong className="font-bold text-[#1ac98d]">75 000 $</strong> à{" "}
+                <strong className="font-bold text-[#1ac98d]">250 000 $</strong>,
+                sur des trajectoires allant de{" "}
+                <strong className="font-bold text-[#1ac98d]">90 jours</strong> à{" "}
+                <strong className="font-bold text-[#1ac98d]">4 mois</strong>.
+              </p>
+              <h2 className="mt-4 text-5xl font-black text-[#09142c] md:text-5xl">
+                Briefings de Réussite
               </h2>
             </div>
 
@@ -587,7 +594,7 @@ export default function SovereignFiscalLandingPage() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-[1rem] font-black uppercase">
+                    <p className="text-[1rem] font-black">
                       {story.quote}
                     </p>
                     <div className="mt-8 flex items-center gap-4">
@@ -608,42 +615,45 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        <section id="faq" className="bg-[#f0f2f4] px-6 py-24 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="text-sm font-semibold uppercase tracking-[0.35em] text-[#1ac98d]">
-              Base de Connaissances
-            </div>
-            <h2 className="mt-5 text-4xl font-black uppercase  tracking-[-0.05em] text-[#08132a] md:text-5xl">
-              Questions Fréquentes
-            </h2>
-          </div>
+        <section id="faq" className="bg-[#eef0f3] px-6 py-24 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <motion.div className="text-center" {...fadeUp(0.04)}>
+              <div className="text-sm font-semibold uppercase tracking-[0.28em] text-[#19b884]">
+                FAQ
+              </div>
+              <h2 className="mt-5 text-4xl font-black tracking-[-0.04em] text-[#08132a] md:text-5xl">
+                Questions fréquentes
+              </h2>
+            </motion.div>
 
-          <div className="mx-auto mt-14 max-w-4xl space-y-4">
-            {faqs.map((item) => (
-              <details
-                key={item.q}
-                className="group bg-white px-8 py-7 shadow-[0_12px_35px_rgba(15,23,42,0.05)]"
-              >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-left text-xl font-bold tracking-[-0.04em] text-[#10192f] marker:hidden">
-                  <span>{item.q}</span>
-                  <span className="text-4xl font-light text-slate-400 transition group-open:rotate-45">
-                    +
-                  </span>
-                </summary>
-                <p className="mt-6 max-w-3xl text-xl leading-relaxed text-slate-500">
-                  {item.a}
-                </p>
-              </details>
-            ))}
+            <div className="mt-12 space-y-4">
+              {faqs.map((item, index) => (
+                <motion.details
+                  key={item.q}
+                  className="group rounded-[24px] bg-white px-8 py-7 shadow-[0_12px_35px_rgba(15,23,42,0.05)]"
+                  {...fadeUp(0.06 + index * 0.03)}
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-left text-xl font-bold tracking-[-0.03em] text-[#10192f] marker:hidden">
+                    <span>{item.q}</span>
+                    <span className="text-4xl font-light text-slate-400 transition group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-6 text-lg leading-8 text-slate-600">
+                    {item.a}
+                  </p>
+                </motion.details>
+              ))}
+            </div>
           </div>
         </section>
 
         <section className="relative overflow-hidden bg-[#f5f6f8] px-6 py-28 text-center lg:px-8">
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden text-[24vw] font-black uppercase tracking-[-0.05em] text-black/[0.03]">
-            SOUVERAIN
+            CARTE
           </div>
           <div className="relative mx-auto max-w-5xl">
-            <h2 className="text-5xl font-black uppercase  leading-none tracking-[-0.05em] text-[#0a1428] md:text-7xl">
+            <h2 className="text-4xl font-black uppercase  leading-none tracking-[-0.05em] text-[#0a1428] md:text-6xl">
               Structurez ou Échouez.
               <span className="block text-[#19ba87]">À vous de choisir.</span>
             </h2>
