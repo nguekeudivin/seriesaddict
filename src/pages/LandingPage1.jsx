@@ -84,23 +84,31 @@ export default function SovereignFiscalLandingPage() {
   const faqs = [
     {
       q: "Est-ce une banque ?",
-      a: "Non, nous sommes un cabinet de conseil stratégique. Nous vous aidons à naviguer correctement les exigences des institutions financières américaines.",
+      a: "Non. Nous ne sommes ni une banque, ni un organisme de crédit, ni une administration. Nous sommes un cabinet de conseil stratégique qui vous aide à mieux comprendre les exigences du système financier américain et à avancer avec une structure plus cohérente.",
     },
     {
-      q: "Combien de temps prend le processus itin ?",
-      a: "Généralement de 6 à 12 semaines, selon les délais de traitement de l'IRS.",
+      q: "Est-ce que vous créez l’ITIN à ma place ?",
+      a: "Non. Nous ne remplaçons pas l’IRS et nous ne soumettons pas une demande officielle en notre nom. Nous vous guidons dans la compréhension du processus, la préparation des documents et les étapes à suivre pour éviter les erreurs.",
     },
     {
-      q: "Puis-je le faire sans LLC ?",
-      a: "Oui, un ITIN vous permet d'ouvrir des comptes personnels, bien qu'une LLC offre des avantages commerciaux supplémentaires par la suite.",
+      q: "Combien de temps prend le processus ITIN ?",
+      a: "En général, le traitement peut prendre entre 6 et 12 semaines, selon les délais de l’IRS, la période de l’année et la qualité du dossier soumis.",
     },
     {
-      q: "Garantissez-vous l'obtention d'une carte de crédit ?",
-      a: "Nous garantissons le processus et la documentation. L'approbation reste à la discrétion de la banque, mais suivre notre architecture maximise vos chances.",
+      q: "Puis-je commencer sans LLC ?",
+      a: "Oui. Selon votre situation, il est possible de commencer sans LLC. Une LLC peut toutefois devenir pertinente plus tard si vous souhaitez structurer une activité commerciale ou renforcer certains aspects de votre présence dans le système.",
     },
     {
-      q: "De quels documents aurai-je besoin ?",
-      a: "Principalement un passeport valide et une preuve d'adresse étrangère. Nous fournissons une liste complète pour chaque niveau.",
+      q: "Puis-je avancer même si je ne vis pas aux États-Unis ?",
+      a: "Oui. Notre accompagnement est précisément pensé pour les non-résidents qui souhaitent comprendre comment entrer dans le système financier américain de manière plus claire, plus crédible et plus structurée.",
+    },
+    {
+      q: "Garantissez-vous l’obtention d’une carte de crédit ?",
+      a: "Non. Aucune institution sérieuse ne peut garantir une approbation bancaire ou un accès au crédit. Les décisions finales appartiennent toujours aux banques et aux établissements financiers. Notre rôle est de vous aider à avancer avec une meilleure préparation.",
+    },
+    {
+      q: "Garantissez-vous des résultats ?",
+      a: "Non. Nous ne promettons ni approbation, ni financement, ni ouverture automatique de compte. Nous vous apportons une méthode, une meilleure lisibilité du processus et un accompagnement structuré pour réduire les erreurs évitables.",
     },
   ];
 
@@ -212,31 +220,6 @@ export default function SovereignFiscalLandingPage() {
             <img src="/images/carte-usa.png" className="w-[200px]" />
           </a>
 
-          {/* <nav
-            className={`hidden items-center gap-10 text-[17px] font-medium md:flex transition-colors duration-300 ${
-              isScrolled ? "text-slate-600" : "text-slate-300"
-            }`}
-          >
-            <a
-              href="#roadmap"
-              className={`transition hover:text-emerald-400 ${isScrolled ? "hover:text-[#0a1428]" : ""}`}
-            >
-              La Feuille de Route
-            </a>
-            <a
-              href="#pricing"
-              className={`transition hover:text-emerald-400 ${isScrolled ? "hover:text-[#0a1428]" : ""}`}
-            >
-              Tarifs
-            </a>
-            <a
-              href="#faq"
-              className={`transition hover:text-emerald-400 ${isScrolled ? "hover:text-[#0a1428]" : ""}`}
-            >
-              FAQ
-            </a>
-          </nav> */}
-
           <a
             href="#cta"
             className={`rounded-sm px-6 py-4 text-sm font-semibold uppercase tracking-[0.22em] transition-all duration-300 ${
@@ -251,7 +234,91 @@ export default function SovereignFiscalLandingPage() {
       </header>
 
       <main>
-        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top,rgba(78,223,182,0.22),transparent_28%),linear-gradient(135deg,#07101c_0%,#04122e_38%,#061530_72%,#0a1321_100%)]">
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top,rgba(78,223,182,0.20),transparent_24%),linear-gradient(135deg,#07101c_0%,#04122e_38%,#061530_72%,#0a1321_100%)]">
+          {/* Base grid */}
+          <div className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(rgba(255,255,255,0.09)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.09)_1px,transparent_1px)] [background-size:64px_64px]" />
+
+          {/* Secondary micro grid */}
+          <div className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:16px_16px]" />
+
+          {/* Premium diagonal lattice */}
+          <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:repeating-linear-gradient(135deg,transparent_0px,transparent_34px,rgba(255,255,255,0.1)_34px,rgba(255,255,255,0.1)_35px),repeating-linear-gradient(45deg,transparent_0px,transparent_52px,rgba(109,220,255,0.06)_52px,rgba(109,220,255,0.06)_53px)]" />
+
+          {/* Soft metal-like spotlight */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.06),transparent_18%),radial-gradient(circle_at_80%_30%,rgba(109,220,255,0.05),transparent_20%),radial-gradient(circle_at_50%_80%,rgba(24,201,141,0.06),transparent_24%)]" />
+
+          {/* Large premium geometric panels */}
+          <div className="pointer-events-none absolute -left-24 top-20 h-[28rem] w-[28rem] rotate-[18deg] rounded-[3rem] border border-white/10 bg-white/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-[2px]" />
+          <div className="pointer-events-none absolute right-[-10rem] top-8 h-[30rem] w-[30rem] -rotate-[16deg] rounded-[4rem] border border-cyan-300/10 bg-cyan-200/[0.02]" />
+          <div className="pointer-events-none absolute bottom-[-9rem] left-[10%] h-[22rem] w-[22rem] rotate-[22deg] rounded-[3rem] border border-emerald-300/10 bg-emerald-200/[0.02]" />
+
+          {/* Circuit/card-line motif */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <svg
+              className="absolute inset-0 h-full w-full opacity-[0.16]"
+              viewBox="0 0 1600 900"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              <path
+                d="M120 170 H420 Q470 170 470 220 V260 H700"
+                stroke="rgba(255,255,255,0.18)"
+                strokeWidth="1.2"
+              />
+              <path
+                d="M980 160 H1180 Q1240 160 1240 220 V320 H1460"
+                stroke="rgba(109,220,255,0.18)"
+                strokeWidth="1.2"
+              />
+              <path
+                d="M180 690 H420 Q480 690 480 630 V540 H760"
+                stroke="rgba(24,201,141,0.18)"
+                strokeWidth="1.2"
+              />
+              <path
+                d="M860 760 H1120 Q1180 760 1180 700 V620 H1450"
+                stroke="rgba(255,255,255,0.14)"
+                strokeWidth="1.2"
+              />
+              <path
+                d="M720 100 V220 Q720 260 760 260 H920"
+                stroke="rgba(255,255,255,0.14)"
+                strokeWidth="1.2"
+              />
+              <path
+                d="M840 900 V760 Q840 710 890 710 H1080"
+                stroke="rgba(109,220,255,0.14)"
+                strokeWidth="1.2"
+              />
+
+              <circle cx="420" cy="170" r="4" fill="rgba(255,255,255,0.22)" />
+              <circle cx="700" cy="260" r="4" fill="rgba(255,255,255,0.22)" />
+              <circle cx="1240" cy="220" r="4" fill="rgba(109,220,255,0.22)" />
+              <circle cx="1460" cy="320" r="4" fill="rgba(109,220,255,0.22)" />
+              <circle cx="480" cy="630" r="4" fill="rgba(24,201,141,0.22)" />
+              <circle cx="760" cy="540" r="4" fill="rgba(24,201,141,0.22)" />
+              <circle cx="760" cy="260" r="4" fill="rgba(255,255,255,0.18)" />
+              <circle cx="890" cy="710" r="4" fill="rgba(109,220,255,0.18)" />
+            </svg>
+          </div>
+
+          {/* Credit-card chip inspired motif */}
+          <div className="pointer-events-none absolute left-[11%] top-[22%] hidden h-24 w-32 rounded-2xl border border-white/10 bg-white/[0.035] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] lg:block">
+            <div className="absolute left-4 top-4 h-16 w-20 rounded-xl border border-white/12" />
+            <div className="absolute left-10 top-4 h-16 w-px bg-white/12" />
+            <div className="absolute left-4 top-9 h-20 w-20 -rotate-90 bg-[linear-gradient(to_right,transparent_0%,rgba(255,255,255,0.08)_50%,transparent_100%)]" />
+            <div className="absolute left-4 top-6 h-px w-20 bg-white/10" />
+            <div className="absolute left-4 top-12 h-px w-20 bg-white/10" />
+            <div className="absolute left-4 top-[18px] h-14 w-px bg-white/10" />
+            <div className="absolute right-4 top-[18px] h-14 w-px bg-white/10" />
+          </div>
+
+          {/* Blur glows */}
+          <div className="pointer-events-none absolute -left-16 top-24 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="pointer-events-none absolute right-[-5rem] top-1/3 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl" />
+          <div className="pointer-events-none absolute bottom-[-4rem] left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/5 blur-3xl" />
+
+          {/* Content */}
           <div className="relative mx-auto max-w-6xl px-6 py-24 text-center lg:px-8 lg:py-32">
             <motion.div
               className="mx-auto inline-flex items-center rounded-sm border border-emerald-500/40 bg-emerald-400/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-emerald-300 backdrop-blur-sm"
@@ -426,25 +493,6 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        {/* <section className="bg-[linear-gradient(90deg,#04143f_0%,#06102d_50%,#0a2131_100%)] px-6 py-20 text-center text-white lg:px-8 lg:py-24">
-          <div className="mx-auto max-w-5xl">
-            <h2 className="text-4xl font-extrabold tracking-[-0.04em] md:text-6xl">
-              Une Nouvelle Vision du Capital
-            </h2>
-            <p className="mx-auto mt-5 max-w-3xl text-xl leading-relaxed text-slate-400">
-              Regardez le briefing de 12 minutes sur l'architecture de la
-              souveraineté moderne et comment contourner les gardiens
-              traditionnels.
-            </p>
-
-            <div className="mx-auto mt-14 flex aspect-video max-w-4xl items-center justify-center rounded-[22px] bg-[linear-gradient(90deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02),rgba(24,201,141,0.06))] shadow-[0_30px_90px_rgba(0,0,0,0.3)] backdrop-blur-sm">
-              <div className="flex h-28 w-28 items-center justify-center rounded-[26px] bg-[#20c48d] text-5xl shadow-[0_0_40px_rgba(32,196,141,0.35)]">
-                ▶
-              </div>
-            </div>
-          </div>
-        </section> */}
-
         <section id="roadmap" className="bg-[#eef0f3] px-6 py-20 lg:px-8">
           <div className="mx-auto max-w-5xl">
             <h2 className="text-4xl text-center font-bold tracking-[-0.04em] text-black md:text-6xl">
@@ -555,7 +603,7 @@ export default function SovereignFiscalLandingPage() {
                 Protocoles éprouvés
               </div>
               <p className="mx-auto mt-6 max-w-3xl text-2xl leading-7 text-slate-800 font-bold">
-                <strong className="font-bold text-[#1ac98d]">50</strong> cas
+                <strong className="font-bold text-[#1ac98d]">125</strong> cas
                 documentés, avec des montants observés de{" "}
                 <strong className="font-bold text-[#1ac98d]">75 000 $</strong> à{" "}
                 <strong className="font-bold text-[#1ac98d]">250 000 $</strong>,
@@ -633,15 +681,15 @@ export default function SovereignFiscalLandingPage() {
         </section>
 
         <section className="relative overflow-hidden bg-[#f5f6f8] px-6 py-28 text-center lg:px-8">
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden text-[24vw] font-black uppercase tracking-[-0.05em] text-black/[0.03]">
-            CARTE
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden text-[24vw] font-black uppercase tracking-[-0.05em] text-black/[0.04]">
+            CREDIT
           </div>
           <div className="relative mx-auto max-w-5xl">
             <h2 className="text-4xl font-black uppercase  leading-none text-[#0a1428] md:text-6xl">
               Structurez ou Échouez.
               <span className="block text-[#19ba87]">Faites le bon choix</span>
             </h2>
-            <p className="mx-auto mt-8 max-w-3xl text-2xl  leading-relaxed text-slate-500">
+            <p className="mx-auto mt-8 max-w-3xl text-2xl  leading-relaxed text-slate-700">
               La plupart des gens échouent parce qu'ils tentent de brûler les
               étapes. Ne faites pas comme eux. Construisez votre fondation
               correctement.
@@ -658,7 +706,7 @@ export default function SovereignFiscalLandingPage() {
                 <div className="h-8 w-8 rounded-full bg-gradient-to-br from-yellow-100 to-teal-500 ring-2 ring-[#f5f6f8]" />
                 <div className="h-8 w-8 rounded-full bg-gradient-to-br from-orange-100 to-amber-600 ring-2 ring-[#f5f6f8]" />
               </div>
-              <span>+400 entrepreneurs nous ont rejoints</span>
+              <span>+80 entrepreneurs nous ont rejoints</span>
             </div>
           </div>
         </section>
