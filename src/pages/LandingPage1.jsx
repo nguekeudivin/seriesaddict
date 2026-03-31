@@ -165,7 +165,7 @@ export default function SovereignFiscalLandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#eef0f3] text-[#0e1830] font-medium">
+    <div className="min-h-screen overflow-x-hidden bg-[#eef0f3] text-[#0e1830] font-medium">
       <style>{`
         .hero-grid {
           background-image:
@@ -205,24 +205,27 @@ export default function SovereignFiscalLandingPage() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "border-b border-slate-200/70 bg-[#f5f6f8]/95 backdrop-blur py-4"
-            : "border-transparent bg-transparent py-6"
+            ? " border-b border-slate-200/70 bg-[#f5f6f8]/95 backdrop-blur py-4"
+            : " border-transparent bg-transparent py-4 sm:py-6"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-10">
+        <div className="mx-auto md:flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
           <a
             href="#"
-            className={`text-2xl font-black tracking-tight transition-colors duration-300 ${
-              isScrolled ? "text-[#0a1428] bg-[#08132a]" : "text-white "
+            className={`md:inline-flex items-center text-2xl font-black tracking-tight transition-colors duration-300 ${
+              isScrolled ? "text-[#0a1428] bg-[#08132a]" : "text-white"
             }`}
           >
             {/* CARTEUSA */}
-            <img src="/images/carte-usa.png" className="w-[200px]" />
+            <img
+              src="/images/carte-usa.png"
+              className="w-[140px] sm:w-[170px] md:w-[200px]"
+            />
           </a>
 
           <a
             href="#cta"
-            className={`rounded-sm px-6 py-4 text-sm font-semibold uppercase tracking-[0.22em] transition-all duration-300 ${
+            className={`hidden md:block rounded-sm px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] transition-all duration-300 sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.22em] ${
               isScrolled
                 ? "bg-[#08132a] text-white shadow-lg"
                 : "bg-white text-[#08132a] shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
@@ -319,16 +322,16 @@ export default function SovereignFiscalLandingPage() {
           <div className="pointer-events-none absolute bottom-[-4rem] left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/5 blur-3xl" />
 
           {/* Content */}
-          <div className="relative mx-auto max-w-6xl px-6 py-24 text-center lg:px-8 lg:py-32">
+          <div className="relative mx-auto max-w-6xl px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-32">
             <motion.div
-              className="mx-auto inline-flex items-center rounded-sm border border-emerald-500/40 bg-emerald-400/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-emerald-300 backdrop-blur-sm"
+              className="mx-auto inline-flex items-center rounded-sm border border-emerald-500/40 bg-emerald-400/5 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-emerald-300 backdrop-blur-sm sm:px-5 sm:py-3 sm:text-xs sm:tracking-[0.35em]"
               {...fadeUp(0.05)}
             >
               Accès au financement US
             </motion.div>
 
             <motion.h1
-              className="mx-auto mt-10 max-w-5xl text-2xl font-black uppercase text-white md:text-3xl lg:text-[3rem]"
+              className="mx-auto mt-8 max-w-5xl text-[1.85rem] font-black uppercase leading-[1.05] text-white sm:mt-10 sm:text-3xl lg:text-[3rem]"
               {...fadeUp(0.14)}
             >
               Construisez votre accès au
@@ -338,7 +341,7 @@ export default function SovereignFiscalLandingPage() {
             </motion.h1>
 
             <motion.p
-              className="mx-auto mt-10 max-w-4xl text-xl leading-relaxed text-slate-300 md:text-2xl"
+              className="mx-auto mt-8 max-w-4xl text-base leading-7 text-slate-300 sm:mt-10 sm:text-xl sm:leading-relaxed md:text-2xl"
               {...fadeUp(0.22)}
             >
               De l’
@@ -362,12 +365,12 @@ export default function SovereignFiscalLandingPage() {
             </motion.p>
 
             <motion.div
-              className="mt-14 flex flex-col items-center justify-center gap-5 sm:flex-row"
+              className="mt-10 flex flex-col items-center justify-center gap-5 sm:mt-14 sm:flex-row"
               {...fadeUp(0.3)}
             >
               <a
                 href="#cta"
-                className="inline-flex min-w-[280px] items-center justify-center rounded-sm bg-[#20c48d] px-10 py-6 text-lg font-semibold uppercase tracking-[0.16em] text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:-translate-y-0.5 hover:brightness-110"
+                className="inline-flex w-full max-w-[320px] min-w-0 items-center justify-center rounded-sm bg-[#20c48d] px-6 py-5 text-base font-semibold uppercase tracking-[0.14em] text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:-translate-y-0.5 hover:brightness-110 sm:w-auto sm:min-w-[280px] sm:max-w-none sm:px-10 sm:py-6 sm:text-lg sm:tracking-[0.16em]"
               >
                 Accéder au système
               </a>
@@ -375,14 +378,14 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        <section className="bg-[#f3f5f7] px-6 py-20 lg:px-0">
+        <section className="bg-[#f3f5f7] px-4 py-16 sm:px-6 sm:py-20 lg:px-0">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+            <h2 className="text-xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
               Obtenir un crédit aux États-Unis en tant que non-résident est
               possible.
             </h2>
 
-            <div className="mt-6 space-y-5 text-base leading-8 text-slate-700 sm:text-xl">
+            <div className="mt-6 space-y-5 text-[15px] leading-7 text-slate-700 sm:text-xl sm:leading-8">
               <p>
                 Ce qui bloque la plupart des dossiers, ce n’est pas seulement le
                 statut de non-résident, mais l’absence de structure, de séquence
@@ -397,10 +400,10 @@ export default function SovereignFiscalLandingPage() {
               </p>
             </div>
 
-            <div className="relative mt-10 overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-7 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:px-8">
+            <div className="relative mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:mt-10 sm:px-8 sm:py-7">
               <div className="absolute left-1/2 top-0 h-1 w-32 -translate-x-1/2 rounded-full bg-gradient-to-r from-green-400 via-green-300 to-green-400" />
 
-              <p className="text-base font-semibold leading-8 text-slate-900 sm:text-xl">
+              <p className="text-[15px] font-semibold leading-7 text-slate-900 sm:text-xl sm:leading-8">
                 Pas de raccourcis. Seulement une approche sérieuse pour avancer
                 proprement dans le système financier américain.
               </p>
@@ -408,16 +411,16 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        <section className="px-6 pb-20 lg:px-8">
+        <section className="px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
           <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_30px_70px_rgba(15,23,42,0.06)] lg:grid-cols-2">
-            <motion.div className="p-8 lg:p-12" {...fadeUp(0.05)}>
-              <div className="text-sm font-semibold uppercase tracking-[0.28em] text-red-600">
+            <motion.div className="p-6 sm:p-8 lg:p-12" {...fadeUp(0.05)}>
+              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-red-600 sm:text-sm sm:tracking-[0.28em]">
                 Ce que vous evitons
               </div>
-              <h2 className="mt-5 text-3xl font-black tracking-[-0.04em] text-[#0b1430] md:text-4xl">
+              <h2 className="mt-4 text-2xl font-black tracking-[-0.04em] text-[#0b1430] sm:mt-5 sm:text-3xl md:text-4xl">
                 Les "pieges" du Marché
               </h2>
-              <div className="mt-10 space-y-8">
+              <div className="mt-8 space-y-7 sm:mt-10 sm:space-y-8">
                 {[
                   {
                     title: "“Financement Immédiat 100k”",
@@ -432,15 +435,15 @@ export default function SovereignFiscalLandingPage() {
                     text: "Si vous ne possédez pas le processus, vous n'avez pas de fondation. Vous pourrez commettre des erreurs",
                   },
                 ].map((item) => (
-                  <div key={item.title} className="flex gap-5">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-red-200 bg-red-50 text-red-600">
+                  <div key={item.title} className="md:flex gap-4 sm:gap-5">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-red-200 bg-red-50 text-red-600 sm:h-12 sm:w-12">
                       <CircleAlert className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold tracking-[-0.03em] text-[#10192f]">
+                      <h3 className="mt-3 md:mt-0 text-lg font-bold tracking-[-0.03em] text-[#10192f] sm:text-xl">
                         {item.title}
                       </h3>
-                      <p className="mt-2 text-lg leading-8 text-slate-600">
+                      <p className="mt-2 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
                         {item.text}
                       </p>
                     </div>
@@ -450,16 +453,16 @@ export default function SovereignFiscalLandingPage() {
             </motion.div>
 
             <motion.div
-              className="bg-[linear-gradient(135deg,#07112a_0%,#04183b_42%,#07253b_100%)] p-8 text-white lg:p-12"
+              className="bg-[linear-gradient(135deg,#07112a_0%,#04183b_42%,#07253b_100%)] p-6 text-white sm:p-8 lg:p-12"
               {...fadeUp(0.12)}
             >
-              <div className="text-sm font-semibold uppercase tracking-[0.28em] text-[#65efbf]">
+              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#65efbf] sm:text-sm sm:tracking-[0.28em]">
                 Notre Protocole
               </div>
-              <h2 className="mt-5 text-3xl font-black tracking-[-0.04em] md:text-4xl">
+              <h2 className="mt-4 text-2xl font-black tracking-[-0.04em] sm:mt-5 sm:text-3xl md:text-4xl">
                 La Vérité Souveraine
               </h2>
-              <div className="mt-10 space-y-8">
+              <div className="mt-8 space-y-7 sm:mt-10 sm:space-y-8">
                 {[
                   {
                     title: "Alignement Institutionnel",
@@ -474,15 +477,15 @@ export default function SovereignFiscalLandingPage() {
                     text: "Bâtissez une présence financière vous permettant d'opérer mondialement avec la force de la monnaie de réserve mondiale.",
                   },
                 ].map((item) => (
-                  <div key={item.title} className="flex gap-5">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#20c48d] text-white">
+                  <div key={item.title} className="md: flex gap-4 sm:gap-5">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#20c48d] text-white sm:h-12 sm:w-12">
                       <Check className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold tracking-[-0.03em] text-white">
+                      <h3 className="mt-3 md:mt-0 text-lg font-bold tracking-[-0.03em] text-white sm:text-xl">
                         {item.title}
                       </h3>
-                      <p className="mt-2 text-lg leading-8 text-slate-300">
+                      <p className="mt-2 text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
                         {item.text}
                       </p>
                     </div>
@@ -493,12 +496,15 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        <section id="roadmap" className="bg-[#eef0f3] px-6 py-20 lg:px-8">
+        <section
+          id="roadmap"
+          className="bg-[#eef0f3] px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
+        >
           <div className="mx-auto max-w-5xl">
-            <h2 className="text-4xl text-center font-bold tracking-[-0.04em] text-black md:text-6xl">
+            <h2 className="text-center text-3xl font-bold tracking-[-0.04em] text-black sm:text-4xl md:text-6xl">
               Comment nous construisons votre accès au crédit américain
             </h2>
-            <p className="mt-4 text-xl text-center text-slate-700">
+            <p className="mt-4 text-center text-lg leading-8 text-slate-700 sm:text-xl">
               Nous ne brûlons pas les étapes : nous posons d&apos;abord votre
               base, nous installons votre crédibilité bancaire, puis nous vous
               faisons monter vers le crédit et le financement.
@@ -508,16 +514,19 @@ export default function SovereignFiscalLandingPage() {
               {steps.map((item, index) => (
                 <motion.article
                   key={item.title}
-                  className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.05)]"
+                  className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)] sm:p-8"
                   {...fadeUp(0.08 + index * 0.05)}
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-[#1dc38e]">
-                    <item.icon className="h-9 w-9" strokeWidth={2.1} />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-50 text-[#1dc38e] sm:h-14 sm:w-14">
+                    <item.icon
+                      className="h-8 w-8 sm:h-9 sm:w-9"
+                      strokeWidth={2.1}
+                    />
                   </div>
-                  <h3 className="mt-6 text-2xl font-bold tracking-[-0.03em] text-[#10192f]">
+                  <h3 className="mt-5 text-xl font-bold tracking-[-0.03em] text-[#10192f] sm:mt-6 sm:text-2xl">
                     {item.title}
                   </h3>
-                  <p className="mt-4 text-lg leading-8 text-slate-600">
+                  <p className="mt-3 text-base leading-7 text-slate-600 sm:mt-4 sm:text-lg sm:leading-8">
                     {item.description}
                   </p>
                 </motion.article>
@@ -528,42 +537,42 @@ export default function SovereignFiscalLandingPage() {
 
         <section
           id="pricing"
-          className="bg-[linear-gradient(180deg,#091224_0%,#06172e_100%)]  px-6 py-24 text-white lg:px-8"
+          className="bg-[linear-gradient(180deg,#091224_0%,#06172e_100%)] px-4 py-16 text-white sm:px-6 sm:py-24 lg:px-8"
         >
           <div className="mx-auto max-w-6xl">
             <div className="text-center">
-              <div className="text-sm uppercase tracking-[0.35em] text-[#1dc38e]">
+              <div className="text-xs uppercase tracking-[0.28em] text-[#1dc38e] sm:text-sm sm:tracking-[0.35em]">
                 L'Investissement
               </div>
-              <h2 className="mx-auto mt-5 max-w-4xl text-5xl font-bold tracking-[-0.05em] md:text-7xl">
+              <h2 className="mx-auto mt-4 max-w-4xl text-4xl font-bold tracking-[-0.05em] sm:mt-5 sm:text-5xl md:text-7xl">
                 Le chemin vers votre financement americain
               </h2>
             </div>
 
-            <div className="relative mx-auto mt-20 max-w-4xl">
+            <div className="relative mx-auto mt-14 max-w-4xl sm:mt-20">
               <div className="absolute left-1/2 top-2 hidden h-[82%] w-px -translate-x-1/2 bg-white/10 md:block" />
-              <div className="space-y-14">
+              <div className="space-y-10 sm:space-y-14">
                 {timeline.map((item, index) => (
                   <div
                     key={item.stage}
-                    className={`grid items-center gap-8 md:grid-cols-2 ${index % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""}`}
+                    className={`grid items-center gap-6 sm:gap-8 md:grid-cols-2 ${index % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""}`}
                   >
                     <div
                       className={`text-center ${index % 2 === 0 ? "md:text-right md:pr-10" : "md:text-left md:pl-10"}`}
                     >
                       <div className="mx-auto mb-4 h-4 w-4 rounded-full bg-[#1dc38e] shadow-[0_0_22px_rgba(29,195,142,0.5)] md:mx-0 md:inline-block" />
-                      <div className="text-4xl font-bold text-[#1dc38e]">
+                      <div className="text-3xl font-bold text-[#1dc38e] sm:text-4xl">
                         {item.stage}
                       </div>
-                      <div className="mt-1 text-lg text-slate-200">
+                      <div className="mt-1 text-base text-slate-200 sm:text-lg">
                         {item.label}
                       </div>
                     </div>
-                    <div className="rounded-3xl border border-white/5 bg-white/[0.04] p-8 shadow-[0_30px_80px_rgba(255,255,255,0.03)] backdrop-blur-sm">
-                      <h3 className="text-3xl font-bold tracking-[-0.04em]">
+                    <div className="rounded-3xl border border-white/5 bg-white/[0.04] p-6 shadow-[0_30px_80px_rgba(255,255,255,0.03)] backdrop-blur-sm sm:p-8">
+                      <h3 className="text-2xl font-bold tracking-[-0.04em] sm:text-3xl">
                         {item.title}
                       </h3>
-                      <p className="mt-4 text-lg leading-relaxed text-slate-200">
+                      <p className="mt-4 text-base leading-7 text-slate-200 sm:text-lg sm:leading-relaxed">
                         {item.description}
                       </p>
                     </div>
@@ -574,21 +583,21 @@ export default function SovereignFiscalLandingPage() {
 
             <div
               id="cta"
-              className="mx-auto mt-24 max-w-3xl rounded-[28px] border border-white/5 bg-white/[0.04] px-8 py-12 text-center shadow-[0_30px_100px_rgba(255,255,255,0.04)]"
+              className="mx-auto mt-16 max-w-3xl rounded-[28px] border border-white/5 bg-white/[0.04] px-5 py-8 text-center shadow-[0_30px_100px_rgba(255,255,255,0.04)] sm:mt-24 sm:px-8 sm:py-12"
             >
-              <h3 className="text-4xl font-black md:text-5xl">
+              <h3 className="text-3xl font-black sm:text-4xl md:text-5xl">
                 Votre accès au crédit
                 <span className="block text-[#1dc38e]">
                   ne se joue pas au hasard
                 </span>
               </h3>
-              <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-200 font-medium">
+              <p className="mx-auto mt-5 max-w-2xl text-base font-medium leading-7 text-slate-200 sm:mt-6 sm:text-lg">
                 Si votre objectif est sérieux, nous vous montrons le processus
                 exacte pour devenir crédible aux yeux des banques.
               </p>
               <a
                 href="#"
-                className="mt-10 inline-flex min-w-[340px] max-w-full items-center justify-center rounded-sm bg-[#20c48d] px-10 py-6 text-xl font-semibold text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:brightness-110"
+                className="mt-8 inline-flex w-full max-w-[320px] min-w-0 items-center justify-center rounded-sm bg-[#20c48d] px-6 py-5 text-lg font-semibold text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:brightness-110 sm:mt-10 sm:w-auto sm:min-w-[340px] sm:max-w-full sm:px-10 sm:py-6 sm:text-xl"
               >
                 Accéder à la méthode
               </a>
@@ -596,13 +605,13 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        <section className="bg-[#f4f5f7] px-6 py-24 lg:px-8">
+        <section className="bg-[#f4f5f7] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="text-center">
-              <div className="mt-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#1ac98d] bg-white px-4 py-2 inline-flex rounded-full border border-slate-200">
+              <div className="mt-4 inline-flex rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[#1ac98d] sm:text-sm sm:tracking-[0.3em]">
                 Protocoles éprouvés
               </div>
-              <p className="mx-auto mt-6 max-w-3xl text-2xl leading-7 text-slate-800 font-bold">
+              <p className="mx-auto mt-6 max-w-3xl text-lg font-bold leading-8 text-slate-800 sm:text-2xl sm:leading-9">
                 <strong className="font-bold text-[#1ac98d]">125</strong> cas
                 documentés, avec des montants observés de{" "}
                 <strong className="font-bold text-[#1ac98d]">75 000 $</strong> à{" "}
@@ -611,31 +620,33 @@ export default function SovereignFiscalLandingPage() {
                 <strong className="font-bold text-[#1ac98d]">90 jours</strong> à{" "}
                 <strong className="font-bold text-[#1ac98d]">4 mois</strong>.
               </p>
-              <h2 className="mt-4 text-5xl font-black text-[#09142c] md:text-5xl">
+              <h2 className="mt-4 text-4xl font-black text-[#09142c] sm:text-5xl">
                 Briefings de Réussite
               </h2>
             </div>
 
-            <div className="mt-16 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-12 grid gap-6 sm:mt-16 sm:grid-cols-2 sm:gap-8 xl:grid-cols-4">
               {successStories.map((story) => (
                 <article
                   key={story.quote}
-                  className="group flex min-h-[460px] flex-col justify-between rounded-lg bg-[radial-gradient(circle_at_top,rgba(26,201,141,0.08),transparent_18%),linear-gradient(180deg,#04143f_0%,#031027_100%)] p-6 text-white shadow-[0_22px_40px_rgba(15,23,42,0.12)] transition hover:-translate-y-1"
+                  className="group flex min-h-[360px] flex-col justify-between rounded-lg bg-[radial-gradient(circle_at_top,rgba(26,201,141,0.08),transparent_18%),linear-gradient(180deg,#04143f_0%,#031027_100%)] p-5 text-white shadow-[0_22px_40px_rgba(15,23,42,0.12)] transition hover:-translate-y-1 sm:min-h-[460px] sm:p-6"
                 >
                   <div className="flex justify-center pt-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#20c48d] text-2xl shadow-[0_0_32px_rgba(32,196,141,0.25)]">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#20c48d] text-xl shadow-[0_0_32px_rgba(32,196,141,0.25)] sm:h-16 sm:w-16 sm:text-2xl">
                       ▶
                     </div>
                   </div>
                   <div>
-                    <p className="text-[1rem] font-black">{story.quote}</p>
+                    <p className="text-[0.95rem] font-black leading-7 sm:text-[1rem]">
+                      {story.quote}
+                    </p>
                     <div className="mt-8 flex items-center gap-4">
                       <div className="h-11 w-11 rounded-full border border-[#1bc58e]/40 bg-white/5" />
                       <div>
                         <div className="font-semibold text-sm uppercase tracking-[0.18em]">
                           {story.name}
                         </div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1ac98d]">
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1ac98d] sm:text-xs">
                           {story.role}
                         </div>
                       </div>
@@ -647,13 +658,16 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        <section id="faq" className="bg-[#eef0f3] px-6 py-24 lg:px-8">
+        <section
+          id="faq"
+          className="bg-[#eef0f3] px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+        >
           <div className="mx-auto max-w-4xl">
             <motion.div className="text-center" {...fadeUp(0.04)}>
-              <div className="text-sm font-semibold uppercase tracking-[0.28em] text-[#19b884]">
+              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#19b884] sm:text-sm sm:tracking-[0.28em]">
                 FAQ
               </div>
-              <h2 className="mt-5 text-4xl font-black  text-[#08132a] md:text-5xl">
+              <h2 className="mt-4 text-3xl font-black text-[#08132a] sm:mt-5 sm:text-4xl md:text-5xl">
                 Questions fréquentes
               </h2>
             </motion.div>
@@ -662,16 +676,16 @@ export default function SovereignFiscalLandingPage() {
               {faqs.map((item, index) => (
                 <motion.details
                   key={item.q}
-                  className="group rounded-[24px] bg-white px-8 py-7 shadow-[0_12px_35px_rgba(15,23,42,0.05)]"
+                  className="group rounded-[24px] bg-white px-5 py-5 shadow-[0_12px_35px_rgba(15,23,42,0.05)] sm:px-8 sm:py-7"
                   {...fadeUp(0.06 + index * 0.03)}
                 >
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-left text-xl font-bold tracking-[-0.03em] text-[#10192f] marker:hidden">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-lg font-bold tracking-[-0.03em] text-[#10192f] marker:hidden sm:gap-5 sm:text-xl">
                     <span>{item.q}</span>
-                    <span className="text-4xl font-light text-slate-400 transition group-open:rotate-45">
+                    <span className="text-3xl font-light text-slate-400 transition group-open:rotate-45 sm:text-4xl">
                       +
                     </span>
                   </summary>
-                  <p className="mt-6 text-lg leading-8 text-slate-600">
+                  <p className="mt-5 text-base leading-7 text-slate-600 sm:mt-6 sm:text-lg sm:leading-8">
                     {item.a}
                   </p>
                 </motion.details>
@@ -680,27 +694,27 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden bg-[#f5f6f8] px-6 py-28 text-center lg:px-8">
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden text-[24vw] font-black uppercase tracking-[-0.05em] text-black/[0.04]">
+        <section className="relative overflow-hidden bg-[#f5f6f8] px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden text-[28vw] font-black uppercase tracking-[-0.05em] text-black/[0.04] sm:text-[24vw]">
             CREDIT
           </div>
           <div className="relative mx-auto max-w-5xl">
-            <h2 className="text-4xl font-black uppercase  leading-none text-[#0a1428] md:text-6xl">
+            <h2 className="text-3xl font-black uppercase leading-none text-[#0a1428] sm:text-4xl md:text-6xl">
               Structurez ou Échouez.
               <span className="block text-[#19ba87]">Faites le bon choix</span>
             </h2>
-            <p className="mx-auto mt-8 max-w-3xl text-2xl  leading-relaxed text-slate-700">
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-700 sm:mt-8 sm:text-2xl sm:leading-relaxed">
               La plupart des gens échouent parce qu'ils tentent de brûler les
               étapes. Ne faites pas comme eux. Construisez votre fondation
               correctement.
             </p>
             <a
               href="#"
-              className="mt-12 inline-flex items-center justify-center rounded-sm bg-[#08132a] px-16 py-6 text-xl font-semibold uppercase tracking-[0.2em] text-white shadow-[0_25px_45px_rgba(8,19,42,0.16)] transition hover:brightness-110"
+              className="mt-10 inline-flex w-full max-w-[320px] items-center justify-center rounded-sm bg-[#08132a] px-8 py-5 text-base font-semibold uppercase tracking-[0.16em] text-white shadow-[0_25px_45px_rgba(8,19,42,0.16)] transition hover:brightness-110 sm:mt-12 sm:w-auto sm:max-w-none sm:px-16 sm:py-6 sm:text-xl sm:tracking-[0.2em]"
             >
               Démarrer maintenant
             </a>
-            <div className="mt-10 flex items-center justify-center gap-4 text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 text-center text-xs font-semibold uppercase tracking-[0.18em] text-slate-400 sm:mt-10 sm:flex-row sm:gap-4 sm:text-sm sm:tracking-[0.22em]">
               <div className="flex -space-x-2">
                 <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-200 to-emerald-500 ring-2 ring-[#f5f6f8]" />
                 <div className="h-8 w-8 rounded-full bg-gradient-to-br from-yellow-100 to-teal-500 ring-2 ring-[#f5f6f8]" />
@@ -712,9 +726,9 @@ export default function SovereignFiscalLandingPage() {
         </section>
       </main>
 
-      <footer className="bg-[#0a0f1e] px-6 py-16 text-center text-slate-500 lg:px-8">
+      <footer className="bg-[#0a0f1e] px-4 py-14 text-center text-slate-500 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-5xl">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm font-medium text-[#20c48d]">
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-medium text-[#20c48d] sm:gap-6 sm:text-sm">
             <a href="#">Termes et conditions</a>
             <span className="text-white/15">|</span>
             <a href="#">Politique de confidentialité</a>
@@ -722,11 +736,11 @@ export default function SovereignFiscalLandingPage() {
             <a href="#">Mentions légales</a>
           </div>
 
-          <div className="mt-8 text-sm uppercase tracking-[0.25em] text-slate-400">
+          <div className="mt-6 text-xs uppercase tracking-[0.2em] text-slate-400 sm:mt-8 sm:text-sm sm:tracking-[0.25em]">
             ZAID LAWANI - Copyright © 2026
           </div>
 
-          <div className="mx-auto mt-12 max-w-4xl space-y-6 text-sm leading-relaxed text-slate-400">
+          <div className="mx-auto mt-10 max-w-4xl space-y-5 text-[13px] leading-relaxed text-slate-400 sm:mt-12 sm:space-y-6 sm:text-sm">
             <p>
               ⚠️ Les montants de financement et les résultats mentionnés sont
               des exemples basés sur des cas réels. Les résultats peuvent varier
