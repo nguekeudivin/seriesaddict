@@ -205,8 +205,8 @@ export default function SovereignFiscalLandingPage() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? " border-b border-slate-200/70 bg-[#f5f6f8]/95 backdrop-blur py-4"
-            : " border-transparent bg-transparent py-4 sm:py-6"
+            ? "hidden md:block border-b border-slate-200/70 bg-[#f5f6f8]/95 backdrop-blur py-4"
+            : "block border-transparent bg-transparent py-4 sm:py-6"
         }`}
       >
         <div className="mx-auto md:flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
