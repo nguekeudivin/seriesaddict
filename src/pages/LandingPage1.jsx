@@ -3,7 +3,6 @@ import {
   BadgeCheck,
   BarChart3,
   Check,
-  CheckIcon,
   CircleAlert,
   Landmark,
   TrendingUp,
@@ -92,7 +91,7 @@ export default function SovereignFiscalLandingPage() {
       a: "Généralement de 6 à 12 semaines, selon les délais de traitement de l'IRS.",
     },
     {
-      q: "Puis-je le faire sans llc ?",
+      q: "Puis-je le faire sans LLC ?",
       a: "Oui, un ITIN vous permet d'ouvrir des comptes personnels, bien qu'une LLC offre des avantages commerciaux supplémentaires par la suite.",
     },
     {
@@ -158,7 +157,7 @@ export default function SovereignFiscalLandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#eef0f3] text-[#0e1830]">
+    <div className="min-h-screen bg-[#eef0f3] text-[#0e1830] font-medium">
       <style>{`
         .hero-grid {
           background-image:
@@ -206,14 +205,14 @@ export default function SovereignFiscalLandingPage() {
           <a
             href="#"
             className={`text-2xl font-black tracking-tight transition-colors duration-300 ${
-              isScrolled ? "text-[#0a1428]" : "text-white"
+              isScrolled ? "text-[#0a1428] bg-[#08132a]" : "text-white "
             }`}
           >
             {/* CARTEUSA */}
-            <img src="/images/carte-usa-image.webp" className="w-[200px]" />
+            <img src="/images/carte-usa.png" className="w-[200px]" />
           </a>
 
-          <nav
+          {/* <nav
             className={`hidden items-center gap-10 text-[17px] font-medium md:flex transition-colors duration-300 ${
               isScrolled ? "text-slate-600" : "text-slate-300"
             }`}
@@ -236,7 +235,7 @@ export default function SovereignFiscalLandingPage() {
             >
               FAQ
             </a>
-          </nav>
+          </nav> */}
 
           <a
             href="#cta"
@@ -309,48 +308,35 @@ export default function SovereignFiscalLandingPage() {
           </div>
         </section>
 
-        <section className="bg-[#f3f5f7] px-6 py-20 lg:px-8">
-          <div className="mx-auto grid max-w-4xl ">
-            <div>
-              <h2 className="text-2xl font-black uppercase text-black md:text-4xl">
-                Pensez-vous qu’obtenir un crédit aux États-Unis en tant que
-                non-résident est
-                <span className="block text-[#19b884]">impossible ?</span>
-              </h2>
+        <section className="bg-[#f3f5f7] px-6 py-20 lg:px-0">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              Obtenir un crédit aux États-Unis en tant que non-résident est
+              possible.
+            </h2>
 
-              <div className="mt-8 space-y-6 text-xl leading-relaxed text-slate-700">
-                <p>
-                  Ce n’est pas impossible. Mais sans structure claire, sans
-                  présence bancaire cohérente, sans la bonne séquence et sans
-                  les bonnes informations, la plupart des dossiers se bloquent
-                  dès le départ.
-                </p>
-                <p>
-                  Beaucoup de non-résidents essuient des refus non pas parce que
-                  l’accès est fermé, mais parce qu’ils entrent dans le système
-                  dans le mauvais ordre et commettent des erreurs qui
-                  fragilisent leur profil.
-                </p>
-                <p>
-                  Notre rôle est de vous aider à construire les bonnes bases :
-                  ITIN, compte bancaire, positionnement crédible et montée
-                  progressive vers le crédit.
-                </p>
-                <p>
-                  Notre approche est conçue pour vous aider à éviter les erreurs
-                  coûteuses et les mauvais choix. Grâce à notre expérience du
-                  terrain et à notre connaissance des pratiques des institutions
-                  financières, nous vous guidons avec des informations à jour et
-                  pertinentes.
-                </p>
-                <p className="font-semibold text-slate-800">
-                  Pas de raccourcis, pas de promesses irréalistes, pas de
-                  montage improvisé. Seulement une méthode structurée pour
-                  accéder au système financier américain de manière propre,
-                  cohérente et durable, avec un objectif clair : construire
-                  votre accès au crédit et au financement.
-                </p>
-              </div>
+            <div className="mt-6 space-y-5 text-base leading-8 text-slate-700 sm:text-xl">
+              <p>
+                Ce qui bloque la plupart des dossiers, ce n’est pas seulement le
+                statut de non-résident, mais l’absence de structure, de séquence
+                et de cohérence dès le départ.
+              </p>
+
+              <p>
+                Nous vous aidons à construire des bases plus solides — ITIN,
+                cohérence bancaire, structuration du profil et progression vers
+                le crédit — avec une méthode claire, réaliste et sans promesses
+                excessives.
+              </p>
+            </div>
+
+            <div className="relative mt-10 overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-7 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:px-8">
+              <div className="absolute left-1/2 top-0 h-1 w-32 -translate-x-1/2 rounded-full bg-gradient-to-r from-green-400 via-green-300 to-green-400" />
+
+              <p className="text-base font-semibold leading-8 text-slate-900 sm:text-xl">
+                Pas de raccourcis. Seulement une approche sérieuse pour avancer
+                proprement dans le système financier américain.
+              </p>
             </div>
           </div>
         </section>
@@ -542,14 +528,14 @@ export default function SovereignFiscalLandingPage() {
               id="cta"
               className="mx-auto mt-24 max-w-3xl rounded-[28px] border border-white/5 bg-white/[0.04] px-8 py-12 text-center shadow-[0_30px_100px_rgba(255,255,255,0.04)]"
             >
-              <h3 className="text-4xl font-bold md:text-5xl">
+              <h3 className="text-4xl font-black md:text-5xl">
                 Votre accès au crédit
                 <span className="block text-[#1dc38e]">
                   ne se joue pas au hasard
                 </span>
               </h3>
-              <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-400">
-                Si votre objectif est sérieux, nous vous montrons la séquence
+              <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-200 font-medium">
+                Si votre objectif est sérieux, nous vous montrons le processus
                 exacte pour devenir crédible aux yeux des banques.
               </p>
               <a
@@ -565,7 +551,7 @@ export default function SovereignFiscalLandingPage() {
         <section className="bg-[#f4f5f7] px-6 py-24 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="text-center">
-              <div className="mt-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#1ac98d]">
+              <div className="mt-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#1ac98d] bg-white px-4 py-2 inline-flex rounded-full border border-slate-200">
                 Protocoles éprouvés
               </div>
               <p className="mx-auto mt-6 max-w-3xl text-2xl leading-7 text-slate-800 font-bold">
@@ -594,9 +580,7 @@ export default function SovereignFiscalLandingPage() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-[1rem] font-black">
-                      {story.quote}
-                    </p>
+                    <p className="text-[1rem] font-black">{story.quote}</p>
                     <div className="mt-8 flex items-center gap-4">
                       <div className="h-11 w-11 rounded-full border border-[#1bc58e]/40 bg-white/5" />
                       <div>
@@ -621,7 +605,7 @@ export default function SovereignFiscalLandingPage() {
               <div className="text-sm font-semibold uppercase tracking-[0.28em] text-[#19b884]">
                 FAQ
               </div>
-              <h2 className="mt-5 text-4xl font-black tracking-[-0.04em] text-[#08132a] md:text-5xl">
+              <h2 className="mt-5 text-4xl font-black  text-[#08132a] md:text-5xl">
                 Questions fréquentes
               </h2>
             </motion.div>
@@ -653,9 +637,9 @@ export default function SovereignFiscalLandingPage() {
             CARTE
           </div>
           <div className="relative mx-auto max-w-5xl">
-            <h2 className="text-4xl font-black uppercase  leading-none tracking-[-0.05em] text-[#0a1428] md:text-6xl">
+            <h2 className="text-4xl font-black uppercase  leading-none text-[#0a1428] md:text-6xl">
               Structurez ou Échouez.
-              <span className="block text-[#19ba87]">À vous de choisir.</span>
+              <span className="block text-[#19ba87]">Faites le bon choix</span>
             </h2>
             <p className="mx-auto mt-8 max-w-3xl text-2xl  leading-relaxed text-slate-500">
               La plupart des gens échouent parce qu'ils tentent de brûler les
