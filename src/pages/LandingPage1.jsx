@@ -1,28 +1,41 @@
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  BadgeCheck,
+  BarChart3,
+  Check,
+  CheckIcon,
+  CircleAlert,
+  Landmark,
+  TrendingUp,
+  X,
+} from "lucide-react";
+import { useState, useEffect } from "react";
+
 export default function SovereignFiscalLandingPage() {
   const steps = [
     {
       title: "Fondation ITIN",
       description:
         "Établissez votre identité numérique basée aux États-Unis pour un traitement des transactions sans frontières.",
-      icon: "◎",
+      icon: BadgeCheck,
     },
     {
       title: "Banque de Tier 1",
       description:
         "Activez des lignes de crédit à plafond élevé et des comptes de gestion privée auprès de prêteurs premium.",
-      icon: "▣",
+      icon: Landmark,
     },
     {
       title: "Data Seeding",
       description:
         "Programmez la perception algorithmique de votre profil financier pour commander les taux les plus bas.",
-      icon: "◫",
+      icon: BarChart3,
     },
     {
       title: "Capital de Croissance",
       description:
         "Tirez parti de votre souveraineté structurelle pour obtenir des liquidités destinées à l'acquisition d'actifs.",
-      icon: "↗",
+      icon: TrendingUp,
     },
   ];
 
@@ -116,32 +129,122 @@ export default function SovereignFiscalLandingPage() {
     },
   ];
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  const fadeUp = (delay = 0) =>
+    shouldReduceMotion
+      ? {
+          initial: { opacity: 1, y: 0 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0 },
+        }
+      : {
+          initial: { opacity: 0, y: 26 },
+          animate: { opacity: 1, y: 0 },
+          transition: {
+            duration: 0.8,
+            delay,
+            ease: [0.16, 1, 0.3, 1],
+          },
+        };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#eef0f3] text-[#0e1830]">
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-[#f5f6f8]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+      <style>{`
+        .hero-grid {
+          background-image:
+            linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+          background-size: 72px 72px;
+          mask-image: linear-gradient(180deg, rgba(255,255,255,0.85), transparent 88%);
+        }
+
+        .hero-orb {
+          filter: blur(12px);
+          animation: heroFloat 11s ease-in-out infinite;
+        }
+
+        .hero-orb-delay {
+          animation-delay: -4s;
+          animation-duration: 15s;
+        }
+
+        @keyframes heroFloat {
+          0%, 100% {
+            transform: translate3d(0, 0, 0);
+          }
+          50% {
+            transform: translate3d(0, -14px, 0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-orb,
+          .hero-orb-delay {
+            animation: none !important;
+          }
+        }
+      `}</style>
+
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? "border-b border-slate-200/70 bg-[#f5f6f8]/95 backdrop-blur py-4"
+            : "border-transparent bg-transparent py-6"
+        }`}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-10">
           <a
             href="#"
-            className="text-2xl font-black tracking-tight text-[#0a1428]"
+            className={`text-2xl font-black tracking-tight transition-colors duration-300 ${
+              isScrolled ? "text-[#0a1428]" : "text-white"
+            }`}
           >
-            SOVEREIGN FISCAL
+            {/* CARTEUSA */}
+            <img src="/images/carte-usa-image.webp" className="w-[200px]" />
           </a>
 
-          <nav className="hidden items-center gap-10 text-[17px] font-medium text-slate-600 md:flex">
-            <a href="#roadmap" className="transition hover:text-[#0a1428]">
+          <nav
+            className={`hidden items-center gap-10 text-[17px] font-medium md:flex transition-colors duration-300 ${
+              isScrolled ? "text-slate-600" : "text-slate-300"
+            }`}
+          >
+            <a
+              href="#roadmap"
+              className={`transition hover:text-emerald-400 ${isScrolled ? "hover:text-[#0a1428]" : ""}`}
+            >
               La Feuille de Route
             </a>
-            <a href="#pricing" className="transition hover:text-[#0a1428]">
+            <a
+              href="#pricing"
+              className={`transition hover:text-emerald-400 ${isScrolled ? "hover:text-[#0a1428]" : ""}`}
+            >
               Tarifs
             </a>
-            <a href="#faq" className="transition hover:text-[#0a1428]">
+            <a
+              href="#faq"
+              className={`transition hover:text-emerald-400 ${isScrolled ? "hover:text-[#0a1428]" : ""}`}
+            >
               FAQ
             </a>
           </nav>
 
           <a
             href="#cta"
-            className="rounded-sm bg-[#08132a] px-6 py-4 text-sm font-semibold uppercase tracking-[0.22em] text-white shadow-[0_18px_40px_rgba(8,19,42,0.18)] transition hover:brightness-110"
+            className={`rounded-sm px-6 py-4 text-sm font-semibold uppercase tracking-[0.22em] transition-all duration-300 ${
+              isScrolled
+                ? "bg-[#08132a] text-white shadow-lg"
+                : "bg-white text-[#08132a] shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
+            } hover:brightness-110`}
           >
             Accéder maintenant
           </a>
@@ -149,52 +252,119 @@ export default function SovereignFiscalLandingPage() {
       </header>
 
       <main>
-        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top,rgba(26,196,145,0.16),transparent_24%),linear-gradient(90deg,#111a2d_0%,#031236_50%,#071226_100%)]">
-          <div className="absolute inset-0 opacity-[0.06] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:22px_22px]" />
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top,rgba(78,223,182,0.22),transparent_28%),linear-gradient(135deg,#07101c_0%,#04122e_38%,#061530_72%,#0a1321_100%)]">
           <div className="relative mx-auto max-w-6xl px-6 py-24 text-center lg:px-8 lg:py-32">
-            <div className="mx-auto mb-10 inline-flex items-center rounded-sm border border-emerald-500/40 bg-emerald-400/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-emerald-400">
-              Architecture Financière Stratégique
-            </div>
+            <motion.div
+              className="mx-auto inline-flex items-center rounded-sm border border-emerald-500/40 bg-emerald-400/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-emerald-300 backdrop-blur-sm"
+              {...fadeUp(0.05)}
+            >
+              Accès au financement US
+            </motion.div>
 
-            <h1 className="mx-auto max-w-5xl text-5xl font-black uppercase italic leading-[0.92] tracking-[-0.05em] text-white md:text-7xl lg:text-[8rem]">
-              Architecturez Votre
-              <span className="mt-3 block text-[#18c98d]">Souveraineté US</span>
-            </h1>
+            <motion.h1
+              className="mx-auto mt-10 max-w-5xl text-2xl font-black uppercase text-white md:text-3xl lg:text-[3rem]"
+              {...fadeUp(0.14)}
+            >
+              Construisez votre accès au
+              <span className="mt-3 block bg-[linear-gradient(135deg,#b8ffe9_0%,#19c98d_50%,#6ddcff_100%)] bg-clip-text text-transparent">
+                système de crédit et financement américain
+              </span>
+            </motion.h1>
 
-            <p className="mx-auto mt-10 max-w-4xl text-xl leading-relaxed text-slate-300 md:text-2xl">
-              Le protocole exact pour les non-résidents souhaitant intégrer le
-              système financier américain.
-              <span className="font-semibold text-white">
-                {" "}
-                ITIN. Banque. Crédit. Financement.
+            <motion.p
+              className="mx-auto mt-10 max-w-4xl text-xl leading-relaxed text-slate-300 md:text-2xl"
+              {...fadeUp(0.22)}
+            >
+              De l’
+              <span className="text-[1.05em] font-semibold text-white">
+                ITIN
               </span>{" "}
-              Pas de raccourcis. Juste le système.
-            </p>
+              au{" "}
+              <span className="text-[1.05em] font-semibold text-white">
+                compte bancaire
+              </span>{" "}
+              puis au{" "}
+              <span className="text-[1.05em] font-semibold text-white">
+                crédit
+              </span>
+              , une méthode structurée et efficace pour construire un{" "}
+              <span className="text-[1.05em] font-semibold text-white">
+                accès crédible
+              </span>{" "}
+              au système financier américain, sans raccourcis ni fausses
+              promesses.
+            </motion.p>
 
-            <div className="mt-14 flex flex-col items-center justify-center gap-5 sm:flex-row">
+            <motion.div
+              className="mt-14 flex flex-col items-center justify-center gap-5 sm:flex-row"
+              {...fadeUp(0.3)}
+            >
               <a
                 href="#cta"
-                className="inline-flex min-w-[280px] items-center justify-center rounded-sm bg-[#20c48d] px-10 py-6 text-lg font-semibold uppercase tracking-[0.16em] text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:brightness-110"
+                className="inline-flex min-w-[280px] items-center justify-center rounded-sm bg-[#20c48d] px-10 py-6 text-lg font-semibold uppercase tracking-[0.16em] text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:-translate-y-0.5 hover:brightness-110"
               >
-                Sécurisez votre accès
+                Accéder au système
               </a>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="bg-[#f3f5f7] px-6 py-20 lg:px-8">
+          <div className="mx-auto grid max-w-4xl ">
+            <div>
+              <h2 className="text-2xl font-black uppercase text-black md:text-4xl">
+                Pensez-vous qu’obtenir un crédit aux États-Unis en tant que
+                non-résident est
+                <span className="block text-[#19b884]">impossible ?</span>
+              </h2>
+
+              <div className="mt-8 space-y-6 text-xl leading-relaxed text-slate-700">
+                <p>
+                  Ce n’est pas impossible. Mais sans structure claire, sans
+                  présence bancaire cohérente, sans la bonne séquence et sans
+                  les bonnes informations, la plupart des dossiers se bloquent
+                  dès le départ.
+                </p>
+                <p>
+                  Beaucoup de non-résidents essuient des refus non pas parce que
+                  l’accès est fermé, mais parce qu’ils entrent dans le système
+                  dans le mauvais ordre et commettent des erreurs qui
+                  fragilisent leur profil.
+                </p>
+                <p>
+                  Notre rôle est de vous aider à construire les bonnes bases :
+                  ITIN, compte bancaire, positionnement crédible et montée
+                  progressive vers le crédit.
+                </p>
+                <p>
+                  Notre approche est conçue pour vous aider à éviter les erreurs
+                  coûteuses et les mauvais choix. Grâce à notre expérience du
+                  terrain et à notre connaissance des pratiques des institutions
+                  financières, nous vous guidons avec des informations à jour et
+                  pertinentes.
+                </p>
+                <p className="font-semibold text-slate-800">
+                  Pas de raccourcis, pas de promesses irréalistes, pas de
+                  montage improvisé. Seulement une méthode structurée pour
+                  accéder au système financier américain de manière propre,
+                  cohérente et durable, avec un objectif clair : construire
+                  votre accès au crédit et au financement.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="protocol" className="px-6 py-14 lg:px-8 lg:py-20">
-          <div className="mx-auto grid max-w-6xl overflow-hidden rounded-none border-2 border-[#0d1629] bg-[#f5f6f8] shadow-[20px_20px_0_rgba(15,23,42,0.05)] lg:grid-cols-2">
-            <div className="p-10 lg:p-16">
-              <div className="text-sm font-bold uppercase tracking-[0.22em] text-red-600">
-                Section 01 // L'Avertissement
+        <section className="px-6 pb-20 lg:px-8">
+          <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_30px_70px_rgba(15,23,42,0.06)] lg:grid-cols-2">
+            <motion.div className="p-8 lg:p-12" {...fadeUp(0.05)}>
+              <div className="text-sm font-semibold uppercase tracking-[0.28em] text-red-600">
+                Ce que vous evitons
               </div>
-              <h2 className="mt-6 text-4xl font-black uppercase italic leading-none tracking-[-0.04em] text-[#0a1430] md:text-6xl">
-                Les "Hacks"
-                <br />
-                du Marché
+              <h2 className="mt-5 text-3xl font-black tracking-[-0.04em] text-[#0b1430] md:text-4xl">
+                Les "pieges" du Marché
               </h2>
-
-              <div className="mt-12 space-y-10">
+              <div className="mt-10 space-y-8">
                 {[
                   {
                     title: "“Financement Immédiat 100k”",
@@ -206,37 +376,37 @@ export default function SovereignFiscalLandingPage() {
                   },
                   {
                     title: "“Crédit Clé-en-Main”",
-                    text: "Si vous ne possédez pas le processus, vous n'avez pas de fondation. La plupart utilisent des données frauduleuses.",
+                    text: "Si vous ne possédez pas le processus, vous n'avez pas de fondation. Vous pourrez commettre des erreurs",
                   },
                 ].map((item) => (
-                  <div key={item.title} className="flex gap-6">
-                    <div className="mt-1 flex h-11 w-11 items-center justify-center border-2 border-red-600 text-2xl text-red-600">
-                      ×
+                  <div key={item.title} className="flex gap-5">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-red-200 bg-red-50 text-red-600">
+                      <CircleAlert className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-extrabold uppercase tracking-[-0.03em] text-[#111b34]">
+                      <h3 className="text-xl font-bold tracking-[-0.03em] text-[#10192f]">
                         {item.title}
                       </h3>
-                      <p className="mt-3 max-w-xl text-xl leading-relaxed text-slate-500">
+                      <p className="mt-2 text-lg leading-8 text-slate-600">
                         {item.text}
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-[linear-gradient(90deg,#04143f_0%,#06102d_50%,#0a2131_100%)] p-10 text-white lg:p-16">
-              <div className="text-sm font-bold uppercase tracking-[0.22em] text-[#18c98d]">
-                Section 02 // Le Protocole
+            <motion.div
+              className="bg-[linear-gradient(135deg,#07112a_0%,#04183b_42%,#07253b_100%)] p-8 text-white lg:p-12"
+              {...fadeUp(0.12)}
+            >
+              <div className="text-sm font-semibold uppercase tracking-[0.28em] text-[#65efbf]">
+                Notre Protocole
               </div>
-              <h2 className="mt-6 text-4xl font-black uppercase italic leading-none tracking-[-0.04em] md:text-6xl">
-                La Vérité
-                <br />
-                Souveraine
+              <h2 className="mt-5 text-3xl font-black tracking-[-0.04em] md:text-4xl">
+                La Vérité Souveraine
               </h2>
-
-              <div className="mt-12 space-y-10">
+              <div className="mt-10 space-y-8">
                 {[
                   {
                     title: "Alignement Institutionnel",
@@ -251,26 +421,26 @@ export default function SovereignFiscalLandingPage() {
                     text: "Bâtissez une présence financière vous permettant d'opérer mondialement avec la force de la monnaie de réserve mondiale.",
                   },
                 ].map((item) => (
-                  <div key={item.title} className="flex gap-6">
-                    <div className="mt-1 flex h-11 w-11 items-center justify-center bg-[#20c48d] text-2xl text-white">
-                      ✓
+                  <div key={item.title} className="flex gap-5">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#20c48d] text-white">
+                      <Check className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-extrabold uppercase tracking-[-0.03em] text-white">
+                      <h3 className="text-xl font-bold tracking-[-0.03em] text-white">
                         {item.title}
                       </h3>
-                      <p className="mt-3 max-w-xl text-xl leading-relaxed text-slate-400">
+                      <p className="mt-2 text-lg leading-8 text-slate-300">
                         {item.text}
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        <section className="bg-[linear-gradient(90deg,#04143f_0%,#06102d_50%,#0a2131_100%)] px-6 py-20 text-center text-white lg:px-8 lg:py-24">
+        {/* <section className="bg-[linear-gradient(90deg,#04143f_0%,#06102d_50%,#0a2131_100%)] px-6 py-20 text-center text-white lg:px-8 lg:py-24">
           <div className="mx-auto max-w-5xl">
             <h2 className="text-4xl font-extrabold tracking-[-0.04em] md:text-6xl">
               Une Nouvelle Vision du Capital
@@ -287,103 +457,35 @@ export default function SovereignFiscalLandingPage() {
               </div>
             </div>
           </div>
-        </section>
-
-        <section className="bg-[#f3f5f7] px-6 py-20 lg:px-8">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
-            <div className="relative overflow-hidden rounded-lg bg-[linear-gradient(180deg,#031237,#03112b)] p-8 shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
-              <div className="mx-auto aspect-[4/5] max-w-md rounded-md bg-[radial-gradient(circle_at_top,rgba(255,217,119,0.25),transparent_24%),linear-gradient(180deg,#031038,#02112e_52%,#071221_100%)] p-6 text-white">
-                <div className="mx-auto mt-2 max-w-[240px] rounded-md border border-[#c1a563]/60 bg-[#c8b06d] px-5 py-4 text-center text-[#1a1a1a] shadow-lg">
-                  <div className="text-xs font-semibold uppercase tracking-[0.3em]">
-                    American Express
-                  </div>
-                  <div className="mt-3 text-5xl">◉</div>
-                </div>
-                <div className="mt-8 text-[#7ef0c7]">● Bonne Nouvelle !</div>
-                <div className="mt-3 text-6xl font-black tracking-[-0.05em]">
-                  $75,000.00
-                </div>
-                <div className="mt-6 h-px bg-white/10" />
-                <p className="mt-6 text-lg leading-relaxed text-slate-300">
-                  Nous avons approuvé votre demande de dépense de 75 000,00 $
-                  sur les achats généraux avec la carte se terminant par -71001.
-                </p>
-                <div className="absolute bottom-8 left-8 inline-flex bg-[#20c48d] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-white">
-                  Protocole Vérifié
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h2 className="max-w-2xl text-4xl font-black uppercase italic leading-[0.94] tracking-[-0.05em] text-black md:text-6xl">
-                Pensez-vous
-                <br />
-                qu’obtenir un crédit
-                <br />
-                aux États-Unis en tant
-                <br />
-                que non-résident est
-                <span className="block text-[#19b884]">impossible ?</span>
-              </h2>
-
-              <div className="mt-8 space-y-6 text-xl leading-relaxed text-slate-600">
-                <p>
-                  Le système financier veut vous le faire croire. Voyez-vous…
-                </p>
-                <p>
-                  Alors que d&apos;autres chefs d&apos;entreprise non américains
-                  se heurtent à des impasses avec des refus de type « résidence
-                  requise », notre équipe a aidé plus de{" "}
-                  <span className="font-semibold text-slate-800">
-                    500 entrepreneurs internationaux
-                  </span>{" "}
-                  à débloquer plus de{" "}
-                  <span className="font-semibold text-slate-800">
-                    4,3 millions de dollars
-                  </span>{" "}
-                  sans s’installer en Amérique.
-                </p>
-                <p className="font-semibold italic text-slate-800">
-                  Nous ne sommes pas des consultants financiers typiques…
-                </p>
-                <p>
-                  Nous sommes l’équipe qui possède une expérience éprouvée, des
-                  connexions bancaires établies et des systèmes certifiés pour
-                  intégrer légalement le système financier américain.
-                </p>
-                <p className="font-semibold italic text-slate-800">
-                  Pendant que vos concurrents restent à l’écart…
-                </p>
-                <p>Nous avons transformé l’« impossible » en inévitable.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        </section> */}
 
         <section id="roadmap" className="bg-[#eef0f3] px-6 py-20 lg:px-8">
-          <div className="mx-auto max-w-6xl text-center">
-            <h2 className="text-4xl font-black tracking-[-0.04em] text-black md:text-6xl">
-              La Séquence d'Autorité
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-4xl text-center font-bold tracking-[-0.04em] text-black md:text-6xl">
+              La séquence d'Autorité
             </h2>
-            <p className="mt-4 text-xl text-slate-600">
-              Une exécution linéaire précise pour une intégrité structurelle
-              maximale.
+            <p className="mt-4 text-xl text-center text-slate-700">
+              Notre methode qui fait toute la differente : une exécution
+              linéaire précise pour un resultant optimale
             </p>
 
-            <div className="relative mt-14 grid gap-10 md:grid-cols-2 xl:grid-cols-4">
-              <div className="absolute left-0 right-0 top-11 hidden h-px bg-slate-200 xl:block" />
-              {steps.map((step) => (
-                <div key={step.title} className="relative px-4">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-white text-3xl text-[#1cbc87] shadow-[0_18px_45px_rgba(15,23,42,0.07)]">
-                    {step.icon}
+            <div className="mt-12 grid gap-6 grid-cols-1 lg:grid-cols-2">
+              {steps.map((item, index) => (
+                <motion.article
+                  key={item.title}
+                  className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.05)]"
+                  {...fadeUp(0.08 + index * 0.05)}
+                >
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-red-600">
+                    <item.icon className="h-9 w-9" strokeWidth={2.1} />
                   </div>
-                  <h3 className="mt-6 text-3xl font-extrabold tracking-[-0.04em] text-[#111827]">
-                    {step.title}
+                  <h3 className="mt-6 text-2xl font-bold tracking-[-0.03em] text-[#10192f]">
+                    {item.title}
                   </h3>
-                  <p className="mx-auto mt-4 max-w-xs text-lg leading-relaxed text-slate-500">
-                    {step.description}
+                  <p className="mt-4 text-lg leading-8 text-slate-600">
+                    {item.description}
                   </p>
-                </div>
+                </motion.article>
               ))}
             </div>
           </div>
@@ -391,15 +493,15 @@ export default function SovereignFiscalLandingPage() {
 
         <section
           id="pricing"
-          className="bg-black px-6 py-24 text-white lg:px-8"
+          className="bg-[linear-gradient(180deg,#091224_0%,#06172e_100%)]  px-6 py-24 text-white lg:px-8"
         >
           <div className="mx-auto max-w-6xl">
             <div className="text-center">
               <div className="text-sm uppercase tracking-[0.35em] text-[#1dc38e]">
                 L'Investissement
               </div>
-              <h2 className="mx-auto mt-5 max-w-4xl text-5xl font-black tracking-[-0.05em] md:text-7xl">
-                Votre Chemin vers l'Autonomie Souveraine
+              <h2 className="mx-auto mt-5 max-w-4xl text-5xl font-bold tracking-[-0.05em] md:text-7xl">
+                Votre chemin vers un financement americain
               </h2>
             </div>
 
@@ -418,7 +520,7 @@ export default function SovereignFiscalLandingPage() {
                       <div className="text-4xl font-bold text-[#1dc38e]">
                         {item.stage}
                       </div>
-                      <div className="mt-1 text-lg text-slate-400">
+                      <div className="mt-1 text-lg text-slate-200">
                         {item.label}
                       </div>
                     </div>
@@ -426,7 +528,7 @@ export default function SovereignFiscalLandingPage() {
                       <h3 className="text-3xl font-bold tracking-[-0.04em]">
                         {item.title}
                       </h3>
-                      <p className="mt-4 text-lg leading-relaxed text-slate-400">
+                      <p className="mt-4 text-lg leading-relaxed text-slate-200">
                         {item.description}
                       </p>
                     </div>
@@ -439,13 +541,11 @@ export default function SovereignFiscalLandingPage() {
               id="cta"
               className="mx-auto mt-24 max-w-3xl rounded-[28px] border border-white/5 bg-white/[0.04] px-8 py-12 text-center shadow-[0_30px_100px_rgba(255,255,255,0.04)]"
             >
-              <h3 className="text-4xl font-black uppercase italic leading-none tracking-[-0.04em] md:text-6xl">
-                Commencez Votre Voyage Vers la
-                <span className="block text-[#1dc38e]">
-                  Souveraineté Absolue
-                </span>
+              <h3 className="text-4xl font-bold md:text-5xl">
+                Changez votre future
+                <span className="block text-[#1dc38e]">financier</span>
               </h3>
-              <p className="mx-auto mt-6 max-w-2xl text-lg italic text-slate-400">
+              <p className="mx-auto mt-6 max-w-2xl text-lg  text-slate-400">
                 Investissement unique pour une souveraineté structurelle à vie.
                 Places limitées.
               </p>
@@ -453,26 +553,22 @@ export default function SovereignFiscalLandingPage() {
                 href="#"
                 className="mt-10 inline-flex min-w-[340px] max-w-full items-center justify-center rounded-sm bg-[#20c48d] px-10 py-6 text-xl font-semibold text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:brightness-110"
               >
-                Sécurisez Votre Siège
+                Sécurisez votre access
               </a>
-              <p className="mt-6 text-sm text-slate-500">
-                Paiement sécurisé via Stripe. Inclut un audit stratégique
-                1-sur-1.
-              </p>
             </div>
           </div>
         </section>
 
         <section className="bg-[#f4f5f7] px-6 py-24 lg:px-8">
-          <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-7xl">
             <div className="text-center">
               <div className="text-xs uppercase tracking-[0.4em] text-slate-400">
-                Records Établis
+                Records etablis
               </div>
               <div className="mt-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#1ac98d]">
-                Protocoles Éprouvés
+                Protocoles eprouvés
               </div>
-              <h2 className="mt-4 text-5xl font-black uppercase italic leading-none tracking-[-0.05em] text-[#09142c] md:text-7xl">
+              <h2 className="mt-4 text-5xl font-black  text-[#09142c] md:text-7xl">
                 Briefings de
                 <br />
                 Réussite
@@ -491,16 +587,16 @@ export default function SovereignFiscalLandingPage() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-[2rem] font-black uppercase italic leading-[1.05] tracking-[-0.05em]">
+                    <p className="text-[1rem] font-black uppercase">
                       {story.quote}
                     </p>
                     <div className="mt-8 flex items-center gap-4">
                       <div className="h-11 w-11 rounded-full border border-[#1bc58e]/40 bg-white/5" />
                       <div>
-                        <div className="font-semibold uppercase tracking-[0.18em]">
+                        <div className="font-semibold text-sm uppercase tracking-[0.18em]">
                           {story.name}
                         </div>
-                        <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1ac98d]">
+                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1ac98d]">
                           {story.role}
                         </div>
                       </div>
@@ -517,7 +613,7 @@ export default function SovereignFiscalLandingPage() {
             <div className="text-sm font-semibold uppercase tracking-[0.35em] text-[#1ac98d]">
               Base de Connaissances
             </div>
-            <h2 className="mt-5 text-5xl font-black uppercase italic tracking-[-0.05em] text-[#08132a] md:text-6xl">
+            <h2 className="mt-5 text-4xl font-black uppercase  tracking-[-0.05em] text-[#08132a] md:text-5xl">
               Questions Fréquentes
             </h2>
           </div>
@@ -528,7 +624,7 @@ export default function SovereignFiscalLandingPage() {
                 key={item.q}
                 className="group bg-white px-8 py-7 shadow-[0_12px_35px_rgba(15,23,42,0.05)]"
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-left text-2xl font-black uppercase tracking-[-0.04em] text-[#10192f] marker:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-left text-xl font-bold tracking-[-0.04em] text-[#10192f] marker:hidden">
                   <span>{item.q}</span>
                   <span className="text-4xl font-light text-slate-400 transition group-open:rotate-45">
                     +
@@ -547,11 +643,11 @@ export default function SovereignFiscalLandingPage() {
             SOUVERAIN
           </div>
           <div className="relative mx-auto max-w-5xl">
-            <h2 className="text-5xl font-black uppercase italic leading-none tracking-[-0.05em] text-[#0a1428] md:text-7xl">
+            <h2 className="text-5xl font-black uppercase  leading-none tracking-[-0.05em] text-[#0a1428] md:text-7xl">
               Structurez ou Échouez.
               <span className="block text-[#19ba87]">À vous de choisir.</span>
             </h2>
-            <p className="mx-auto mt-8 max-w-3xl text-2xl italic leading-relaxed text-slate-500">
+            <p className="mx-auto mt-8 max-w-3xl text-2xl  leading-relaxed text-slate-500">
               La plupart des gens échouent parce qu'ils tentent de brûler les
               étapes. Ne faites pas comme eux. Construisez votre fondation
               correctement.
@@ -568,7 +664,7 @@ export default function SovereignFiscalLandingPage() {
                 <div className="h-8 w-8 rounded-full bg-gradient-to-br from-yellow-100 to-teal-500 ring-2 ring-[#f5f6f8]" />
                 <div className="h-8 w-8 rounded-full bg-gradient-to-br from-orange-100 to-amber-600 ring-2 ring-[#f5f6f8]" />
               </div>
-              <span>+1 400 Architectes Souverains nous ont rejoints</span>
+              <span>+400 entrepreneurs nous ont rejoints</span>
             </div>
           </div>
         </section>
@@ -588,7 +684,7 @@ export default function SovereignFiscalLandingPage() {
             ZAID LAWANI - Copyright © 2026
           </div>
 
-          <div className="mx-auto mt-12 max-w-4xl space-y-6 text-sm leading-relaxed text-slate-600">
+          <div className="mx-auto mt-12 max-w-4xl space-y-6 text-sm leading-relaxed text-slate-400">
             <p>
               ⚠️ Les montants de financement et les résultats mentionnés sont
               des exemples basés sur des cas réels. Les résultats peuvent varier
