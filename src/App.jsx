@@ -24,6 +24,7 @@ import LoginPage from "./pages/LoginPage";
 import PasswordForget from "./pages/PasswordForget";
 import NotFoundPage from "./pages/NotFoundPage";
 import ArticlePage from "./pages/ArticlePage";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route path="/not-found" element={<NotFoundPage />} />
 
           <Route path="/design" element={<DesignPage />} />
+          <Route path="/landing-page" element={<LandingPage />} />
           <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
         </Routes>
       </main>
