@@ -1,0 +1,676 @@
+<html class="light scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sovereign Fiscal | The Architect of Financial Autonomy</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#586377",
+              "on-primary-fixed-variant": "#3f465c",
+              "background": "#f7f9fb",
+              "on-tertiary-fixed": "#002115",
+              "on-secondary-fixed": "#111c2d",
+              "surface-container-highest": "#e0e3e5",
+              "tertiary": "#000000",
+              "surface": "#f7f9fb",
+              "on-primary-container": "#7c839b",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed": "#dae2fd",
+              "surface-container-high": "#e6e8ea",
+              "outline-variant": "#c6c6cd",
+              "on-secondary": "#ffffff",
+              "on-background": "#191c1e",
+              "primary-fixed-dim": "#bec6e0",
+              "inverse-on-surface": "#eff1f3",
+              "primary": "#000000",
+              "surface-tint": "#565e74",
+              "on-primary-fixed": "#131b2e",
+              "surface-container-low": "#f2f4f6",
+              "secondary": "#545f73",
+              "on-tertiary-container": "#10b981",
+              "on-tertiary-fixed-variant": "#00513a",
+              "secondary-container": "#d5e0f8",
+              "primary-container": "#0f172a",
+              "inverse-primary": "#bec6e0",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "on-surface-variant": "#45464d",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#aaf1d0",
+              "on-error": "#ffffff",
+              "secondary-fixed-dim": "#bcc7de",
+              "tertiary-container": "#002115",
+              "on-surface": "#191c1e",
+              "error-container": "#ffdad6",
+              "surface-dim": "#d8dadc",
+              "on-secondary-fixed-variant": "#3c475a",
+              "on-primary": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "outline": "#76777d",
+              "secondary-fixed": "#d8e3fb",
+              "inverse-surface": "#2d3133",
+              "surface-container": "#eceef0"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+      }
+      .dark .glass-card {
+        background: rgba(19, 27, 46, 0.8);
+      }
+      .noise-bg {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.05;
+      }
+      .authority-gradient {
+          background: radial-gradient(circle at 0% 0%, #1e293b 0%, #0f172a 100%);
+      }
+      .text-gradient-emerald {
+          background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200">
+<div class="flex justify-between items-center px-8 py-5 max-w-7xl mx-auto">
+<div class="text-2xl font-extrabold tracking-tighter text-slate-900 font-headline uppercase">Sovereign Fiscal</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-manrope tracking-tight font-semibold text-sm text-slate-600 hover:text-emerald-600 transition-colors" href="#">The Roadmap</a>
+<a class="font-manrope tracking-tight font-semibold text-sm text-slate-600 hover:text-emerald-600 transition-colors" href="#">Pricing</a>
+<a class="font-manrope tracking-tight font-semibold text-sm text-slate-600 hover:text-emerald-600 transition-colors" href="#">FAQ</a>
+<button class="bg-primary-container text-white px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-black transition-all">Get Access Now</button>
+</div>
+</div>
+</nav>
+<main class="pt-0">
+<header class="relative pt-40 pb-32 md:pt-56 md:pb-48 authority-gradient text-white overflow-hidden">
+<div class="absolute inset-0 opacity-10">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+</div>
+<div class="max-w-7xl mx-auto px-8 relative z-10">
+<div class="max-w-5xl mx-auto text-center">
+<span class="inline-block px-4 py-1.5 border border-on-tertiary-container/30 text-on-tertiary-container font-label text-[10px] uppercase tracking-[0.3em] font-bold mb-8 bg-on-tertiary-container/5">
+                    Strategic Financial Architecture
+                </span>
+<h1 class="text-5xl md:text-8xl font-headline font-extrabold tracking-tight mb-10 leading-[0.95] uppercase italic">
+                    Architect Your <br/><span class="text-emerald-500">U.S. Sovereignty</span>
+</h1>
+<p class="text-xl md:text-2xl text-slate-400 mb-16 font-light leading-relaxed max-w-3xl mx-auto">
+                    The exact protocol for non-residents to enter the U.S. financial system. <span class="text-white font-semibold">ITIN. Banking. Credit. Funding.</span> No shortcuts. Just the system.
+                </p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+<button class="bg-emerald-500 text-white px-12 py-6 font-bold text-xl uppercase tracking-widest hover:bg-emerald-400 transition-all shadow-2xl shadow-emerald-500/20 active:scale-95 w-full sm:w-auto">
+                        Secure Your Access Now
+                    </button>
+<button class="border-2 border-white/20 text-white px-12 py-6 font-bold text-xl uppercase tracking-widest hover:bg-white/10 transition-all w-full sm:w-auto">
+                        Review The Protocol
+                    </button>
+</div>
+<div class="mt-20 pt-12 border-t border-white/10 flex flex-wrap justify-center gap-12 opacity-50 transition-all hover:opacity-100">
+<div class="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase">
+<span class="material-symbols-outlined text-lg" data-icon="verified_user">verified_user</span> Encrypted Data
+                    </div>
+<div class="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase">
+<span class="material-symbols-outlined text-lg" data-icon="gavel">gavel</span> Compliance Ready
+                    </div>
+<div class="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase">
+<span class="material-symbols-outlined text-lg" data-icon="security">security</span> Private &amp; Secure
+                    </div>
+</div>
+</div>
+</div>
+</header>
+<section class="py-32 bg-white relative">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid lg:grid-cols-2 gap-0 border-2 border-black overflow-hidden shadow-[32px_32px_0px_0px_rgba(15,23,42,0.05)]">
+<div class="bg-slate-50 p-16 border-b lg:border-b-0 lg:border-r-2 border-black">
+<div class="mb-12">
+<span class="text-error font-bold text-sm tracking-widest uppercase mb-4 block">Section 01 // The Warning</span>
+<h2 class="text-4xl font-headline font-black text-slate-900 uppercase italic leading-none">The Market <br/>"Hacks"</h2>
+</div>
+<ul class="space-y-8">
+<li class="flex items-start gap-6 group">
+<div class="flex-shrink-0 w-10 h-10 border-2 border-error flex items-center justify-center text-error">
+<span class="material-symbols-outlined font-bold" data-icon="close">close</span>
+</div>
+<div>
+<h4 class="font-bold text-lg text-slate-900 mb-1 uppercase tracking-tight">"Instant $100K Funding"</h4>
+<p class="text-slate-500 leading-relaxed">Predatory services that overpromise and under-deliver, often putting your profile at risk of permanent blacklisting.</p>
+</div>
+</li>
+<li class="flex items-start gap-6 group">
+<div class="flex-shrink-0 w-10 h-10 border-2 border-error flex items-center justify-center text-error">
+<span class="material-symbols-outlined font-bold" data-icon="close">close</span>
+</div>
+<div>
+<h4 class="font-bold text-lg text-slate-900 mb-1 uppercase tracking-tight">"0% Interest Glitches"</h4>
+<p class="text-slate-500 leading-relaxed">Temporary loopholes that banks close within months, leading to high-interest debt traps for the uninformed.</p>
+</div>
+</li>
+<li class="flex items-start gap-6 group">
+<div class="flex-shrink-0 w-10 h-10 border-2 border-error flex items-center justify-center text-error">
+<span class="material-symbols-outlined font-bold" data-icon="close">close</span>
+</div>
+<div>
+<h4 class="font-bold text-lg text-slate-900 mb-1 uppercase tracking-tight">"Done-For-You Credit"</h4>
+<p class="text-slate-500 leading-relaxed">If you don't own the process, you don't own the foundation. Most DFY services use fraudulent data seeding.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="bg-primary-container p-16 text-white relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+<div class="mb-12 relative z-10">
+<span class="text-emerald-500 font-bold text-sm tracking-widest uppercase mb-4 block">Section 02 // The Protocol</span>
+<h2 class="text-4xl font-headline font-black uppercase italic leading-none">The Sovereign <br/>Truth</h2>
+</div>
+<ul class="space-y-8 relative z-10">
+<li class="flex items-start gap-6 group">
+<div class="flex-shrink-0 w-10 h-10 bg-emerald-500 flex items-center justify-center text-white">
+<span class="material-symbols-outlined font-bold" data-icon="check">check</span>
+</div>
+<div>
+<h4 class="font-bold text-lg text-white mb-1 uppercase tracking-tight">Institutional Alignment</h4>
+<p class="text-slate-400 leading-relaxed">We teach you how to mirror the exact profile that Tier-1 U.S. banks are algorithmically programmed to approve.</p>
+</div>
+</li>
+<li class="flex items-start gap-6 group">
+<div class="flex-shrink-0 w-10 h-10 bg-emerald-500 flex items-center justify-center text-white">
+<span class="material-symbols-outlined font-bold" data-icon="check">check</span>
+</div>
+<div>
+<h4 class="font-bold text-lg text-white mb-1 uppercase tracking-tight">Mathematical Seeding</h4>
+<p class="text-slate-400 leading-relaxed">A step-by-step sequence of reporting data to the three major bureaus that builds trust organically and permanently.</p>
+</div>
+</li>
+<li class="flex items-start gap-6 group">
+<div class="flex-shrink-0 w-10 h-10 bg-emerald-500 flex items-center justify-center text-white">
+<span class="material-symbols-outlined font-bold" data-icon="check">check</span>
+</div>
+<div>
+<h4 class="font-bold text-lg text-white mb-1 uppercase tracking-tight">Long-Term Sovereignty</h4>
+<p class="text-slate-400 leading-relaxed">Build a financial presence that allows you to operate globally with the strength of the world's primary reserve currency.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 bg-primary-container px-6">
+<div class="max-w-6xl mx-auto text-center mb-16">
+<h2 class="text-4xl md:text-5xl font-extrabold font-headline tracking-tight text-white mb-6">A New Vision of Capital</h2>
+<p class="text-slate-400 text-lg max-w-2xl mx-auto">Watch the 12-minute briefing on the architecture of modern sovereignty and how we bypass traditional gatekeepers.</p>
+</div>
+<div class="max-w-5xl mx-auto relative group">
+<div class="aspect-video rounded-2xl overflow-hidden bg-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative">
+<img alt="Video thumbnail" class="w-full h-full object-cover opacity-60 grayscale-[50%]" data-alt="A sophisticated home office with a dark wood desk, global maps on the wall, and warm ambient lighting creating a professional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwMKgiy9_LzHp-0laVlaRk2GVrrIU0jGhU78RLUYpm4t4EDeOGhtBWo6QhdObou8ZcIpbNQ2n3NSzVfvB3jiZ6RuEKt44O0CMSTyMVicShhD8mpvX-_pPUcVZIXTz-PRgqvgEzXogwggyuzahyjJ__BONB7zrRhDNgiK2cdd9DTBjQFKJg5GuBerf_H2jOS8q9VOmq3pkfB2ew2M7vyUJmp-oGs1mQPqcA097A5ITm7Puza1BT1me8DnYFb6kipveBm0safhoEbA"/>
+<div class="absolute inset-0 flex items-center justify-center cursor-pointer">
+<div class="w-24 h-24 bg-on-tertiary-container/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300 shadow-xl">
+<span class="material-symbols-outlined text-5xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="absolute -bottom-6 -right-6 w-32 h-32 bg-emerald-500/10 blur-3xl rounded-full"></div>
+</div>
+</section>
+<section class="py-24 bg-surface px-6 overflow-hidden">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row gap-16 items-center">
+<div class="w-full md:w-1/2 order-2 md:order-1">
+<div class="relative rounded-xl overflow-hidden border border-slate-200 shadow-2xl group">
+<img alt="Financial Sovereignty Document" class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0ug5Opgz2HCi37Hs13qV3yqwOMNtdV2DruiYITS4e_6NU_eY01wnPU8uthVFFl_PVklP3cM9lpDyoaNfVCh8FeDjptS7zcrZQj141yQ1DhuHVB0891x0_4GvMahzInHvvbM1fUQqI4ymUS-ZSveFsxZZrv7QQfNGZY9lejtbDQsC0dxMSo7VI7-Q9pXjEheTrIQti12X7ifGKL4KSMT-hHPRBdHtpy-Egy8luXMQWEfzwwoPpab0-k67JTe-i-t_zKHNzVKi_vDc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-60"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="inline-block px-3 py-1 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-widest mb-2">
+                                Verified Protocol
+                            </span>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/2 space-y-8 order-1 md:order-2">
+<h2 class="text-3xl md:text-5xl font-extrabold font-headline tracking-tight text-primary leading-tight uppercase italic">
+                        Pensez-vous qu'obtenir un crédit aux États-Unis en tant que non-résident est <span class="text-emerald-600">impossible ?</span>
+</h2>
+<p class="text-lg text-secondary leading-relaxed">
+                        Le système financier veut vous le faire croire. Voyez-vous... <br/><br/>
+                        Alors que d'autres chefs d'entreprise non américains se heurtent à des impasses avec des refus de type « résidence requise », notre équipe a aidé plus de <strong>500 entrepreneurs internationaux</strong> à débloquer plus de <strong>4,3 millions de dollars</strong> sans s'installer en Amérique.
+                    </p>
+<div class="space-y-6">
+<p class="text-lg text-primary font-bold italic">Nous ne sommes pas des consultants financiers typiques...</p>
+<p class="text-slate-600 leading-relaxed">
+                            Nous sommes l'équipe qui possède une expérience éprouvée, des connexions bancaires établies et des systèmes certifiés pour intégrer légalement le système financier américain.
+                        </p>
+<p class="text-lg text-primary font-bold italic">Pendant que vos concurrents restent à l'écart...</p>
+<p class="text-slate-600 leading-relaxed">
+                            Nous avons transformé l'« impossible » en inévitable.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 bg-surface-container px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20">
+<h2 class="text-4xl md:text-5xl font-extrabold font-headline tracking-tight text-primary">The Sequence of Authority</h2>
+<p class="text-on-surface-variant mt-4">A precise, linear execution for maximum structural integrity.</p>
+</div>
+<div class="grid md:grid-cols-4 gap-8 relative">
+<div class="hidden md:block absolute top-12 left-0 w-full h-px bg-outline-variant/30 z-0"></div>
+<div class="relative z-10 text-center flex flex-col items-center">
+<div class="w-24 h-24 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center mb-6 border border-outline-variant/20">
+<span class="material-symbols-outlined text-4xl text-on-tertiary-container" data-icon="identity_platform">identity_platform</span>
+</div>
+<h4 class="font-headline font-extrabold text-xl text-primary mb-3">ITIN Foundation</h4>
+<p class="text-sm text-secondary px-4">Establish your US-based digital persona for borderless transaction processing.</p>
+</div>
+<div class="relative z-10 text-center flex flex-col items-center">
+<div class="w-24 h-24 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center mb-6 border border-outline-variant/20">
+<span class="material-symbols-outlined text-4xl text-on-tertiary-container" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<h4 class="font-headline font-extrabold text-xl text-primary mb-3">Tier 1 Banking</h4>
+<p class="text-sm text-secondary px-4">Activate high-limit lines of credit and private client accounts with premium lenders.</p>
+</div>
+<div class="relative z-10 text-center flex flex-col items-center">
+<div class="w-24 h-24 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center mb-6 border border-outline-variant/20">
+<span class="material-symbols-outlined text-4xl text-on-tertiary-container" data-icon="database">database</span>
+</div>
+<h4 class="font-headline font-extrabold text-xl text-primary mb-3">Data Seeding</h4>
+<p class="text-sm text-secondary px-4">Program the algorithmic perception of your financial profile to command lower rates.</p>
+</div>
+<div class="relative z-10 text-center flex flex-col items-center">
+<div class="w-24 h-24 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center mb-6 border border-outline-variant/20">
+<span class="material-symbols-outlined text-4xl text-on-tertiary-container" data-icon="trending_up">trending_up</span>
+</div>
+<h4 class="font-headline font-extrabold text-xl text-primary mb-3">Growth Capital</h4>
+<p class="text-sm text-secondary px-4">Leverage structural sovereignty into liquid growth capital for asset acquisition.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 bg-primary text-white px-6">
+<div class="max-w-3xl mx-auto">
+<div class="text-center mb-16">
+<span class="label-md text-on-tertiary-container tracking-[0.3em] font-headline">THE INVESTMENT</span>
+<h2 class="text-4xl md:text-6xl font-extrabold font-headline mt-6">Your Path to Sovereign Autonomy</h2>
+</div>
+<div class="space-y-0 border-l-2 border-emerald-500/20 ml-4 md:ml-0 md:border-l-0 relative">
+<div class="relative pl-8 md:pl-0 pb-16 md:grid md:grid-cols-2 md:gap-16 items-center">
+<div class="hidden md:block text-right">
+<h3 class="text-2xl font-headline font-bold text-on-tertiary-container">Stage 01</h3>
+<p class="text-slate-400 text-sm">Structural Integrity</p>
+</div>
+<div class="absolute left-[-11px] md:left-1/2 md:translate-x-[-50%] top-0 w-5 h-5 rounded-full bg-on-tertiary-container border-4 border-primary"></div>
+<div class="bg-white/5 p-8 rounded-xl backdrop-blur-md">
+<h4 class="font-headline font-bold text-xl mb-4">Complete Legal Architecture</h4>
+<p class="text-slate-400 text-sm leading-relaxed">Full formation of LLC nodes, ITIN procurement, and secure digital identity setup for maximum privacy and tax optimization.</p>
+</div>
+</div>
+<div class="relative pl-8 md:pl-0 pb-16 md:grid md:grid-cols-2 md:gap-16 items-center">
+<div class="bg-white/5 p-8 rounded-xl backdrop-blur-md order-2 md:order-1 text-right md:text-left">
+<h4 class="font-headline font-bold text-xl mb-4">The Credit Masterplan</h4>
+<p class="text-slate-400 text-sm leading-relaxed">Personalized data seeding strategies designed to unlock $100k+ in business credit within 90 days of activation.</p>
+</div>
+<div class="absolute left-[-11px] md:left-1/2 md:translate-x-[-50%] top-0 w-5 h-5 rounded-full bg-on-tertiary-container border-4 border-primary"></div>
+<div class="hidden md:block text-left order-1 md:order-2">
+<h3 class="text-2xl font-headline font-bold text-on-tertiary-container">Stage 02</h3>
+<p class="text-slate-400 text-sm">Liquid Leverage</p>
+</div>
+</div>
+<div class="relative pl-8 md:pl-0 pb-16 md:grid md:grid-cols-2 md:gap-16 items-center">
+<div class="hidden md:block text-right">
+<h3 class="text-2xl font-headline font-bold text-on-tertiary-container">Stage 03</h3>
+<p class="text-slate-400 text-sm">Generational Shield</p>
+</div>
+<div class="absolute left-[-11px] md:left-1/2 md:translate-x-[-50%] top-0 w-5 h-5 rounded-full bg-on-tertiary-container border-4 border-primary"></div>
+<div class="bg-white/5 p-8 rounded-xl backdrop-blur-md">
+<h4 class="font-headline font-bold text-xl mb-4">Offshore Continuity</h4>
+<p class="text-slate-400 text-sm leading-relaxed">Establishment of international banking buffers and residency roadmaps for ultimate geopolitical freedom.</p>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center bg-surface-container-lowest/5 p-12 rounded-2xl border border-emerald-500/10">
+<h3 class="text-3xl md:text-5xl font-extrabold font-headline text-white mb-10 leading-tight uppercase italic">
+                    Start Your Journey to <br/><span class="text-emerald-500">Absolute Sovereignty</span>
+</h3>
+<p class="text-sm text-slate-400 mb-10 italic">One-time investment for life-long structural sovereignty. Limited intake.</p>
+<button class="w-full md:w-auto bg-on-tertiary-container text-white px-16 py-6 rounded font-headline font-extrabold text-xl shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:scale-105 transition-all">Secure Your Architectural Seat</button>
+<p class="text-xs text-slate-400 mt-6">Secure checkout via Stripe. Includes 1-on-1 strategy audit.</p>
+</div>
+</div>
+</section>
+<section class="py-32 bg-white relative overflow-hidden">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-20">
+<span class="text-slate-400 font-bold text-xs tracking-[0.4em] uppercase mb-4 block">Proven Records</span>
+<span class="text-emerald-500 font-bold text-sm tracking-widest uppercase mb-4 block">Proven Protocols</span>
+<h2 class="text-4xl md:text-6xl font-headline font-black uppercase italic text-slate-900 leading-none">Success <br/>Briefings</h2>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="group">
+<div class="aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden relative shadow-2xl transition-transform duration-500 hover:-translate-y-2 border border-slate-200">
+<img alt="Student Success Story 1" class="w-full h-full object-cover opacity-60 grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6v7WpQv_rWl-6qYfD8pXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="mb-4">
+<p class="text-white font-headline font-black italic uppercase text-lg leading-tight">"From rejection to $75k in credit in 90 days."</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-emerald-500/50 bg-slate-800"></div>
+<div>
+<p class="text-white text-xs font-bold uppercase tracking-widest">Alejandro M.</p>
+<p class="text-emerald-500 text-[10px] font-bold uppercase">eCom Founder</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group">
+<div class="aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden relative shadow-2xl transition-transform duration-500 hover:-translate-y-2 border border-slate-200">
+<img alt="Student Success Story 2" class="w-full h-full object-cover opacity-60 grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6v7WpQv_rWl-6qYfD8pXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="mb-4">
+<p class="text-white font-headline font-black italic uppercase text-lg leading-tight">"Secured Amex Platinum with no SSN in 4 months."</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-emerald-500/50 bg-slate-800"></div>
+<div>
+<p class="text-white text-xs font-bold uppercase tracking-widest">Sarah K.</p>
+<p class="text-emerald-500 text-[10px] font-bold uppercase">SaaS Architect</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group">
+<div class="aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden relative shadow-2xl transition-transform duration-500 hover:-translate-y-2 border border-slate-200">
+<img alt="Student Success Story 3" class="w-full h-full object-cover opacity-60 grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6v7WpQv_rWl-6qYfD8pXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="mb-4">
+<p class="text-white font-headline font-black italic uppercase text-lg leading-tight">"Scaled to $250k funding via ITIN-based LLC."</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-emerald-500/50 bg-slate-800"></div>
+<div>
+<p class="text-white text-xs font-bold uppercase tracking-widest">Dmitri V.</p>
+<p class="text-emerald-500 text-[10px] font-bold uppercase">Growth Marketer</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group">
+<div class="aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden relative shadow-2xl transition-transform duration-500 hover:-translate-y-2 border border-slate-200">
+<img alt="Student Success Story 4" class="w-full h-full object-cover opacity-60 grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6v7WpQv_rWl-6qYfD8pXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="mb-4">
+<p class="text-white font-headline font-black italic uppercase text-lg leading-tight">"Total financial freedom from outside the U.S."</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-emerald-500/50 bg-slate-800"></div>
+<div>
+<p class="text-white text-xs font-bold uppercase tracking-widest">Jean-Paul B.</p>
+<p class="text-emerald-500 text-[10px] font-bold uppercase">Real Estate Investor</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group">
+<div class="aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden relative shadow-2xl transition-transform duration-500 hover:-translate-y-2 border border-slate-200">
+<img alt="Student Success Story 5" class="w-full h-full object-cover opacity-60 grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6v7WpQv_rWl-6qYfD8pXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="mb-4">
+<p class="text-white font-headline font-black italic uppercase text-lg leading-tight">"Unlocked $120k in high-limit business lines."</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-emerald-500/50 bg-slate-800"></div>
+<div>
+<p class="text-white text-xs font-bold uppercase tracking-widest">Marco L.</p>
+<p class="text-emerald-500 text-[10px] font-bold uppercase">Agency Owner</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group">
+<div class="aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden relative shadow-2xl transition-transform duration-500 hover:-translate-y-2 border border-slate-200">
+<img alt="Student Success Story 6" class="w-full h-full object-cover opacity-60 grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6v7WpQv_rWl-6qYfD8pXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="mb-4">
+<p class="text-white font-headline font-black italic uppercase text-lg leading-tight">"The system works exactly as architecturaly planned."</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-emerald-500/50 bg-slate-800"></div>
+<div>
+<p class="text-white text-xs font-bold uppercase tracking-widest">Sofia R.</p>
+<p class="text-emerald-500 text-[10px] font-bold uppercase">Global Consultant</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group">
+<div class="aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden relative shadow-2xl transition-transform duration-500 hover:-translate-y-2 border border-slate-200">
+<img alt="Student Success Story 7" class="w-full h-full object-cover opacity-60 grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6v7WpQv_rWl-6qYfD8pXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="mb-4">
+<p class="text-white font-headline font-black italic uppercase text-lg leading-tight">"From zero US presence to a perfect 750 score."</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-emerald-500/50 bg-slate-800"></div>
+<div>
+<p class="text-white text-xs font-bold uppercase tracking-widest">Erik H.</p>
+<p class="text-emerald-500 text-[10px] font-bold uppercase">Software Dev</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group">
+<div class="aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden relative shadow-2xl transition-transform duration-500 hover:-translate-y-2 border border-slate-200">
+<img alt="Student Success Story 8" class="w-full h-full object-cover opacity-60 grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6v7WpQv_rWl-6qYfD8pXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0wXqf1f7G2_5QZp0w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="mb-4">
+<p class="text-white font-headline font-black italic uppercase text-lg leading-tight">"The most robust financial path I've encountered."</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-emerald-500/50 bg-slate-800"></div>
+<div>
+<p class="text-white text-xs font-bold uppercase tracking-widest">Carlos P.</p>
+<p class="text-emerald-500 text-[10px] font-bold uppercase">Logistics CEO</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-slate-50" id="faq">
+<div class="max-w-4xl mx-auto px-8">
+<div class="text-center mb-16">
+<span class="text-emerald-500 font-bold text-sm tracking-widest uppercase mb-4 block">Knowledge Base</span>
+<h2 class="text-4xl font-headline font-black uppercase italic text-slate-900">Common Inquiries</h2>
+</div>
+<div class="space-y-4">
+<div class="border-b-2 border-slate-200 group bg-white p-2">
+<button class="w-full py-6 flex justify-between items-center text-left focus:outline-none px-6">
+<span class="text-lg font-black uppercase tracking-tight text-slate-900 font-headline">Is this a bank?</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-500 transition-colors">add</span>
+</button>
+<div class="pb-8 text-slate-500 leading-relaxed max-w-2xl px-6">
+                        No, we are a strategic consultancy. We help you navigate the requirements of U.S. financial institutions correctly.
+                    </div>
+</div>
+<div class="border-b-2 border-slate-200 group bg-white p-2">
+<button class="w-full py-6 flex justify-between items-center text-left focus:outline-none px-6">
+<span class="text-lg font-black uppercase tracking-tight text-slate-900 font-headline">How long does the ITIN process take?</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-500 transition-colors">add</span>
+</button>
+<div class="pb-8 text-slate-500 leading-relaxed max-w-2xl px-6">
+                        Typically 6-12 weeks depending on IRS processing times.
+                    </div>
+</div>
+<div class="border-b-2 border-slate-200 group bg-white p-2">
+<button class="w-full py-6 flex justify-between items-center text-left focus:outline-none px-6">
+<span class="text-lg font-black uppercase tracking-tight text-slate-900 font-headline">Can I do this without an LLC?</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-500 transition-colors">add</span>
+</button>
+<div class="pb-8 text-slate-500 leading-relaxed max-w-2xl px-6">
+                        Yes, an ITIN allows you to open personal accounts, though an LLC can offer additional business benefits later.
+                    </div>
+</div>
+<div class="border-b-2 border-slate-200 group bg-white p-2">
+<button class="w-full py-6 flex justify-between items-center text-left focus:outline-none px-6">
+<span class="text-lg font-black uppercase tracking-tight text-slate-900 font-headline">Do you guarantee I will get a credit card?</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-500 transition-colors">add</span>
+</button>
+<div class="pb-8 text-slate-500 leading-relaxed max-w-2xl px-6">
+                        We guarantee the process and the documentation. Approval is always at the discretion of the bank, but following our architecture maximizes your chances.
+                    </div>
+</div>
+<div class="border-b-2 border-slate-200 group bg-white p-2">
+<button class="w-full py-6 flex justify-between items-center text-left focus:outline-none px-6">
+<span class="text-lg font-black uppercase tracking-tight text-slate-900 font-headline">What documents will I need?</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-500 transition-colors">add</span>
+</button>
+<div class="pb-8 text-slate-500 leading-relaxed max-w-2xl px-6">
+                        Primarily a valid passport and proof of your foreign address. We provide a full checklist in each tier.
+                    </div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-48 bg-white text-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-[0.03]">
+<span class="text-[30rem] font-black absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none uppercase italic">SOVEREIGN</span>
+</div>
+<div class="max-w-4xl mx-auto px-8 relative z-10">
+<h2 class="text-5xl md:text-7xl font-headline font-black uppercase italic mb-10 leading-none">Structure or Fail. <br/><span class="text-emerald-600">The choice is yours.</span></h2>
+<p class="text-xl text-slate-500 mb-16 max-w-2xl mx-auto leading-relaxed italic font-light">Most people fail because they try to jump to the end. Don't be "most people." Build your foundation correctly.</p>
+<div class="space-y-10">
+<button class="bg-slate-900 text-white px-16 py-8 text-2xl font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-2xl hover:-translate-y-1 active:translate-y-0">
+                    Get Started Now
+                </button>
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-4EDq3qON323n8gAq7P3I5lPHLhGD7ftrVC0wFzFAyr5f0jt_HGC0t-9TJ3G5taX866XVAYGIuY-YT5_fdBoSOCkv99ypjWykrdrvLsuIiN74q_fuAtXTuKenvcjb1IidWzbVS1NsspvyyA3P6HNfRq3cpbbkO6CIfWAykUBolYykefVdZQf0jVDfSkknHizBsKpNUjKBrxgwbmdiXITVwyUdzm7ZkRAY9HpmfeyfbySpgzAgBw7Qmi-jizvPnL4ZtKECA4uhwA"/></div>
+<div class="w-8 h-8 rounded-full bg-slate-300 border-2 border-white overflow-hidden"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzhUH3LqBvGuhKdZhLLOEKgjDW-pcWPwrCmCihTnEon4wHuxFw5V7MqLoFHLGMItXlHZgKnPHTdbNm385jnk-_cNzXhY8iIlPDBzpgFfcEDAx8ui5nDgaizDqQE2e2aIuZKTbBPpqQ3EfhnQMxaoHmr1vDXdI57I6YLAlj5zSAorjRe1_3N1T__7T98XpEhn7bh7_pQv0pCsl9lFYBzoBq76ttnMnAfPpyxmy3_ABZ0oot_07gYnpU2yxp2jC4KXYxt73vuvsNUA"/></div>
+<div class="w-8 h-8 rounded-full bg-slate-400 border-2 border-white overflow-hidden"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC67tBO5L5UzHYW3KgbWVe9KCU_xsGVrJMJnSoBUPOZh1otKpUVGCQvLPeGFmnZvsmHUXm8VSbYYBetcoro7nkLNwzIS4bgs1k-XhRgRczKKj5bKn2G6PmbkEytaEYZNUpSaiT__tzA_9VtJxxSoD3aZ47O3B1STiHWexVsjGxp2qye0phrLoAfXeiC-JQvN8QdqlPCHah_55arp8UcuzJHNBGzueBsBpOJIVOObyj6ZbXOqY8hTQ1VpoU6FaiZx_q3ORw4iSfNA"/></div>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400">+1,400 Sovereign Architects Joined</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-[#1a1a24] w-full py-16 px-8 text-center">
+<div class="max-w-4xl mx-auto space-y-6">
+<div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs font-medium text-emerald-500/80">
+<a class="hover:text-emerald-400 transition-colors" href="#">Termes et conditions</a>
+<span class="text-slate-700">|</span>
+<a class="hover:text-emerald-400 transition-colors" href="#">Politique de confidentialité</a>
+<span class="text-slate-700">|</span>
+<a class="hover:text-emerald-400 transition-colors" href="#">Mentions légales</a>
+</div>
+<div class="text-[10px] tracking-[0.2em] font-bold text-slate-400 uppercase">
+            ZAID LAWANI - COPYRIGHT @ 2026<br/>
+<span class="opacity-50">Copyright 2026</span>
+</div>
+<div class="space-y-4 pt-8">
+<p class="text-[10px] text-slate-500 leading-relaxed uppercase font-bold flex items-center justify-center gap-2">
+<span class="text-yellow-500">⚠️</span> *Les montants de financement et les résultats mentionnés sont des exemples basés sur des cas réels. <br/>Les résultats peuvent varier selon le profil, la situation financière et les conditions de marché.
+        </p>
+<p class="text-[9px] text-slate-600 leading-relaxed max-w-3xl mx-auto italic uppercase">
+            Carte USA n'est pas une banque et ne propose aucun prêt.<br/>
+            Ce site ne fait pas partie du site Web de Facebook ou de Facebook Inc. De plus, ce site n'est en aucun cas approuvé par Facebook. FACEBOOK est une marque commerciale de FACEBOOK, Inc.
+        </p>
+<p class="text-[9px] text-slate-600 leading-relaxed max-w-3xl mx-auto uppercase">
+            Carte USA, n'est pas responsable de vos actions. Vous êtes seul responsable de vos propres actions et décisions et l'évaluation et l'utilisation de nos produits et services doivent être basées sur votre propre diligence raisonnable. Vous acceptez que
+        </p>
+<p class="text-[9px] text-slate-600 leading-relaxed max-w-3xl mx-auto uppercase">
+            Carte USA ne soit en aucun cas responsable envers vous des résultats de l'utilisation de nos produits et services. Consultez nos conditions d'utilisation pour connaître notre clause de non-responsabilité complète et d'autres restrictions.
+        </p>
+<p class="text-[9px] text-slate-600 leading-relaxed max-w-3xl mx-auto uppercase">
+            En cliquant sur soumettre, vous autorisez expressément Carte USA à vous envoyer des e-mails et des SMS concernant ses produits ou services en utilisant une technologie automatisée à l'e-mail/numéro fourni sur le formulaire ci-dessus.
+        </p>
+<p class="text-[9px] text-slate-600 leading-relaxed max-w-3xl mx-auto uppercase pb-8">
+            Vous comprenez que vous n'êtes pas tenu de donner votre consentement comme condition pour recevoir des informations ou acheter un produit et que vous pouvez vous désinscrire à tout moment.
+        </p>
+</div>
+</div>
+</footer>
+</body></html>
