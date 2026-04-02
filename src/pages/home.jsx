@@ -3,14 +3,15 @@ import {
   ArrowRight,
   CirclePlay,
   Mail,
-  Phone,
   ShieldCheck,
   User,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import PhoneInput from "react-phone-input-2";
 import { Link } from "react-router-dom";
 import cardUsaImage from "../assets/carte-usa-image.webp";
+import "react-phone-input-2/lib/style.css";
 
 const discoveryPoints = [
   "Comment les cartes de crédit américaines peuvent vous aider à accéder à du financement pour votre activité.",
@@ -113,6 +114,7 @@ export default function HomePage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
+    window.location.assign("https://carteusa.com/vsl-ytb");
   };
 
   return (
@@ -151,6 +153,79 @@ export default function HomePage() {
             animation: none !important;
           }
         }
+
+        .phone-input-container {
+          width: 100%;
+        }
+
+        .phone-input-container .form-control {
+          width: 100% !important;
+          height: 56px !important;
+          border: 1px solid rgb(203 213 225) !important;
+          border-radius: 1rem !important;
+          padding-left: 4.9rem !important;
+          padding-right: 1rem !important;
+          font-size: 1rem !important;
+          color: rgb(15 23 42) !important;
+          background: white !important;
+          box-shadow: none !important;
+        }
+
+        .phone-input-container .form-control:focus {
+          border-color: rgb(16 185 129) !important;
+          box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15) !important;
+        }
+
+        .phone-input-container .flag-dropdown {
+          border: 1px solid rgb(203 213 225) !important;
+          border-right: none !important;
+          border-radius: 1rem 0 0 1rem !important;
+          background: rgb(248 250 252) !important;
+        }
+
+        .phone-input-container .selected-flag {
+          width: 4.1rem !important;
+          padding-left: 0.95rem !important;
+          border-radius: 1rem 0 0 1rem !important;
+          background: transparent !important;
+        }
+
+        .phone-input-container .selected-flag:hover,
+        .phone-input-container .selected-flag:focus {
+          background: rgba(15, 23, 42, 0.04) !important;
+        }
+
+        .phone-input-container .country-list {
+          width: min(340px, calc(100vw - 2rem)) !important;
+          margin-top: 0.6rem !important;
+          border: 1px solid rgb(226 232 240) !important;
+          border-radius: 1rem !important;
+          box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12) !important;
+        }
+
+        .phone-input-container .search {
+          padding: 0.75rem !important;
+          background: white !important;
+        }
+
+        .phone-input-container .search-box {
+          width: 100% !important;
+          margin: 0 !important;
+          border: 1px solid rgb(203 213 225) !important;
+          border-radius: 0.85rem !important;
+          padding: 0.75rem 0.9rem !important;
+          color: rgb(15 23 42) !important;
+        }
+
+        .phone-input-container .country-list .country {
+          padding-top: 0.7rem !important;
+          padding-bottom: 0.7rem !important;
+        }
+
+        .phone-input-container .country-list .country.highlight,
+        .phone-input-container .country-list .country:hover {
+          background: rgb(236 253 245) !important;
+        }
       `}</style>
 
       <header
@@ -172,7 +247,7 @@ export default function HomePage() {
           <button
             type="button"
             onClick={scrollToForm}
-            className={`rounded-sm px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] transition-all duration-300 sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.22em] ${
+            className={`rounded-sm px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] transition-all duration-300 sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.22em] ${
               isScrolled
                 ? "bg-[#08132a] text-white shadow-lg"
                 : "bg-white text-[#08132a] shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
@@ -270,7 +345,7 @@ export default function HomePage() {
                 <button
                   type="button"
                   onClick={scrollToForm}
-                  className="inline-flex w-full max-w-[320px] items-center justify-center gap-2 rounded-sm bg-[#20c48d] px-6 py-5 text-base font-semibold uppercase tracking-[0.14em] text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:-translate-y-0.5 hover:brightness-110 sm:w-auto sm:max-w-none sm:px-10 sm:py-6 sm:text-lg sm:tracking-[0.16em]"
+                  className="inline-flex w-full max-w-[320px] items-center justify-center gap-2 rounded-sm bg-[#20c48d] px-6 py-5 text-base font-semibold uppercase tracking-[0.14em] text-white shadow-[0_0_40px_rgba(32,196,141,0.28)] transition hover:-translate-y-0.5 hover:brightness-110 sm:w-auto sm:max-w-none sm:px-10 sm:py-4 sm:text-lg sm:tracking-[0.16em]"
                 >
                   Découvrir
                   <ArrowRight className="h-5 w-5" />
@@ -441,24 +516,32 @@ export default function HomePage() {
                     <label className="mb-2 block text-sm font-medium text-slate-700">
                       Téléphone
                     </label>
-                    <div className="relative">
-                      <Phone className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                      <input
-                        name="phone"
-                        value={formState.phone}
-                        onChange={handleChange}
-                        placeholder="Votre numéro"
-                        className="w-full rounded-2xl border border-slate-300 px-11 py-3.5 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
-                      />
-                    </div>
+                    <PhoneInput
+                      country="fr"
+                      preferredCountries={["fr"]}
+                      enableSearch
+                      disableSearchIcon
+                      countryCodeEditable={false}
+                      specialLabel=""
+                      value={formState.phone}
+                      onChange={(phone) =>
+                        setFormState((prev) => ({ ...prev, phone }))
+                      }
+                      inputProps={{
+                        name: "phone",
+                        required: true,
+                        autoComplete: "tel",
+                      }}
+                      placeholder="Votre numéro"
+                      containerClass="phone-input-container"
+                      searchPlaceholder="Rechercher un pays"
+                      preserveOrder={["preferredCountries"]}
+                    />
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  onClick={() => {
-                    window.location.assign("https://carteusa.com/vsl-ytb");
-                  }}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#08132a] px-6 py-4 text-base font-semibold text-white transition hover:brightness-110"
                 >
                   Découvrir la prochaine étape
