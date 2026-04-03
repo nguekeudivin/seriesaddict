@@ -134,13 +134,13 @@ export default function TestimonialVideoModal({ video, onClose }) {
         aria-modal="true"
         aria-label={`Lecture video ${video.name}`}
       >
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-          <div>
+        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-2">
+          {/* <div>
             <h3 className="text-lg font-semibold text-slate-900">
               {video.name}
             </h3>
             <p className="text-sm text-slate-500">{video.role}</p>
-          </div>
+          </div> */}
           <button
             type="button"
             onClick={onClose}
