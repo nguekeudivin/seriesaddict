@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home";
+import FormationAPage from "./pages/formation-a";
+import FormationBPage from "./pages/formation-b";
 import TermsConditions from "./pages/terms-conditions";
 import PolitiqueConfidentialite from "./pages/politique-confidentialite";
 import MentionsLegales from "./pages/mentions-legales";
@@ -10,6 +12,8 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/formation-a" element={<FormationAPage />} />
+          <Route path="/formation-b" element={<FormationBPage />} />
           <Route
             path="/conditions-generales"
             element={<TermsConditions />}

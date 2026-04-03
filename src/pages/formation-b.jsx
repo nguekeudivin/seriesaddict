@@ -376,58 +376,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="bg-[linear-gradient(180deg,#091224_0%,#06172e_100%)] px-4 py-16 text-white sm:px-6 sm:py-24 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <motion.div className="text-center" {...fadeUp(0.04)}>
-              <div className="text-xs uppercase tracking-[0.28em] text-[#1dc38e] sm:text-sm sm:tracking-[0.35em]">
-                Témoignages
-              </div>
-              <h2 className="mx-auto mt-4 max-w-4xl text-4xl font-bold tracking-[-0.05em] sm:mt-5 sm:text-4xl md:text-5xl">
-                Des retours plus concrets
-              </h2>
-              <p className="mx-auto mt-5 max-w-3xl text-lg leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                Découvrez comment certains clients ont mieux compris les étapes
-                à suivre et structuré leur progression vers le financement
-                business.
-              </p>
-            </motion.div>
-
-            <div className="mt-12 grid gap-6 lg:grid-cols-3">
-              {testimonials.map((story, index) => (
-                <div>
-                  <motion.button
-                    key={story.name}
-                    type="button"
-                    onClick={() => setSelectedVideo(story)}
-                    className="group rounded-[28px] border border-white/8 bg-white/[0.04] p-6 text-left shadow-[0_30px_80px_rgba(255,255,255,0.03)] backdrop-blur-sm transition hover:-translate-y-1 hover:bg-white/[0.06]"
-                    {...fadeUp(0.08 + index * 0.04)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#20c48d] text-white shadow-[0_0_32px_rgba(32,196,141,0.25)]">
-                        <CirclePlay className="h-7 w-7" />
-                      </div>
-                      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7ef3cf]">
-                        Vidéo
-                      </span>
-                    </div>
-                    <p className="mt-8 text-lg font-normal leading-8 text-white">
-                      {story.quote}
-                    </p>
-                    {/* <div className="mt-8 border-t border-white/8 pt-5">
-                      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white">
-                        {story.name}
-                      </div>
-                      <div className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1ac98d]">
-                        {story.role}
-                      </div>
-                    </div> */}
-                  </motion.button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section
           id="lead-form"
           className="bg-[#f5f6f8] px-0 py-16 sm:px-4 sm:py-24 lg:px-8"
