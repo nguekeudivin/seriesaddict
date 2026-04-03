@@ -22,10 +22,10 @@ const testimonials = [
     videoUrl: "/videos/retour-1.mov",
   },
   {
-    name: "SARAH K.",
-    role: "CONSULTANTE",
+    name: "MONSIEUR K.",
+    role: "CONSULTANT",
     quote:
-      "“Je me suis inscrite à Carte USA et ça a été très rapide... Je suis en cours de mise en place, j'ai mon brokerage account chez Schwab et je suis en train d'ouvrir le checking... Il y a un support et un coach avec nous pour nous aider à tout mettre en place... Un grand merci à la communauté de Carte USA et à Zaid.”",
+      "“Je me suis inscrit à Carte USA et ça a été très rapide... Je suis en cours de mise en place, j'ai mon brokerage account chez Schwab et je suis en train d'ouvrir le checking... Il y a un support et un coach avec nous pour nous aider à tout mettre en place... Un grand merci à la communauté de Carte USA et à Zaid.”",
     videoUrl: "/videos/retour-2.mov",
   },
   {
