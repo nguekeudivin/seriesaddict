@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import NewsListPage from "./pages/NewsListPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import SeriesListPage from "./pages/SeriesListPage";
+import SeriesDetailsPage from "./pages/SeriesDetailsPage";
 import UserSpacePage from "./pages/UserSpacePage";
 import TrailersPages from "./pages/TrailersPages";
 import TrailerDetailsPage from "./pages/TrailerDetailsPage";
@@ -24,8 +25,7 @@ import LoginPage from "./pages/LoginPage";
 import PasswordForget from "./pages/PasswordForget";
 import NotFoundPage from "./pages/NotFoundPage";
 import ArticlePage from "./pages/ArticlePage";
-import LandingPage1 from "./pages/landings/LandingPage1";
-import LandingPage2 from "./pages/landings/LandingPage2";
+import DemoPage from "./pages/DemoPage";
 
 function App() {
   return (
@@ -39,6 +39,7 @@ function App() {
           <Route path="/article" element={<ArticlePage />} />
 
           <Route path="/series" element={<SeriesListPage />} />
+          <Route path="/series-details" element={<SeriesDetailsPage />} />
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/user-space" element={<UserSpacePage />} />
@@ -62,8 +63,7 @@ function App() {
 
           <Route path="/design" element={<DesignPage />} />
 
-          <Route path="/landing-page-1" element={<LandingPage1 />} />
-          <Route path="/landing-page-2" element={<LandingPage2 />} />
+          <Route path="/demo" element={<DemoPage />} />
 
           <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
         </Routes>
