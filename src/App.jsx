@@ -40,6 +40,7 @@ function App() {
 
           <Route path="/series" element={<SeriesListPage />} />
           <Route path="/series-details" element={<SeriesDetailsPage />} />
+         
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/user-space" element={<UserSpacePage />} />
