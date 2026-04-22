@@ -16,7 +16,7 @@ import RegisterPage from "./pages/RegisterPage";
 import MembersPage from "./pages/MembersPage";
 import {
   CreateListPage,
-  MemberFriendsPage,
+  MemberFriendsPage as UserMemberFriendsPage,
   MemberListsPage,
   MemberSeriesLibraryPage,
 } from "./pages/UserSpaceElements";
@@ -25,7 +25,25 @@ import LoginPage from "./pages/LoginPage";
 import PasswordForget from "./pages/PasswordForget";
 import NotFoundPage from "./pages/NotFoundPage";
 import ArticlePage from "./pages/ArticlePage";
-import DemoPage from "./pages/DemoPage";
+
+import SerieSeasonsPage from "./pages/SerieSeasonsPage";
+import SerieNewsPage from "./pages/SerieNewsPage";
+import SerieCommunityPage from "./pages/SerieCommunityPage";
+import SerieAvisPage from "./pages/SerieAvisPage";
+import SerieTrailersPage from "./pages/SerieTrailersPage";
+import SerieShopPage from "./pages/SerieShopPage";
+import AddUserSerithequePage from "./pages/AddUserSerithequePage";
+import FriendRequestPage from "./pages/FriendRequestPage";
+import TagsAndGenrePage from "./pages/TagsAndGenrePage";
+import CoupsDeCoeurPage from "./pages/CoupsDeCoeurPage";
+import DailyPage from "./pages/DailyPage";
+import DailyArticleDetailsPage from "./pages/DailyArticleDetailsPage";
+import NewSerieMonthlyPage from "./pages/NewSerieMonthlyPage";
+import PressePage from "./pages/PressePage";
+import MemberSerithequePage from "./pages/MemberSerithequePage";
+import MemberListesPage from "./pages/MemberListesPage";
+import MemberFriendsPage from "./pages/MemberFriendsPage";
+import NouvellesPage from "./pages/NouvellesPage";
 
 function App() {
   return (
@@ -40,7 +58,13 @@ function App() {
 
           <Route path="/series" element={<SeriesListPage />} />
           <Route path="/series-details" element={<SeriesDetailsPage />} />
-         
+          <Route path="/series/seasons" element={<SerieSeasonsPage />} />
+          <Route path="/series/news" element={<SerieNewsPage />} />
+          <Route path="/series/community" element={<SerieCommunityPage />} />
+          <Route path="/series/avis" element={<SerieAvisPage />} />
+          <Route path="/series/trailers-page" element={<SerieTrailersPage />} />
+          <Route path="/series/shop" element={<SerieShopPage />} />
+
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/user-space" element={<UserSpacePage />} />
@@ -55,16 +79,27 @@ function App() {
           <Route path="/password-forget" element={<PasswordForget />} />
 
           <Route path="/members" element={<MembersPage />} />
-          <Route path="/user/friends" element={<MemberFriendsPage />} />
+          <Route path="/user/friends" element={<UserMemberFriendsPage />} />
           <Route path="/user/series" element={<MemberSeriesLibraryPage />} />
           <Route path="/user/lists" element={<MemberListsPage />} />
           <Route path="/user/create-liste" element={<CreateListPage />} />
+          <Route path="/user/add-serie" element={<AddUserSerithequePage />} />
+          <Route path="/user/friend-requests" element={<FriendRequestPage />} />
+          <Route path="/user/seritheque" element={<MemberSerithequePage />} />
+          <Route path="/user/listes" element={<MemberListesPage />} />
+          <Route path="/user/amis" element={<MemberFriendsPage />} />
 
           <Route path="/not-found" element={<NotFoundPage />} />
 
           <Route path="/design" element={<DesignPage />} />
+          <Route path="/nouvelles" element={<NouvellesPage />} />
 
-          <Route path="/demo" element={<DemoPage />} />
+          <Route path="/tags" element={<TagsAndGenrePage />} />
+          <Route path="/coups-de-coeur" element={<CoupsDeCoeurPage />} />
+          <Route path="/daily" element={<DailyPage />} />
+          <Route path="/daily/article" element={<DailyArticleDetailsPage />} />
+          <Route path="/nouveautes" element={<NewSerieMonthlyPage />} />
+          <Route path="/presse" element={<PressePage />} />
 
           <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
         </Routes>

@@ -15,6 +15,9 @@ import {
 import logo from "../assets/logo.png";
 import mediaThumbA from "../assets/serieaddict-3.webp";
 import mediaThumbB from "../assets/serieaddict-4.webp";
+import ProductCard from "../components/product-card";
+import SeriesSeasonsRefactor from "../components/SerieSeasons";
+import SeriesSeasonsVariantB from "../components/SerieSeasonVariantB";
 
 const BRAND = {
   primary: "#841D4F",
@@ -175,6 +178,27 @@ const CAST = [
   },
 ];
 
+const SEASONS = [
+  {
+    id: "s1",
+    number: 1,
+    episodes: 8,
+    image: "...",
+  },
+  {
+    id: "s2",
+    number: 2,
+    episodes: 9,
+    image: "...",
+  },
+  {
+    id: "s3",
+    number: 3,
+    episodes: 8,
+    image: "...",
+  },
+];
+
 const VIDEOS = [
   {
     title: "Teaser final season",
@@ -224,34 +248,35 @@ const NEWS = [
   },
 ];
 
-const SHOP_ITEMS = [
+const shopProducts = [
   {
     title: "Poster collector Upside Down",
-    type: "Poster collector",
-    price: "24,90 €",
+    universe: "Poster collector",
+    price: "29,90 €",
+    rating: "4.8",
     image:
-      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80",
+    badge: "Collector",
   },
   {
-    title: "Hoodie Hawkins High",
-    type: "Textile",
-    price: "49,90 €",
+    id: 2,
+    title: "Mug TARDIS",
+    universe: "Doctor Who",
+    price: "19,90 €",
+    rating: "4.7",
     image:
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=900&q=80",
+    badge: "Best seller",
   },
   {
-    title: "Mug Hellfire Club",
-    type: "Goodie",
-    price: "16,90 €",
+    id: 3,
+    title: "Lucille Replica",
+    universe: "The Walking Dead",
+    price: "149,90 €",
+    rating: "4.9",
     image:
-      "https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    title: "Carnet édition Vecna",
-    type: "Papeterie",
-    price: "12,90 €",
-    image:
-      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=900&q=80",
+    badge: "Édition limitée",
   },
 ];
 
@@ -399,7 +424,7 @@ function SectionHeader({ title, rightLabel, onRightClick }) {
     <div className="mb-6 flex items-end justify-between gap-4">
       <div className="flex items-center gap-3">
         <span className={`h-4 w-[2px] rounded-full ${ACCENT_GRADIENT}`} />
-        <h2 className="text-[13px] font-extrabold uppercase tracking-[0.18em] text-white">
+        <h2 className="text-2xl font-extrabold uppercase text-white">
           {title}
         </h2>
       </div>
@@ -407,7 +432,7 @@ function SectionHeader({ title, rightLabel, onRightClick }) {
       {rightLabel ? (
         <button
           onClick={onRightClick}
-          className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-primary transition hover:text-white"
+          className="inline-flex items-center gap-2 text-base font-semibold  text-white transition hover:text-white"
         >
           {rightLabel}
           <ChevronRight className="h-4 w-4 text-brand-cyan" />
@@ -559,7 +584,7 @@ function HeroTabsBar({ onNavigateSection, onWatch }) {
               tab.action === "watch" ? onWatch() : onNavigateSection(tab.target)
             }
             className={[
-              "text-sm font-extrabold uppercase tracking-[0.08em] transition",
+              "font-semibold uppercase  transition",
               tab.active
                 ? "bg-gradient-to-r from-brand-primary to-brand-cyan bg-clip-text text-transparent"
                 : "text-white hover:text-brand-cyan",
@@ -593,55 +618,6 @@ function SectionNavButton({ direction = "right" }) {
   );
 }
 
-function SeasonFeaturePanel() {
-  return (
-    <div className="relative flex flex-col items-center pt-1 xl:px-4">
-      <SectionBandTitle
-        title={`${SEASON_FEATURE.totalSeasons} SAISONS - ${SEASON_FEATURE.totalEpisodes} ÉPISODES`}
-        className="w-full"
-      />
-
-      <div className="mt-10 grid w-full items-center gap-5 xl:grid-cols-[72px_minmax(0,380px)_72px]">
-        <div className="hidden justify-center xl:flex">
-          <SectionNavButton direction="left" />
-        </div>
-
-        <div className="mx-auto w-full max-w-[380px]">
-          <div className="relative overflow-hidden rounded-[18px] border border-brand-cyan/65 bg-black/10 shadow-[0_18px_48px_rgba(0,0,0,.26)]">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/5" />
-            <div className="absolute left-4 top-4 rounded-md bg-[#7c1c1f] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white">
-              Terminée
-            </div>
-            <div className="absolute right-4 top-6 rounded-[16px] border border-white/55 bg-white/[0.03] px-4 py-4 text-center text-white backdrop-blur-[2px]">
-              <div className="text-[10px] font-bold uppercase tracking-[0.16em]">
-                {SEASON_FEATURE.badge}
-              </div>
-            </div>
-            <img
-              src={SEASON_FEATURE.image}
-              alt={SEASON_FEATURE.currentSeasonLabel}
-              className="aspect-[0.68] w-full object-cover"
-            />
-          </div>
-
-          <p className="mt-5 text-center text-[20px] font-black uppercase tracking-[0.04em] text-white lg:text-[22px]">
-            {SEASON_FEATURE.currentSeasonLabel}
-          </p>
-
-          <div className="mt-5 flex items-center justify-center gap-4 xl:hidden">
-            <SectionNavButton direction="left" />
-            <SectionNavButton direction="right" />
-          </div>
-        </div>
-
-        <div className="hidden justify-center xl:flex">
-          <SectionNavButton direction="right" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function EpisodeRow({ item, upcoming = false }) {
   return (
     <div className="flex items-center justify-between gap-4 border-b border-white/18 py-4">
@@ -650,15 +626,14 @@ function EpisodeRow({ item, upcoming = false }) {
           {item.network}
         </div>
         <div className="min-w-0">
-          <p className="truncate text-[16px] font-black uppercase tracking-[0.015em] text-white lg:text-[17px]">
+          <p className="truncate font-semibold uppercase tracking-[0.015em] text-white">
             {item.title}
           </p>
-          <p className="mt-0.5 text-[13px] font-medium uppercase text-white/78 lg:text-[14px]">
+          <p className="mt-0.5 font-medium uppercase text-white/78 lg:text-[14px]">
             {item.meta}
           </p>
         </div>
       </div>
-
       {upcoming ? (
         <p className="shrink-0 text-right text-[13px] font-medium uppercase tracking-[0.02em] text-white/82 lg:text-[14px]">
           {item.date}
@@ -673,23 +648,6 @@ function EpisodeRow({ item, upcoming = false }) {
           </button>
         </div>
       )}
-    </div>
-  );
-}
-
-function EpisodeColumn({ title, items, upcoming = false }) {
-  return (
-    <div className="pt-1">
-      <SectionBandTitle title={title} />
-      <div className="mt-3">
-        {items.map((item, index) => (
-          <EpisodeRow
-            key={`${item.title}-${item.meta}-${index}`}
-            item={item}
-            upcoming={upcoming}
-          />
-        ))}
-      </div>
     </div>
   );
 }
@@ -734,13 +692,13 @@ function CastRail() {
 
 function AdvertisementBlock() {
   return (
-    <div className="rounded-sm bg-white px-4 py-5 text-center text-3xl font-black uppercase tracking-[0.2em] text-black">
+    <div className="rounded-sm bg-white/60 px-4 py-10 text-center text-3xl font-black uppercase tracking-[0.2em] text-black">
       PUB
     </div>
   );
 }
 
-function MediaCard({ item, tall = false, onClick }) {
+function MediaCard({ item, tall = true, onClick }) {
   return (
     <button
       onClick={onClick}
@@ -777,36 +735,86 @@ function MediaCard({ item, tall = false, onClick }) {
   );
 }
 
-function NewsCard({ item, onClick }) {
+function InnerGradientBorder() {
   return (
-    <button
-      onClick={onClick}
-      className="group relative overflow-hidden rounded-[24px] text-left"
-    >
-      <GradientRing radiusClass="rounded-[24px]" thickness={1.5} />
-      <GradientRing radiusClass="rounded-[24px]" thickness={1.5} glow hoverGlow />
-      <div className="relative rounded-[24px] bg-brand-dark/55 p-4 backdrop-blur">
-        <div className="overflow-hidden rounded-[18px]">
-          <img
-            src={item.image}
-            alt={item.title}
-            className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-          />
-        </div>
+    <>
+      {/* Ring principal */}
+      <div
+        className="pointer-events-none absolute inset-4 rounded-2xl"
+        style={{
+          background: GRADIENT,
+          WebkitMask:
+            "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+          WebkitMaskComposite: "xor",
+          maskComposite: "exclude",
+          padding: "1.5px",
+        }}
+      />
 
-        <div className="px-1 pb-1 pt-5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-primary">
-            {item.meta}
-          </p>
-          <h3 className="mt-2 text-[15px] font-bold leading-6 text-white">
+      {/* Glow subtil au hover */}
+      <div
+        className="pointer-events-none absolute inset-4 rounded-2xl opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-60"
+        style={{
+          background: GRADIENT,
+          WebkitMask:
+            "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+          WebkitMaskComposite: "xor",
+          maskComposite: "exclude",
+          padding: "1.5px",
+        }}
+      />
+    </>
+  );
+}
+
+export function NewsCard({ item }) {
+  return (
+    <article className="group relative w-full overflow-hidden rounded-3xl">
+      {/* Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${item.img})` }}
+      />
+
+      {/* Overlay sombre */}
+      <div className="absolute inset-0 bg-black/55" />
+
+      {/* Contenu principal */}
+      <div className="relative rounded-3xl bg-brand-dark/35 backdrop-blur-[2px] p-6 sm:p-8">
+        {/* ✅ Cadre intérieur gradient */}
+        <InnerGradientBorder />
+
+        <div className="relative flex min-h-[240px] flex-col items-center justify-center text-center">
+          <h3 className="max-w-[34rem] text-lg font-extrabold uppercase tracking-wide text-white sm:text-xl">
             {item.title}
           </h3>
-          <p className="mt-2 text-[13px] leading-6 text-white/60">
+
+          <div className="my-5 h-px w-56 bg-white/55" />
+
+          <p className="max-w-[36rem] text-sm leading-relaxed text-white/80">
             {item.excerpt}
           </p>
+
+          {/* Bouton */}
+          <div className="mt-6 relative inline-flex rounded-full">
+            <span
+              className="pointer-events-none absolute inset-0 rounded-full"
+              style={{
+                background: GRADIENT,
+                WebkitMask:
+                  "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                WebkitMaskComposite: "xor",
+                maskComposite: "exclude",
+                padding: "1.5px",
+              }}
+            />
+            <button className="relative rounded-full bg-brand-wine/55 px-6 py-2 text-xs font-semibold uppercase tracking-wide text-white transition-all duration-300 hover:bg-brand-wine/80">
+              En savoir plus
+            </button>
+          </div>
         </div>
       </div>
-    </button>
+    </article>
   );
 }
 
@@ -880,30 +888,30 @@ function SeriesCommentItem({ comment }) {
 
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <p className="text-sm font-semibold text-white">{comment.author}</p>
+              <p className="text-sm font-semibold text-white">
+                {comment.author}
+              </p>
               <span className="text-white/25">•</span>
-              <p className="text-xs uppercase tracking-[0.16em] text-white/45">
+              <p className="text-xs uppercase tracking-[0.16em] text-white/70">
                 {comment.time}
               </p>
-              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-xs text-white/70">
+              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-xs">
                 {comment.reaction}
               </span>
             </div>
 
-            <p className="mt-3 text-sm leading-7 text-white/72">
-              {comment.content}
-            </p>
+            <p className="mt-3 text-sm leading-7">{comment.content}</p>
 
             <div className="mt-4 flex items-center gap-3">
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-white/65 transition hover:bg-white/[0.07] hover:text-white">
+              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs  transition hover:bg-white/[0.07] hover:text-white">
                 J’aime ({comment.likes})
               </button>
 
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-white/65 transition hover:bg-white/[0.07] hover:text-white">
+              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs transition hover:bg-white/[0.07] hover:text-white">
                 Répondre
               </button>
 
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-white/65 transition hover:bg-white/[0.07] hover:text-white">
+              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs  transition hover:bg-white/[0.07] hover:text-white">
                 Signaler
               </button>
             </div>
@@ -925,28 +933,28 @@ function SeriesCommentsComposer() {
 
       <GradientFrame>
         <div className="p-6">
-          <div className="rounded-[22px] border border-[#841D4F]/18 bg-[linear-gradient(90deg,rgba(132,29,79,.10),rgba(30,108,134,.04))] px-5 py-4 text-sm text-white/60">
+          <div className="rounded-[22px] border border-[#841D4F]/18 bg-[linear-gradient(90deg,rgba(132,29,79,.10),rgba(30,108,134,.04))] px-5 py-4 text-sm text-white">
             Rejoignez la discussion ou partagez votre avis sur cette série.
           </div>
 
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/45">
+              <label className="mb-2 block text-xs uppercase tracking-[0.18em]">
                 Pseudo
               </label>
               <input
                 placeholder="Saisir un pseudo"
-                className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none placeholder:text-white/40 focus:border-white/25"
+                className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none focus:border-white/25"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/45">
+              <label className="mb-2 block text-xs uppercase tracking-[0.18em]">
                 Email
               </label>
               <input
                 placeholder="Vous pouvez aussi ajouter un email"
-                className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none placeholder:text-white/40 focus:border-white/25"
+                className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none  focus:border-white/25"
               />
             </div>
           </div>
@@ -965,7 +973,7 @@ function SeriesCommentsComposer() {
             <textarea
               rows="8"
               placeholder="Ajoutez votre commentaire ici..."
-              className="w-full resize-none bg-transparent px-4 py-4 text-sm text-white outline-none placeholder:text-white/40"
+              className="w-full resize-none bg-transparent px-4 py-4 text-sm text-white outline-none"
             />
           </div>
 
@@ -1035,8 +1043,8 @@ export default function SeriesDetailsPage() {
 
       <main className="relative z-10">
         <section className="border-b border-white/5">
-          <div className="mx-auto max-w-[1450px] px-4 pb-8 pt-4 sm:px-5">
-            <div className="relative overflow-hidden rounded-[32px] border border-brand-primary/30 shadow-[0_24px_80px_rgba(0,0,0,.25)]">
+          <div className="mx-auto pb-8 pt-4">
+            <div className="relative overflow-hidden border border-brand-primary/30 shadow-[0_24px_80px_rgba(0,0,0,.25)]">
               <div className="absolute inset-x-0 top-0 h-[2px] bg-brand-primary/70" />
               <HeroBackdropArtwork />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.06)_0%,rgba(0,0,0,.12)_38%,rgba(0,0,0,.46)_82%,rgba(0,0,0,.76)_100%)]" />
@@ -1134,8 +1142,14 @@ export default function SeriesDetailsPage() {
                     <div className="w-full max-w-[920px] pt-6 lg:pt-0">
                       <div className="flex flex-wrap items-center gap-4">
                         <HeroActionButton icon={Plus} />
-                        <HeroActionButton icon={CalendarDays} accent="primary" />
-                        <HeroActionButton icon={MessageCircle} accent="primary" />
+                        <HeroActionButton
+                          icon={CalendarDays}
+                          accent="primary"
+                        />
+                        <HeroActionButton
+                          icon={MessageCircle}
+                          accent="primary"
+                        />
                         <HeroActionButton icon={Eye} />
                         <HeroActionButton icon={Pencil} />
                         <HeroAudienceStack />
@@ -1147,7 +1161,9 @@ export default function SeriesDetailsPage() {
 
                       <div className="mt-4 space-y-1.5 text-[16px] text-white/88 lg:text-[17px]">
                         <p>
-                          <span className="font-semibold">{SERIES.country}</span>
+                          <span className="font-semibold">
+                            {SERIES.country}
+                          </span>
                         </p>
                         <p>
                           <span className="font-semibold">Créée par :</span>{" "}
@@ -1179,36 +1195,19 @@ export default function SeriesDetailsPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-[1450px] space-y-14 px-4 py-12 sm:px-5 lg:py-14">
-          <div
-            id="series-seasons"
-            className="grid gap-x-14 gap-y-12 xl:grid-cols-[minmax(430px,.82fr)_1fr_1fr]"
-          >
-            <div className="xl:row-span-2">
-              <SeasonFeaturePanel />
-            </div>
-
-            <EpisodeColumn
-              title="Derniers épisodes diffusés"
-              items={LAST_EPISODES}
-            />
-
-            <EpisodeColumn
-              title="Prochains épisodes diffusés"
-              items={UPCOMING_EPISODES}
-              upcoming
-            />
-
-            <div className="xl:col-span-2">
-              <CastRail />
-            </div>
-          </div>
+        <section className="mx-auto max-w-7xl  space-y-14 px-4 py-12 sm:px-5 lg:py-14">
+          <SeriesSeasonsRefactor
+            UPCOMING_EPISODES={UPCOMING_EPISODES}
+            SEASON_FEATURE={SEASON_FEATURE}
+            LAST_EPISODES={LAST_EPISODES}
+            CAST={CAST}
+          />
 
           <AdvertisementBlock />
 
           <div
             id="series-trailers"
-            className="grid gap-8 lg:grid-cols-[1.4fr_.8fr]"
+            className="grid gap-12 lg:grid-cols-[1.4fr_.8fr]"
           >
             <div>
               <SectionHeader
@@ -1252,33 +1251,25 @@ export default function SeriesDetailsPage() {
             />
             <div className="grid gap-6 lg:grid-cols-3">
               {NEWS.map((item) => (
-                <NewsCard
-                  key={item.title}
-                  item={item}
-                  onClick={() => navigate("/article")}
-                />
+                <NewsCard key={item.title} item={item} />
               ))}
             </div>
           </div>
 
           <AdvertisementBlock />
 
-          <div id="series-shop">
+          <section className="mx-auto max-w-7xl px-5 py-12 md:py-12">
             <SectionHeader
               title="Shopping"
               rightLabel="Tout le shop"
               onRightClick={() => navigate("/shop")}
             />
-            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-              {SHOP_ITEMS.map((item) => (
-                <ShopCard
-                  key={item.title}
-                  item={item}
-                  onClick={() => navigate("/shop")}
-                />
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {shopProducts.map((item) => (
+                <ProductCard key={item.id} item={item} />
               ))}
             </div>
-          </div>
+          </section>
 
           <div id="series-similaires">
             <SectionHeader
@@ -1310,7 +1301,11 @@ export default function SeriesDetailsPage() {
 
       <footer className="border-t border-white/5 px-4 py-10 sm:px-5">
         <div className="mx-auto flex max-w-7xl items-center justify-center">
-          <img src={logo} alt="Series Addict" className="h-10 w-auto opacity-90" />
+          <img
+            src={logo}
+            alt="Series Addict"
+            className="h-10 w-auto opacity-90"
+          />
         </div>
       </footer>
     </div>
