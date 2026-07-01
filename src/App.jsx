@@ -35,6 +35,8 @@ import SerieShopPage from "./pages/SerieShopPage";
 import AddUserSerithequePage from "./pages/AddUserSerithequePage";
 import FriendRequestPage from "./pages/FriendRequestPage";
 import TagsAndGenrePage from "./pages/TagsAndGenrePage";
+import GenreDetailsPage from "./pages/GenreDetailsPage";
+import TagDetailsPage from "./pages/TagDetailsPage";
 import CoupsDeCoeurPage from "./pages/CoupsDeCoeurPage";
 import DailyPage from "./pages/DailyPage";
 import DailyArticleDetailsPage from "./pages/DailyArticleDetailsPage";
@@ -95,6 +97,8 @@ function App() {
           <Route path="/nouvelles" element={<NouvellesPage />} />
 
           <Route path="/tags" element={<TagsAndGenrePage />} />
+          <Route path="/genre/:genreName" element={<GenreDetailsPage />} />
+          <Route path="/tag/:tagName" element={<TagDetailsPage />} />
           <Route path="/coups-de-coeur" element={<CoupsDeCoeurPage />} />
           <Route path="/daily" element={<DailyPage />} />
           <Route path="/daily/article" element={<DailyArticleDetailsPage />} />

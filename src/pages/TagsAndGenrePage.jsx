@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
   ChevronRight,
@@ -19,10 +19,17 @@ const BRAND = {
 };
 
 const GRADIENT = `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.cyan})`;
-const ACCENT_GRADIENT = "bg-gradient-to-r from-brand-primary via-brand-wine to-brand-cyan";
+const ACCENT_GRADIENT =
+  "bg-gradient-to-r from-brand-primary via-brand-wine to-brand-cyan";
 
 const GENRES = [
-  { id: 1, name: "Science-Fiction", icon: "", seriesCount: 1247, trending: true },
+  {
+    id: 1,
+    name: "Science-Fiction",
+    icon: "",
+    seriesCount: 1247,
+    trending: true,
+  },
   { id: 2, name: "Horreur", icon: "", seriesCount: 892, trending: true },
   { id: 3, name: "Drame", icon: "", seriesCount: 2156, trending: false },
   { id: 4, name: "Thriller", icon: "", seriesCount: 1089, trending: true },
@@ -55,7 +62,8 @@ const FEATURED_IN_GENRE = [
   {
     id: 1,
     title: "Stranger Things",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80",
     genres: ["Science-Fiction", "Horreur", "Mystere"],
     rating: 4.7,
     year: 2016,
@@ -63,7 +71,8 @@ const FEATURED_IN_GENRE = [
   {
     id: 2,
     title: "The X-Files",
-    image: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=600&q=80",
     genres: ["Science-Fiction", "Mystere", "Thriller"],
     rating: 4.5,
     year: 1993,
@@ -71,7 +80,8 @@ const FEATURED_IN_GENRE = [
   {
     id: 3,
     title: "Black Mirror",
-    image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80",
     genres: ["Science-Fiction", "Thriller", "Drame"],
     rating: 4.6,
     year: 2011,
@@ -79,26 +89,36 @@ const FEATURED_IN_GENRE = [
   {
     id: 4,
     title: "Westworld",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
     genres: ["Science-Fiction", "Western", "Thriller"],
     rating: 4.3,
     year: 2016,
   },
 ];
 
-function GradientRing({ radiusClass = "rounded-2xl", thickness = 2, glow = false, hoverGlow = false, className = "" }) {
+function GradientRing({
+  radiusClass = "rounded-2xl",
+  thickness = 2,
+  glow = false,
+  hoverGlow = false,
+  className = "",
+}) {
   return (
     <div
       className={[
         "pointer-events-none absolute inset-0",
         radiusClass,
         glow ? "blur-md" : "",
-        hoverGlow ? "opacity-0 transition-opacity duration-300 group-hover:opacity-70" : "",
+        hoverGlow
+          ? "opacity-0 transition-opacity duration-300 group-hover:opacity-70"
+          : "",
         className,
       ].join(" ")}
       style={{
         background: GRADIENT,
-        WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+        WebkitMask:
+          "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
         WebkitMaskComposite: "xor",
         maskComposite: "exclude",
         padding: `${thickness}px`,
@@ -112,7 +132,9 @@ function SectionHeader({ title, rightLabel, onRightClick }) {
     <div className="mb-6 flex items-end justify-between gap-4">
       <div className="flex items-center gap-3">
         <span className={`h-4 w-[2px] rounded-full ${ACCENT_GRADIENT}`} />
-        <h2 className="text-xl font-extrabold uppercase tracking-wide text-white">{title}</h2>
+        <h2 className="text-xl font-extrabold uppercase tracking-wide text-white">
+          {title}
+        </h2>
       </div>
       {rightLabel ? (
         <button
@@ -127,15 +149,20 @@ function SectionHeader({ title, rightLabel, onRightClick }) {
   );
 }
 
-function GenreCard({ genre }) {
+function GenreCard({ genre, onClick }) {
   return (
-    <button className="group relative overflow-hidden rounded-[24px] text-left">
+    <button
+      onClick={onClick}
+      className="group relative overflow-hidden rounded-[24px] text-left"
+    >
       <GradientRing radiusClass="rounded-[24px]" thickness={2} hoverGlow />
       <div className="relative rounded-[24px] bg-brand-dark/55 p-5 backdrop-blur transition-all duration-300 group-hover:bg-brand-dark/70">
         <div className="flex items-start justify-between">
           <div>
             <h3 className="font-bold text-white">{genre.name}</h3>
-            <p className="mt-1 text-sm text-white/60">{genre.seriesCount.toLocaleString()} series</p>
+            <p className="mt-1 text-sm text-white/60">
+              {genre.seriesCount.toLocaleString()} series
+            </p>
           </div>
           {genre.trending && (
             <div className="grid h-8 w-8 place-items-center rounded-full bg-brand-primary/20 text-brand-primary">
@@ -152,18 +179,27 @@ function GenreCard({ genre }) {
               />
             ))}
           </div>
-          <span className="text-xs text-white/40">+{Math.floor(genre.seriesCount / 100)} nouveautes</span>
+          <span className="text-xs text-white/40">
+            +{Math.floor(genre.seriesCount / 100)} nouveautes
+          </span>
         </div>
       </div>
     </button>
   );
 }
 
-function TagChip({ tag }) {
+function TagChip({ tag, onClick }) {
   return (
-    <button className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-all duration-300 hover:border-brand-cyan/30 hover:bg-brand-cyan/10">
-      <span className="text-sm font-medium text-white/80 group-hover:text-white">{tag.name}</span>
-      <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white/50">{tag.seriesCount}</span>
+    <button
+      onClick={onClick}
+      className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-all duration-300 hover:border-brand-cyan/30 hover:bg-brand-cyan/10"
+    >
+      <span className="text-sm font-medium text-white/80 group-hover:text-white">
+        {tag.name}
+      </span>
+      <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white/50">
+        {tag.seriesCount}
+      </span>
     </button>
   );
 }
@@ -182,14 +218,19 @@ function FeaturedSeriesCard({ series }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           <div className="absolute left-4 top-4 flex items-center gap-1">
             <Star className="h-4 w-4 fill-brand-primary text-brand-primary" />
-            <span className="text-sm font-bold text-white">{series.rating}</span>
+            <span className="text-sm font-bold text-white">
+              {series.rating}
+            </span>
           </div>
         </div>
         <div className="p-4">
           <h3 className="font-bold text-white">{series.title}</h3>
           <div className="mt-2 flex flex-wrap gap-1">
             {series.genres.map((genre) => (
-              <span key={genre} className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] text-white/60">
+              <span
+                key={genre}
+                className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] text-white/60"
+              >
                 {genre}
               </span>
             ))}
@@ -201,8 +242,13 @@ function FeaturedSeriesCard({ series }) {
 }
 
 export default function TagsAndGenrePage() {
-  const [selectedGenre, setSelectedGenre] = useState(null);
-  const [viewMode, setViewMode] = useState("grid");
+  const navigate = useNavigate();
+
+  const navigateToGenre = (genre) =>
+    navigate(`/genre/${genre.name.toLowerCase()}`);
+
+  const navigateToTag = (tag) =>
+    navigate(`/tag/${tag.name.toLowerCase().replace(/\s+/g, "-")}`);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -218,8 +264,12 @@ export default function TagsAndGenrePage() {
               <ChevronLeft className="h-5 w-5" />
             </button>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">Explorer</p>
-              <h1 className="text-2xl font-extrabold uppercase tracking-wide text-white">Genres & Tags</h1>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
+                Explorer
+              </p>
+              <h1 className="text-2xl font-extrabold uppercase tracking-wide text-white">
+                Genres & Tags
+              </h1>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -234,7 +284,9 @@ export default function TagsAndGenrePage() {
 
         <div className="mb-8">
           <div className="relative rounded-full p-[1px]">
-            <div className={`absolute inset-0 rounded-full ${ACCENT_GRADIENT} opacity-60`} />
+            <div
+              className={`absolute inset-0 rounded-full ${ACCENT_GRADIENT} opacity-60`}
+            />
             <div className="relative flex items-center gap-3 rounded-full bg-brand-dark/80 px-4 py-3 backdrop-blur">
               <Search className="h-5 w-5 text-brand-cyan" />
               <input
@@ -252,7 +304,11 @@ export default function TagsAndGenrePage() {
         <SectionHeader title="Genres populaires" rightLabel="Tous les genres" />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {GENRES.map((genre) => (
-            <GenreCard key={genre.id} genre={genre} />
+            <GenreCard
+              key={genre.id}
+              genre={genre}
+              onClick={() => navigateToGenre(genre)}
+            />
           ))}
         </div>
 
@@ -260,13 +316,20 @@ export default function TagsAndGenrePage() {
           <SectionHeader title="Tags tendance" />
           <div className="flex flex-wrap gap-2">
             {TAGS.map((tag) => (
-              <TagChip key={tag.id} tag={tag} />
+              <TagChip
+                key={tag.id}
+                tag={tag}
+                onClick={() => navigateToTag(tag)}
+              />
             ))}
           </div>
         </div>
 
         <div className="mt-10">
-          <SectionHeader title="Science-Fiction : A decouvrir" rightLabel="Voir tout" />
+          <SectionHeader
+            title="Science-Fiction : A decouvrir"
+            rightLabel="Voir tout"
+          />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {FEATURED_IN_GENRE.map((series) => (
               <FeaturedSeriesCard key={series.id} series={series} />
@@ -275,17 +338,27 @@ export default function TagsAndGenrePage() {
         </div>
 
         <div className="group relative mt-10 overflow-hidden rounded-[28px]">
-          <GradientRing radiusClass="rounded-[28px]" thickness={2} glow hoverGlow />
+          <GradientRing
+            radiusClass="rounded-[28px]"
+            thickness={2}
+            glow
+            hoverGlow
+          />
           <div className="relative rounded-[28px] bg-gradient-to-r from-brand-primary/30 via-brand-wine/20 to-brand-cyan/30 p-8 backdrop-blur">
             <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-5 w-5 text-brand-cyan" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-cyan">Nouveau</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-cyan">
+                    Nouveau
+                  </span>
                 </div>
-                <h3 className="mt-2 text-xl font-bold text-white">Trouvez votre prochaine serie preferee</h3>
+                <h3 className="mt-2 text-xl font-bold text-white">
+                  Trouvez votre prochaine serie preferee
+                </h3>
                 <p className="mt-1 text-sm text-white/70">
-                  Utilisez notre outil de recommandation base sur vos gouts et votre historique.
+                  Utilisez notre outil de recommandation base sur vos gouts et
+                  votre historique.
                 </p>
               </div>
               <button className="shrink-0 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:scale-[1.02]">
