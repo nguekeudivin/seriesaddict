@@ -8,8 +8,94 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { lerpColor } from "../libs/utils";
-import { Play, Heart, Bookmark, MessageCircle } from "lucide-react";
+import { Play, Heart, Bookmark, MessageCircle, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+const hero = {
+  title: "STRANGER THINGS",
+  subtitle: "SAISON FINALE",
+  rating: "4.9",
+  platform: "NETFLIX",
+  release: "16 NOVEMBRE",
+  episodes: "8 ÉPISODES",
+  genres: "Science-Fiction • Thriller • Drame",
+  description:
+    "Alors que Hawkins sombre dans le chaos, Eleven et ses amis affrontent leur ultime bataille contre Vecna. Une dernière saison intense et émotionnelle.",
+
+  background: "/images/hero.png",
+};
+
+const trending = [
+  {
+    id: 1,
+    title: "Wednesday",
+    image:
+      "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 2,
+    title: "Landman",
+    image:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 3,
+    title: "The Bear",
+    image:
+      "https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 4,
+    title: "Pluribus",
+    image:
+      "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=500&q=60",
+  },
+];
+
+function PrimaryButton() {
+  return (
+    <button className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#841D4F] to-[#1E6C86] px-6 py-3 text-sm font-bold uppercase text-white">
+      <Play className="h-5 w-5" />
+      Regarder
+    </button>
+  );
+}
+
+function SecondaryButton({ icon, children }) {
+  return (
+    <button className="inline-flex items-center gap-2 rounded-full bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur">
+      {icon}
+      {children}
+    </button>
+  );
+}
+
+function Badge({ children }) {
+  return (
+    <div className="rounded-full bg-white/5 px-4 py-2 text-xs font-bold uppercase text-white/70">
+      {children}
+    </div>
+  );
+}
+
+function TrendingItem({ item, index }) {
+  return (
+    <div className="flex items-center gap-3 cursor-pointer group">
+      <span className="text-3xl font-black text-white/20 group-hover:text-white/60">
+        0{index + 1}
+      </span>
+
+      <img
+        src={item.image}
+        className="h-12 w-9 rounded object-cover transition group-hover:scale-110"
+      />
+
+      <span className="text-sm font-semibold text-white/70 group-hover:text-white">
+        {item.title}
+      </span>
+    </div>
+  );
+}
 
 const BRAND = {
   primary: "#841D4F",
@@ -412,6 +498,17 @@ function IconButton({ children, title }) {
   );
 }
 
+function SolidButton({ children, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-primary to-brand-cyan px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_30px_rgba(132,29,79,.25)] transition-all duration-300 hover:scale-[1.02]"
+    >
+      {children}
+    </button>
+  );
+}
+
 function NewReleasesSection() {
   const data = {
     title: "THE BEAST IN ME",
@@ -641,6 +738,124 @@ function IconShare(props) {
   );
 }
 
+export function CinematicHero() {
+  return (
+    <section className="relative h-[92vh] min-h-[760px] overflow-hidden bg-black">
+      {/* BACKGROUND IMAGE */}
+      <img
+        src={hero.background}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover scale-110 animate-[heroZoom_12s_linear_forwards]"
+      />
+
+      {/* OVERLAYS CINÉMATIQUES */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20" />
+
+      <div className="absolute left-0 top-0 h-full w-[700px] bg-[radial-gradient(circle_at_left,rgba(132,29,79,.25),transparent_70%)]" />
+
+      <div className="absolute right-0 bottom-0 h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(30,108,134,.18),transparent_70%)]" />
+
+      {/* CONTENT WRAPPER */}
+      <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-12 lg:pb-16">
+        {/* LEFT CONTENT */}
+        <div className="max-w-3xl">
+          {/* BADGE */}
+          <div className="mb-5">
+            <Badge>Tendance de la semaine</Badge>
+          </div>
+
+          {/* TITLE */}
+          <h1 className="text-5xl font-black uppercase text-white lg:text-7xl">
+            {hero.title}
+          </h1>
+
+          <p className="mt-2 text-xl font-bold uppercase tracking-widest text-white/80">
+            {hero.subtitle}
+          </p>
+
+          {/* METADATA */}
+          <div className="mt-5 flex flex-wrap gap-3 text-sm text-white/70">
+            <span className="rounded-full bg-white/5 px-4 py-2">
+              ★ {hero.rating}
+            </span>
+
+            <span className="rounded-full bg-white/5 px-4 py-2">
+              {hero.platform}
+            </span>
+
+            <span className="rounded-full bg-white/5 px-4 py-2">
+              {hero.release}
+            </span>
+
+            <span className="rounded-full bg-white/5 px-4 py-2">
+              {hero.episodes}
+            </span>
+          </div>
+
+          {/* GENRES */}
+          <p className="mt-4 text-sm font-semibold text-white/60">
+            {hero.genres}
+          </p>
+
+          {/* DESCRIPTION */}
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70">
+            {hero.description}
+          </p>
+
+          {/* ACTIONS */}
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <PrimaryButton />
+
+            <SecondaryButton icon={<Bookmark className="h-5 w-5" />}>
+              Ma liste
+            </SecondaryButton>
+
+            <SecondaryButton icon={<Heart className="h-5 w-5" />}>
+              Favoris
+            </SecondaryButton>
+          </div>
+        </div>
+        {/* RIGHT PANEL - TRENDING */}
+        <div className="absolute right-6 top-1/2 hidden -translate-y-1/2 flex-col gap-4 lg:flex">
+          <div className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-white/40">
+            Trending Now
+          </div>
+
+          <div className="flex flex-col gap-4">
+            {trending.map((item, i) => (
+              <TrendingItem key={item.id} item={item} index={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* BOTTOM STRIP - POSTERS */}
+      <div className="absolute bottom-0 left-0 right-0 border-t border-white/5 bg-black/40 backdrop-blur-md">
+        <div className="flex gap-6 overflow-x-auto px-6 py-4">
+          {trending.map((item) => (
+            <div
+              key={item.id}
+              className="group w-[140px] shrink-0 cursor-pointer"
+            >
+              <img
+                src={item.image}
+                className="aspect-[2/3] w-full rounded-lg object-cover transition group-hover:scale-110"
+              />
+              <p className="mt-2 truncate text-xs font-semibold text-white/70 group-hover:text-white">
+                {item.title}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-black text-white">
@@ -684,54 +899,8 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative -mt-16 pt-16">
-        <div
-          className="h-[520px] w-full bg-cover bg-center"
-          style={{
-            backgroundImage: "url(/images/hero.png)",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-wine/30 via-black/30 to-black" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-        <div className="absolute inset-0">
-          <div className="mx-auto flex h-full max-w-7xl flex-col items-center justify-center px-5 text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/75 backdrop-blur">
-              <Flame className="h-4 w-4 text-brand-primary" />A la une
-            </div>
-
-            <h1 className="text-3xl font-extrabold uppercase tracking-wide text-white md:text-4xl lg:text-5xl">
-              STRANGER THINGS REVIENT AVEC SA SAISON 5 !
-            </h1>
-            <p className="mt-2 text-sm text-white/85 md:text-base">
-              Et on a hate de la voir !
-            </p>
-
-            {/* Search bar with neon border */}
-            <div className="mt-8 w-full max-w-2xl">
-              <div className="relative rounded-full p-[1px]">
-                <div
-                  className={`absolute inset-0 rounded-full ${ACCENT_GRADIENT} opacity-60 blur-[10px]`}
-                />
-                <div
-                  className={`absolute inset-0 rounded-full ${ACCENT_GRADIENT} opacity-60`}
-                />
-                <div className="relative flex items-center gap-3 rounded-full bg-brand-dark/80 px-5 py-3.5 backdrop-blur">
-                  <Search className="h-5 w-5 text-brand-cyan" />
-                  <input
-                    placeholder="Rechercher une serie"
-                    className="w-full bg-transparent text-sm text-white placeholder:text-white/45 focus:outline-none"
-                  />
-                  <div className="h-6 w-px bg-brand-cyan/35" />
-                  <button className="grid h-9 w-9 place-items-center rounded-full bg-brand-cyan/15 text-brand-cyan transition hover:bg-brand-cyan/25">
-                    <IconSearch className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero — cinematique asymetrique */}
+      <CinematicHero />
 
       {/* Content */}
       <main className="relative z-10 mx-auto max-w-7xl space-y-14 px-5 py-10">
