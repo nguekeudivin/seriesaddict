@@ -41,6 +41,9 @@ import CoupsDeCoeurPage from "./pages/CoupsDeCoeurPage";
 import DailyPage from "./pages/DailyPage";
 import DailyArticleDetailsPage from "./pages/DailyArticleDetailsPage";
 import NewSerieMonthlyPage from "./pages/NewSerieMonthlyPage";
+import NewSeriesVariantA from "./pages/NewSeriesVariantA";
+import NewSeriesVariantB from "./pages/NewSeriesVariantB";
+import NewSeriesVariantC from "./pages/NewSeriesVariantC";
 import PressePage from "./pages/PressePage";
 import MemberSerithequePage from "./pages/MemberSerithequePage";
 import MemberListesPage from "./pages/MemberListesPage";
@@ -103,6 +106,9 @@ function App() {
           <Route path="/daily" element={<DailyPage />} />
           <Route path="/daily/article" element={<DailyArticleDetailsPage />} />
           <Route path="/nouveautes" element={<NewSerieMonthlyPage />} />
+          <Route path="/nouveautes/a" element={<NewSeriesVariantA />} />
+          <Route path="/nouveautes/b" element={<NewSeriesVariantB />} />
+          <Route path="/nouveautes/c" element={<NewSeriesVariantC />} />
           <Route path="/presse" element={<PressePage />} />
 
           <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
