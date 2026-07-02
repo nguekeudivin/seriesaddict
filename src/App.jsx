@@ -7,6 +7,7 @@ import HomePage2 from "./pages/HomePage2";
 import HomePage3 from "./pages/HomePage3";
 import HomePage4 from "./pages/HomePage4";
 import HomePage5 from "./pages/HomePage5";
+import HomePage6 from "./pages/HomePage6";
 import NewsListPage from "./pages/NewsListPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import SeriesListPage from "./pages/SeriesListPage";
@@ -64,6 +65,7 @@ function App() {
           <Route path="/home/3" element={<HomePage3 />} />
           <Route path="/home/4" element={<HomePage4 />} />
           <Route path="/home/5" element={<HomePage5 />} />
+          <Route path="/home/6" element={<HomePage6 />} />
           <Route path="/news" element={<NewsListPage />} />
 
           <Route path="/article" element={<ArticlePage />} />
