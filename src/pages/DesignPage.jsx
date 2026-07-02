@@ -1,79 +1,22 @@
-import CollectionsPage from "./CollectionsPage";
-import CollectionPage from "./CollectionPage";
-import TrailerDetailsPage from "./TrailerDetailsPage";
-import TrailersPage from "./TrailersPages";
-import MembersPage from "./MembersPage";
-import ShopPage from "./ShopPage";
-import LoginPage from "./LoginPage";
-import RegisterPage from "./RegisterPage";
-import ForgotPasswordPage from "./PasswordForget";
-import {
-  CreateListPage,
-  MemberFriendsPage,
-  MemberListsPage,
-  MemberSeriesLibraryPage,
-} from "./UserSpaceElements";
-import NotFoundPage from "./NotFoundPage";
-import ArticlePage from "./ArticlePage";
+import HomePage from "./HomePage";
+import GenreDetailsPage from "./GenreDetailsPage";
+import TagDetailsPage from "./TagDetailsPage";
+import NewSeriesVariantA from "./NewSeriesVariantA";
 
 export default function DesignPage() {
   return (
-    <ul className="space-y-8">
+    <ul className="space-y-16 bg-dark">
       <li>
-        <ArticlePage />
+        <HomePage />
       </li>
       <li>
-        <TrailersPage />
+        <NewSeriesVariantA />
       </li>
       <li>
-        <TrailerDetailsPage />
+        <GenreDetailsPage />
       </li>
       <li>
-        <CollectionsPage />
-      </li>
-
-      <li>
-        <CollectionPage />
-      </li>
-
-      <li>
-        <MembersPage />
-      </li>
-
-      <li>
-        <ShopPage />
-      </li>
-
-      <li>
-        <LoginPage />
-      </li>
-
-      <li>
-        <RegisterPage />
-      </li>
-
-      <li>
-        <NotFoundPage />
-      </li>
-
-      <li>
-        <ForgotPasswordPage />
-      </li>
-
-      <li>
-        <MemberFriendsPage />
-      </li>
-
-      <li>
-        <MemberSeriesLibraryPage />
-      </li>
-
-      <li>
-        <MemberListsPage />
-      </li>
-
-      <li>
-        <CreateListPage />
+        <TagDetailsPage />
       </li>
     </ul>
   );
