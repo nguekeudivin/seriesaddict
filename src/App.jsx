@@ -2,6 +2,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { DEFAULT_ROUTE } from "./config/routes";
 import CalendarPage from "./pages/CalendarPage";
 import HomePage from "./pages/HomePage";
+import HomePage1 from "./pages/HomePage1";
+import HomePage2 from "./pages/HomePage2";
+import HomePage3 from "./pages/HomePage3";
+import HomePage4 from "./pages/HomePage4";
+import HomePage5 from "./pages/HomePage5";
 import NewsListPage from "./pages/NewsListPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import SeriesListPage from "./pages/SeriesListPage";
@@ -54,6 +59,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to={DEFAULT_ROUTE} replace />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/home/1" element={<HomePage1 />} />
+          <Route path="/home/2" element={<HomePage2 />} />
+          <Route path="/home/3" element={<HomePage3 />} />
+          <Route path="/home/4" element={<HomePage4 />} />
+          <Route path="/home/5" element={<HomePage5 />} />
           <Route path="/news" element={<NewsListPage />} />
 
           <Route path="/article" element={<ArticlePage />} />
