@@ -2,6 +2,7 @@ import { Calendar, HeartPlus, Sparkles, ArrowRight } from "lucide-react";
 import { lerpColor } from "../libs/utils";
 import { Play, Heart, Bookmark, MessageCircle, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import HomeHero from "../components/HomeHero";
 
 const hero = {
   title: "STRANGER THINGS",
@@ -106,24 +107,6 @@ function IconBurger(props) {
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
       <path
         d="M4 6h16M4 12h16M4 18h16"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function IconSearch(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M16.5 16.5 21 21"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
@@ -463,7 +446,7 @@ function NewReleasesSection() {
     description:
       "Depuis la mort tragique de son jeune fils, l’auteure acclamée Aggie Wiggs s’est retirée de la vie publique, incapable d’écrire, n’étant plus qu’un fantôme d’elle-même. Mais elle trouve un sujet improbable pour un nouveau livre lorsque la maison voisine est achetée par Nile Sheldon, un célèbre et redoutable magnat de l’immobilier qui était autrefois le principal suspect de la disparition de sa femme. À la fois horrifiée et fascinée par cet homme, Aggie se retrouve compulsivement à la recherche de la vérité — chassant ses démons tout en fuyant les siens — dans un jeu du chat et de la souris qui pourrait devenir mortel.",
     release: "Diffusée le 16 novembre sur Netflix",
-    backdrop: "/images/hero.png",
+    backdrop: "/images/image-2.png",
     side: [
       {
         title: "LANDMAN",
@@ -694,81 +677,7 @@ export default function HomePage() {
         <div className="absolute right-[-8%] top-[10%] h-[300px] w-[300px] rounded-full bg-brand-cyan/15 blur-3xl" />
       </div>
 
-      {/* Top bar */}
-      <header className="relative z-20 border-b border-white/5 bg-black/40 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/85 transition hover:border-brand-cyan/30 hover:bg-brand-cyan/15">
-            <IconBurger className="h-6 w-6" />
-          </button>
-
-          <div className="select-none text-center">
-            <div className="text-xl font-black tracking-widest">
-              <span className="text-white">SERIE</span>
-              <span
-                className={`${BRAND_GRADIENT_TEXT} bg-clip-text text-transparent`}
-              >
-                ADDICT
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="hidden text-sm text-white/85 md:block">
-              Hello
-              <span className="font-semibold text-brand-cyan">Charlotte</span> !
-            </span>
-            <div className="h-10 w-10 overflow-hidden rounded-full ring-1 ring-brand-cyan/35 transition hover:ring-brand-cyan/60">
-              <img
-                alt="Avatar"
-                className="h-full w-full object-cover"
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=60"
-              />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <section className="relative -mt-16 pt-16">
-        <div
-          className="h-[500px] w-full bg-cover bg-center"
-          style={{
-            backgroundImage: "url(/images/hero.png)",
-          }}
-        />
-        <div className="absolute inset-0 absolute inset-0 bg-gradient-to-b from-brand-wine/30 via-black/30 to-black" />
-        <div className="absolute inset-0">
-          <div className="mx-auto flex h-full bg-transparent max-w-7xl flex-col items-center justify-center px-5 text-center">
-            <p className="text-2xl font-extrabold uppercase tracking-wide md:text-3xl">
-              STRANGER THINGS REVIENT AVEC SA SAISON 5 !
-            </p>
-            <p className="mt-1 text-base text-white/85">
-              Et on a hâte de la voir !
-            </p>
-
-            {/* Search bar with neon border */}
-            <div className="mt-8 w-full max-w-2xl">
-              <div className="relative rounded-full p-[1px]">
-                <div
-                  className={`absolute inset-0 rounded-full ${ACCENT_GRADIENT} opacity-60 blur-[10px]`}
-                />
-                <div
-                  className={`absolute inset-0 rounded-full ${ACCENT_GRADIENT} opacity-60`}
-                />
-                <div className="relative flex items-center gap-2 rounded-full bg-brand-dark/80 px-5 py-3 backdrop-blur">
-                  <input
-                    placeholder="Rechercher une série"
-                    className="w-full bg-transparent text-sm text-white placeholder:text-white/45 focus:outline-none"
-                  />
-                  <div className="h-6 w-px bg-brand-cyan/35" />
-                  <button className="rounded-full p-2 text-brand-cyan hover:bg-brand-cyan/15">
-                    <IconSearch className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeHero />
 
       {/* Content */}
       <main className="relative z-10 mx-auto max-w-7xl space-y-14 px-5 py-10">
