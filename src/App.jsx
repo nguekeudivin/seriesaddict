@@ -27,11 +27,13 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ArticlePage from "./pages/ArticlePage";
 
 import SerieSeasonsPage from "./pages/SerieSeasonsPage";
+import SerieSeasonSinglePage from "./pages/SerieSeasonSinglePage";
 import SerieNewsPage from "./pages/SerieNewsPage";
 import SerieCommunityPage from "./pages/SerieCommunityPage";
 import SerieAvisPage from "./pages/SerieAvisPage";
 import SerieTrailersPage from "./pages/SerieTrailersPage";
 import SerieShopPage from "./pages/SerieShopPage";
+import SerieWatchPage from "./pages/SerieWatchPage";
 import AddUserSerithequePage from "./pages/AddUserSerithequePage";
 import FriendRequestPage from "./pages/FriendRequestPage";
 import TagsAndGenrePage from "./pages/TagsAndGenrePage";
@@ -40,12 +42,32 @@ import TagDetailsPage from "./pages/TagDetailsPage";
 import CoupsDeCoeurPage from "./pages/CoupsDeCoeurPage";
 import DailyPage from "./pages/DailyPage";
 import DailyArticleDetailsPage from "./pages/DailyArticleDetailsPage";
+import UserCalendarPage from "./pages/UserCalendarPage";
 import NewSeriesVariantA from "./pages/NewSeriesVariantA";
 import PressePage from "./pages/PressePage";
+import SimilarTastePage from "./pages/SimilarTastePage";
 import MemberSerithequePage from "./pages/MemberSerithequePage";
 import MemberListesPage from "./pages/MemberListesPage";
 import MemberFriendsPage from "./pages/MemberFriendsPage";
+import WatchHistoryPage from "./pages/WatchHistoryPage";
+import WatchHistoryPageB from "./pages/WatchHistoryPageB";
 import NouvellesPage from "./pages/NouvellesPage";
+import ContactPage from "./pages/ContactPage";
+import TeamPage from "./pages/TeamPage";
+import HelpPage from "./pages/HelpPage";
+import TermsPage from "./pages/TermsPage";
+import CookiesPage from "./pages/CookiesPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import SingleEpisodePage from "./pages/SingleEpisodePage";
+import SeriesHubPage from "./pages/SeriesHubPage";
+import EpisodesToWatchPage from "./pages/EpisodesToWatchPage";
+import EpisodesToWatchPageVariantC from "./pages/EpisodesToWatchPageVariantC";
+import WishlistPage from "./pages/WishlistPage";
+import MovieDetail from "./pages/MovieDetails";
+import CsHorrorTemplate from "./pages/CsHorrorTemplate";
+import ShogunDashboard from "./pages/ShogunDashboard";
+import AvatarSeriesDetail from "./pages/SerieDetails/AvatarSerieDetails";
+import JungleQueenDashboard from "./pages/SerieDetails/JungleQueenDashboard";
 
 function App() {
   return (
@@ -60,12 +82,20 @@ function App() {
 
           <Route path="/series" element={<SeriesListPage />} />
           <Route path="/series-details" element={<SeriesDetailsPage />} />
+
           <Route path="/series/seasons" element={<SerieSeasonsPage />} />
+          <Route
+            path="/series/season/:seasonNumber"
+            element={<SerieSeasonSinglePage />}
+          />
           <Route path="/series/news" element={<SerieNewsPage />} />
           <Route path="/series/community" element={<SerieCommunityPage />} />
           <Route path="/series/avis" element={<SerieAvisPage />} />
           <Route path="/series/trailers-page" element={<SerieTrailersPage />} />
           <Route path="/series/shop" element={<SerieShopPage />} />
+          <Route path="/series/watch" element={<SerieWatchPage />} />
+          <Route path="/series-hub" element={<SeriesHubPage />} />
+          <Route path="/episode" element={<SingleEpisodePage />} />
 
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
@@ -89,7 +119,11 @@ function App() {
           <Route path="/user/friend-requests" element={<FriendRequestPage />} />
           <Route path="/user/seritheque" element={<MemberSerithequePage />} />
           <Route path="/user/listes" element={<MemberListesPage />} />
+          <Route path="/user/history" element={<WatchHistoryPage />} />
+          <Route path="/user/history-b" element={<WatchHistoryPageB />} />
+          <Route path="/my/calendar" element={<UserCalendarPage />} />
           <Route path="/user/amis" element={<MemberFriendsPage />} />
+          <Route path="/my/watchlist" element={<WishlistPage />} />
 
           <Route path="/not-found" element={<NotFoundPage />} />
 
@@ -104,6 +138,26 @@ function App() {
           <Route path="/daily/article" element={<DailyArticleDetailsPage />} />
           <Route path="/nouveautes" element={<NewSeriesVariantA />} />
           <Route path="/presse" element={<PressePage />} />
+          <Route path="/recommandations" element={<SimilarTastePage />} />
+          <Route path="/episodes-a-voir" element={<EpisodesToWatchPage />} />
+
+          <Route
+            path="/episodes-a-voir-c"
+            element={<EpisodesToWatchPageVariantC />}
+          />
+
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/equipe" element={<TeamPage />} />
+          <Route path="/aide" element={<HelpPage />} />
+          <Route path="/cgu" element={<TermsPage />} />
+          <Route path="/cookies" element={<CookiesPage />} />
+          <Route path="/donnees-personnelles" element={<PrivacyPage />} />
+
+          <Route path="/movies-details" element={<MovieDetail />} />
+          <Route path="/cs-horror-templates" element={<CsHorrorTemplate />} />
+          <Route path="/shogun" element={<ShogunDashboard />} />
+          <Route path="/avatar-details" element={<AvatarSeriesDetail />} />
+          <Route path="/jungle-queen" element={<JungleQueenDashboard />} />
 
           <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
         </Routes>

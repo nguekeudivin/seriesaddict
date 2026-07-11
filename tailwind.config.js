@@ -47,6 +47,11 @@ export default {
             500: "#3C0A22",
           },
 
+          yellow: {
+            DEFAULT: "#E8C303",
+            500: "#E8C303",
+          },
+
           dark: {
             DEFAULT: "#011921",
             500: "#011921",

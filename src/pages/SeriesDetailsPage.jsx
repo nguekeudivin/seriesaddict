@@ -1,669 +1,880 @@
-import React from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  CalendarDays,
-  ChevronLeft,
-  ChevronRight,
-  Eye,
-  Menu,
-  MessageCircle,
-  Pencil,
   Play,
   Plus,
-  Send,
+  Heart,
+  Eye,
+  Users,
+  Star,
+  MessageCircle,
+  ChevronRight,
+  ChevronLeft,
+  Clock,
+  Calendar,
+  Tv,
+  Film,
+  Trophy,
+  Quote,
+  Sparkles,
+  TrendingUp,
+  ShoppingBag,
+  Image as ImageIcon,
+  Newspaper,
+  BookOpen,
+  Globe,
+  Hash,
+  Clapperboard,
+  Palette,
+  MonitorPlay,
+  Volume2,
+  X,
+  ArrowRight,
+  User,
+  Search,
 } from "lucide-react";
-import logo from "../assets/logo.png";
-import mediaThumbA from "../assets/serieaddict-3.webp";
-import mediaThumbB from "../assets/serieaddict-4.webp";
-import ProductCard from "../components/product-card";
-import SeriesSeasonsRefactor from "../components/SerieSeasons";
-import SeriesSeasonsVariantB from "../components/SerieSeasonVariantB";
 
-const BRAND = {
-  primary: "#841D4F",
-  cyan: "#1E6C86",
-  wine: "#3C0A22",
-  dark: "#011921",
-  yellow: "#E8C303",
-};
-
-const GRADIENT = `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.cyan})`;
-const ACCENT_GRADIENT =
-  "bg-gradient-to-r from-brand-primary via-brand-wine to-brand-cyan";
-
+// ============================================================
+// Données mock
+// ============================================================
 const SERIES = {
-  title: "STRANGER THINGS",
-  years: "2024 - 2025",
+  title: "Stranger Things",
   originalTitle: "Stranger Things",
-  platform: "HBO",
+  tagline: "L'été 1985 ne sera jamais le même.",
+  years: "2016 - 2025",
+  platform: "Netflix",
   age: "16+",
-  runtime: "50 min",
-  status: "Terminée",
-  seasons: "4 saisons",
-  episodes: "34 épisodes",
-  duration: "48-76 min",
-  publicScore: "9",
-  myScore: "3",
-  saScore: "7",
-  votes: "3 456 votes",
-  country: "Série Américaine(e)",
-  creator: "Dan Erickson",
-  genres: ["Science-fiction", "Drame", "Thriller", "Mystère"],
+  runtime: "52 min",
+  status: "En cours",
+  seasons: 5,
+  episodes: 42,
+  avgEpisodeDuration: "52 min",
+  country: "États-Unis",
+  language: "Anglais",
+  creators: ["Matt Duffer", "Ross Duffer"],
+  studios: ["21 Laps Entertainment", "Monkey Massacre", "Netflix"],
+  genres: ["Science-fiction", "Drame", "Horreur", "Mystère"],
   synopsis:
-    "Dans cette proposition rétro-futuriste, le rêve américain hérité des années 1950 se fissure après une catastrophe nucléaire. La série oppose l'idéal d'un monde meilleur à la dureté d'un territoire dévasté, avec une tension permanente entre survie, désir et désillusion.",
+    "À Hawkins, dans l'Indiana, un jeune garçon de 12 ans disparaît mystérieusement. Ses amis, sa famille et le chef de police vont vivre une enquête haletante qui les mène vers des expériences gouvernementales secrètes, des forces surnaturelles terrifiantes et une petite fille aux pouvoirs extraordinaires.",
+  universe:
+    "Les années 1980, le Hawkins National Laboratory et le Monde à l'envers. Un univers où la nostalgie rencontre le surnaturel.",
   poster:
     "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+  backdrop:
+    "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1920&q=80",
+  trailerUrl: "https://www.youtube.com/embed/b9EkMc79Z3U",
+  communityScore: 9.2,
+  fanCount: "145K",
+  followers: 145320,
+  platforms: ["Netflix", "Prime Video", "Apple TV+"],
 };
 
-const HERO_AUDIENCE = [
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
-  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
-  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80",
-];
-
-const HERO_HASHTAGS = [
-  "#Conflit familial",
-  "#Série culte",
-  "#Los Angeles",
-  "#Amitié",
-  "#Psychologie",
-  "#Mort",
-  "#Homosexualité",
-  "#Fantôme",
-  "#Relation familiale",
-  "#Humour noir",
-  "#PDV amoureux",
-  "#Californie",
-  "#Sombre",
-  "#HBO",
-  "#Lieu de travail",
-  "#Triangle amoureux",
-];
-
-const HERO_TABS = [
-  { label: "Saisons", target: "series-seasons" },
-  { label: "News", target: "series-news" },
-  { label: "Community", target: "series-avis" },
-  { label: "Avis", target: "series-avis" },
-  { label: "Trailers", target: "series-trailers" },
-  { label: "Shop", target: "series-shop" },
-  { label: "Similaires", target: "series-similaires" },
-  { label: "Regarder la série", action: "watch", active: true },
-];
-
-const SEASON_FEATURE = {
-  totalSeasons: 2,
-  totalEpisodes: 19,
-  currentSeasonLabel: "Saison 1 - 10 épisodes",
-  badge: "Season 1",
-  image:
-    "https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=900&q=80",
+const PROGRESS = {
+  season: 3,
+  episode: 5,
+  totalEpisodes: 10,
+  percentage: 80,
+  lastEpisode: { code: "S03E05", title: "Le Nina Project" },
+  nextEpisode: {
+    code: "S03E06",
+    title: "Le Bain de Eleven",
+    synopsis:
+      "Eleven tente de retrouver ses pouvoirs dans un sauna improvisé pendant que ses amis affrontent le Flayed.",
+  },
+  timeRemaining: "4h 20min",
+  friendsWatching: ["Marc", "Sarah", "Lucas"],
 };
-
-const LAST_EPISODES = [
-  {
-    network: "HBO",
-    title: "BUILD BACK BETTER",
-    meta: "S3 E8 - DIFFUSÉ LE 26/12/2025",
-  },
-  {
-    network: "HBO",
-    title: "BUILD BACK BETTER",
-    meta: "S3 E7 - DIFFUSÉ LE 26/12/2025",
-  },
-  {
-    network: "HBO",
-    title: "BUILD BACK BETTER",
-    meta: "S3 E6 - DIFFUSÉ LE 26/12/2025",
-  },
-  {
-    network: "HBO",
-    title: "BUILD BACK BETTER",
-    meta: "S3 E5 - DIFFUSÉ LE 26/12/2025",
-  },
-];
-
-const UPCOMING_EPISODES = [
-  {
-    network: "HBO",
-    title: "BUILD BACK BETTER",
-    meta: "S3 E9",
-    date: "DIFFUSION LE 26/12/2025",
-  },
-  {
-    network: "HBO",
-    title: "BUILD BACK BETTER",
-    meta: "S3 E10",
-    date: "DIFFUSION LE 26/12/2025",
-  },
-  {
-    network: "HBO",
-    title: "BUILD BACK BETTER",
-    meta: "S3 E11",
-    date: "DIFFUSION LE 26/12/2025",
-  },
-  {
-    network: "HBO",
-    title: "BUILD BACK BETTER",
-    meta: "S3 E12",
-    date: "DIFFUSION LE 26/12/2025",
-  },
-];
-
-const CAST = [
-  {
-    name: "BRIAN AUSTIN GREEN",
-    role: "BRIAN AUSTIN GREEN",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    name: "BRIAN AUSTIN GREEN",
-    role: "BRIAN AUSTIN GREEN",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    name: "BRIAN AUSTIN GREEN",
-    role: "BRIAN AUSTIN GREEN",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    name: "JEAN SMART",
-    role: "THE GUY",
-    avatar:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
-  },
-];
 
 const SEASONS = [
   {
-    id: "s1",
+    id: 1,
     number: 1,
+    year: 2016,
     episodes: 8,
-    image: "...",
+    score: 8.7,
+    synopsis:
+      "La disparition de Will Byers plonge Hawkins dans l'effroi. Onze et les garçons découvrent le Monde à l'envers.",
+    poster:
+      "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80",
+    progress: 100,
   },
   {
-    id: "s2",
+    id: 2,
     number: 2,
+    year: 2017,
     episodes: 9,
-    image: "...",
+    score: 8.9,
+    synopsis:
+      "Hawkins tente de retrouver une vie normale, mais une entité plus sombre s'éveille à l'approche d'Halloween.",
+    poster:
+      "https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&w=600&q=80",
+    progress: 100,
   },
   {
-    id: "s3",
+    id: 3,
     number: 3,
+    year: 2019,
     episodes: 8,
-    image: "...",
+    score: 8.5,
+    synopsis:
+      "L'été 1985 bat son plein au centre commercial Starcourt, tandis qu'une créature se cache sous la ville.",
+    poster:
+      "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=600&q=80",
+    progress: 62,
+  },
+  {
+    id: 4,
+    number: 4,
+    year: 2022,
+    episodes: 9,
+    score: 9.1,
+    synopsis:
+      "Six mois après la bataille de Starcourt, le groupe est séparé. Vecna, une nouvelle menace, frappe Hawkins.",
+    poster:
+      "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=600&q=80",
+    progress: 0,
+  },
+  {
+    id: 5,
+    number: 5,
+    year: 2025,
+    episodes: 8,
+    score: null,
+    synopsis:
+      "La saison finale. La guerre contre Vecna et le Monde à l'envers atteindra son apogée.",
+    poster:
+      "https://images.unsplash.com/photo-1535016120720-40c6874c3b1c?auto=format&fit=crop&w=600&q=80",
+    progress: 0,
+    upcoming: true,
   },
 ];
 
 const VIDEOS = [
   {
-    title: "Teaser final season",
-    subtitle: "Bande-annonce officielle",
-    image: mediaThumbA,
+    id: 1,
+    title: "Bande-annonce officielle",
+    type: "Trailer",
+    duration: "2:34",
+    thumbnail:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80",
+    url: "https://www.youtube.com/embed/b9EkMc79Z3U",
   },
   {
-    title: "Behind the scenes",
-    subtitle: "Featurette cast & production",
-    image: mediaThumbB,
+    id: 2,
+    title: "Teaser Saison 4",
+    type: "Teaser",
+    duration: "1:08",
+    thumbnail:
+      "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=900&q=80",
+    url: "https://www.youtube.com/embed/b9EkMc79Z3U",
+  },
+  {
+    id: 3,
+    title: "Making-of Hawkins",
+    type: "Making-of",
+    duration: "12:20",
+    thumbnail:
+      "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80",
+    url: "https://www.youtube.com/embed/b9EkMc79Z3U",
+  },
+  {
+    id: 4,
+    title: "Les Duffer Brothers en interview",
+    type: "Interview",
+    duration: "8:45",
+    thumbnail:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80",
+    url: "https://www.youtube.com/embed/b9EkMc79Z3U",
+  },
+  {
+    id: 5,
+    title: "Featurette : Le Monde à l'envers",
+    type: "Featurette",
+    duration: "5:30",
+    thumbnail:
+      "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=900&q=80",
+    url: "https://www.youtube.com/embed/b9EkMc79Z3U",
   },
 ];
 
-const COLLECTIONS = [
+const CAST = [
   {
-    title: "Monstres et mondes parallèles",
-    subtitle: "Collection éditoriale",
-    image:
-      "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80",
+    id: 1,
+    name: "Millie Bobby Brown",
+    character: "Eleven",
+    role: "Actrice principale",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80",
   },
+  {
+    id: 2,
+    name: "Finn Wolfhard",
+    character: "Mike Wheeler",
+    role: "Acteur principal",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+  },
+  {
+    id: 3,
+    name: "Winona Ryder",
+    character: "Joyce Byers",
+    role: "Actrice principale",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=300&q=80",
+  },
+  {
+    id: 4,
+    name: "David Harbour",
+    character: "Jim Hopper",
+    role: "Acteur principal",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+  },
+  {
+    id: 5,
+    name: "Gaten Matarazzo",
+    character: "Dustin Henderson",
+    role: "Acteur principal",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+  },
+  {
+    id: 6,
+    name: "Caleb McLaughlin",
+    character: "Lucas Sinclair",
+    role: "Acteur principal",
+    avatar:
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
+  },
+];
+
+const CREW = [
+  { id: 1, name: "Matt Duffer", role: "Créateur / Réalisateur" },
+  { id: 2, name: "Ross Duffer", role: "Créateur / Réalisateur" },
+  { id: 3, name: "Shawn Levy", role: "Producteur exécutif" },
+  { id: 4, name: "Dan Cohen", role: "Producteur" },
 ];
 
 const NEWS = [
   {
-    title: "La saison 5 boucle son tournage principal",
-    excerpt:
-      "Le planning se précise et plusieurs indices laissent penser à une communication plus intense dans les prochaines semaines.",
-    meta: "Breaking · 4 min",
+    id: 1,
+    title: "La saison 5 dévoile sa première affiche officielle",
+    category: "Production",
+    date: "10 juillet 2026",
     image:
-      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    title: "Les frères Duffer promettent une fin plus intime",
-    excerpt:
-      "La conclusion devrait recentrer l'émotion sur le groupe historique sans perdre l'ampleur du spectacle.",
-    meta: "Interview · 5 min",
-    image:
-      "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    title: "Pourquoi Hawkins reste un décor aussi fort",
-    excerpt:
-      "Entre nostalgie américaine et menace invisible, la mise en scène transforme la ville en personnage à part entière.",
-    meta: "Décryptage · 6 min",
-    image:
-      "https://images.unsplash.com/photo-1523598455533-144bae1f0b14?auto=format&fit=crop&w=1400&q=80",
-  },
-];
-
-const shopProducts = [
-  {
-    title: "Poster collector Upside Down",
-    universe: "Poster collector",
-    price: "29,90 €",
-    rating: "4.8",
-    image:
-      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80",
-    badge: "Collector",
+      "https://images.unsplash.com/photo-1535016120720-40c6874c3b1c?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: 2,
-    title: "Mug TARDIS",
-    universe: "Doctor Who",
-    price: "19,90 €",
-    rating: "4.7",
+    title: "Nouveau trailer final : la guerre approche",
+    category: "Trailer",
+    date: "8 juillet 2026",
     image:
-      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=900&q=80",
-    badge: "Best seller",
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: 3,
-    title: "Lucille Replica",
-    universe: "The Walking Dead",
-    price: "149,90 €",
-    rating: "4.9",
+    title: "Les créateurs teasent un retour inattendu",
+    category: "Interview",
+    date: "5 juillet 2026",
     image:
-      "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=900&q=80",
-    badge: "Édition limitée",
+      "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 4,
+    title: "Stranger Things nominée aux Emmy Awards",
+    category: "Récompenses",
+    date: "2 juillet 2026",
+    image:
+      "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=900&q=80",
   },
 ];
 
-const SIMILAR_SERIES = [
-  {
-    title: "Dark",
-    image:
-      "https://images.unsplash.com/photo-1527049979667-990f1d0d8e7f?auto=format&fit=crop&w=700&q=80",
+const COMMUNITY = {
+  stats: {
+    members: "145K",
+    online: "3.2K",
+    discussions: "12.4K",
+    today: "+245",
   },
-  {
-    title: "The OA",
-    image:
-      "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=700&q=80",
-  },
-  {
-    title: "Locke & Key",
-    image:
-      "https://images.unsplash.com/photo-1523598455533-144bae1f0b14?auto=format&fit=crop&w=700&q=80",
-  },
-  {
-    title: "Yellowjackets",
-    image:
-      "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=700&q=80",
-  },
-  {
-    title: "Bodies",
-    image:
-      "https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=700&q=80",
-  },
-  {
-    title: "From",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80",
-  },
-];
+  hashtags: ["#StrangerThings", "#Vecna", "#Eleven", "#Hawkins", "#80sVibes"],
+  contributors: [
+    {
+      name: "HawkinsFan",
+      avatar:
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80",
+      posts: 342,
+    },
+    {
+      name: "RetroKid",
+      avatar:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80",
+      posts: 215,
+    },
+    {
+      name: "MomSteve",
+      avatar:
+        "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=100&q=80",
+      posts: 567,
+    },
+    {
+      name: "SynthWave",
+      avatar:
+        "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=100&q=80",
+      posts: 189,
+    },
+  ],
+  discussions: [
+    {
+      id: 1,
+      title: "Théorie : qui est le véritable méchant de la saison 5 ?",
+      author: "HawkinsFan",
+      avatar:
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80",
+      replies: 342,
+      likes: 128,
+      tag: "Théorie",
+      hot: true,
+    },
+    {
+      id: 2,
+      title: "Les références aux années 80 les plus cool de la série",
+      author: "RetroKid",
+      avatar:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80",
+      replies: 215,
+      likes: 89,
+      tag: "Culture",
+    },
+    {
+      id: 3,
+      title: "Steve Harrington : le babysitter héroïque de Hawkins",
+      author: "MomSteve",
+      avatar:
+        "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=100&q=80",
+      replies: 567,
+      likes: 234,
+      tag: "Personnages",
+      hot: true,
+    },
+    {
+      id: 4,
+      title: "Votre OST préférée de la série ?",
+      author: "SynthWave",
+      avatar:
+        "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=100&q=80",
+      replies: 189,
+      likes: 76,
+      tag: "Musique",
+    },
+  ],
+  theories: [
+    {
+      id: 1,
+      title: "Le Monde à l'envers est une dimension parallèle",
+      supporters: 4120,
+    },
+    {
+      id: 2,
+      title: "Eleven est la sœur d'un autre personnage",
+      supporters: 2890,
+    },
+    {
+      id: 3,
+      title: "Hopper n'est pas mort dans la saison 3",
+      supporters: 5630,
+    },
+    {
+      id: 4,
+      title: "Vecna et le Demogorgon partagent une origine",
+      supporters: 1980,
+    },
+  ],
+  quotes: [
+    { id: 1, text: "Les amis ne mentent pas.", character: "Eleven" },
+    { id: 2, text: "Mouth-breather.", character: "Eleven" },
+    { id: 3, text: "Je suis la garde du corps.", character: "Steve" },
+  ],
+  polls: [
+    {
+      id: 1,
+      question: "Quel est votre personnage préféré ?",
+      votes: 12450,
+      options: [
+        { label: "Eleven", percent: 42 },
+        { label: "Steve", percent: 28 },
+        { label: "Dustin", percent: 18 },
+        { label: "Hopper", percent: 12 },
+      ],
+    },
+    {
+      id: 2,
+      question: "Meilleure saison selon vous ?",
+      votes: 8930,
+      options: [
+        { label: "Saison 1", percent: 15 },
+        { label: "Saison 2", percent: 22 },
+        { label: "Saison 3", percent: 26 },
+        { label: "Saison 4", percent: 37 },
+      ],
+    },
+  ],
+  creations: [
+    {
+      id: 1,
+      title: "Fan art Eleven vs Vecna",
+      author: "ArtHawkins",
+      type: "Fan art",
+      image:
+        "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      id: 2,
+      title: "Cosplay du Demogorgon",
+      author: "MonsterFan",
+      type: "Cosplay",
+      image:
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      id: 3,
+      title: "Montage des meilleures scènes",
+      author: "EditMaster",
+      type: "Montage",
+      image:
+        "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      id: 4,
+      title: "Minimalist Hawkins Poster",
+      author: "PixelArt",
+      type: "Design",
+      image:
+        "https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?auto=format&fit=crop&w=600&q=80",
+    },
+  ],
+};
 
-const SERIES_COMMENTS = [
+const SHOP = [
   {
     id: 1,
-    author: "Charlotte",
-    avatar: "C",
-    time: "Il y a 2 jours",
-    reaction: "4.8/5",
-    content:
-      "La série garde une énergie feuilletonnante rare. Même quand l'univers grandit, le coeur émotionnel du groupe reste lisible et c'est ce qui porte vraiment la fiche.",
-    likes: 14,
+    name: "T-shirt Logo Hawkins",
+    price: "29,90 €",
+    status: "En stock",
+    popularity: 4.8,
+    image:
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: 2,
-    author: "Nadia",
-    avatar: "N",
-    time: "Il y a 5 jours",
-    reaction: "4.4/5",
-    content:
-      "Saison 4 très généreuse visuellement, avec une ambiance bien plus noire. J'attends surtout que la dernière salve revienne à quelque chose de plus resserré.",
-    likes: 9,
+    name: "Figurine Eleven",
+    price: "49,90 €",
+    status: "En stock",
+    popularity: 4.9,
+    image:
+      "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=600&q=80",
   },
   {
     id: 3,
-    author: "Luca",
-    avatar: "L",
-    time: "La semaine dernière",
-    reaction: "4.6/5",
-    content:
-      "Le mélange pop culture, horreur et coming-of-age reste redoutable. Peu de séries grand public tiennent aussi bien la mythologie et l'attachement aux personnages.",
-    likes: 17,
+    name: "Poster Saison 4",
+    price: "19,90 €",
+    status: "Derniers exemplaires",
+    popularity: 4.7,
+    image:
+      "https://images.unsplash.com/photo-1580136608260-4eb11f4b64fe?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 4,
+    name: "Mug Friends don't lie",
+    price: "14,90 €",
+    status: "En stock",
+    popularity: 4.6,
+    image:
+      "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 5,
+    name: "Bande originale vinyle",
+    price: "34,90 €",
+    status: "Précommande",
+    popularity: 4.9,
+    image:
+      "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
-function GradientRing({
-  radiusClass = "rounded-2xl",
-  thickness = 2,
-  glow = false,
-  hoverGlow = false,
+const GALLERY = [
+  {
+    id: 1,
+    title: "Affiche officielle",
+    type: "Poster",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: 2,
+    title: "Wallpaper Monde à l'envers",
+    type: "Wallpaper",
+    image:
+      "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: 3,
+    title: "Photo promotionnelle",
+    type: "Promotion",
+    image:
+      "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: 4,
+    title: "Tournage Hawkins Lab",
+    type: "Tournage",
+    image:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: 5,
+    title: "Capture officielle",
+    type: "Capture",
+    image:
+      "https://images.unsplash.com/photo-1535016120720-40c6874c3b1c?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: 6,
+    title: "Artwork communautaire",
+    type: "Artwork",
+    image:
+      "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1200&q=80",
+  },
+];
+
+const RECOMMENDATIONS = {
+  similar: [
+    {
+      title: "Dark",
+      reason: "Mêmes thèmes de mystère et de voyage temporel",
+      poster:
+        "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      title: "The OA",
+      reason: "Univers étrange et personnages attachants",
+      poster:
+        "https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      title: "Yellowjackets",
+      reason: "Suspense et survie entre adolescents",
+      poster:
+        "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      title: "From",
+      reason: "Horreur rurale et secrets de petite ville",
+      poster:
+        "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=600&q=80",
+    },
+  ],
+  friends: [
+    {
+      title: "Severance",
+      friend: "Marc",
+      note: "5 étoiles",
+      poster:
+        "https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      title: "The Last of Us",
+      friend: "Sarah",
+      note: "4.5 étoiles",
+      poster:
+        "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      title: "Silo",
+      friend: "Lucas",
+      note: "4 étoiles",
+      poster:
+        "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80",
+    },
+  ],
+  personalized: [
+    {
+      title: "The Bear",
+      match: "94%",
+      poster:
+        "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      title: "For All Mankind",
+      match: "88%",
+      poster:
+        "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      title: "Silo",
+      match: "91%",
+      poster:
+        "https://images.unsplash.com/photo-1535016120720-40c6874c3b1c?auto=format&fit=crop&w=600&q=80",
+    },
+  ],
+};
+
+const NAV_SECTIONS = [
+  { key: "presentation", label: "Présentation" },
+  { key: "progression", label: "Progression" },
+  { key: "saisons", label: "Saisons" },
+  { key: "videos", label: "Bandes-annonces" },
+  { key: "casting", label: "Casting" },
+  { key: "actualites", label: "Actualités" },
+  { key: "communaute", label: "Communauté" },
+  { key: "boutique", label: "Boutique" },
+  { key: "galerie", label: "Galerie" },
+  { key: "recommandations", label: "Recommandations" },
+];
+
+// ============================================================
+// Composants helpers
+// ============================================================
+function GlassPanel({
+  children,
   className = "",
+  radius = "rounded-md",
+  bodyClassName = "",
+  glow = false,
 }) {
   return (
     <div
       className={[
-        "pointer-events-none absolute inset-0",
-        radiusClass,
-        glow ? "blur-md" : "",
-        hoverGlow
-          ? "opacity-0 transition-opacity duration-300 group-hover:opacity-70"
-          : "",
+        "group relative overflow-hidden border border-white/10 bg-[#141414]",
+        radius,
         className,
       ].join(" ")}
-      style={{
-        background: GRADIENT,
-        WebkitMask:
-          "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-        WebkitMaskComposite: "xor",
-        maskComposite: "exclude",
-        padding: `${thickness}px`,
-      }}
-    />
-  );
-}
-
-function GlassPanel({
-  children,
-  className = "",
-  radius = "rounded-[28px]",
-  bodyClassName = "",
-}) {
-  return (
-    <div
-      className={["group relative overflow-hidden", radius, className].join(
-        " ",
+    >
+      {glow && (
+        <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand-primary/10 blur-3xl" />
       )}
-    >
-      <GradientRing radiusClass={radius} thickness={1.5} />
-      <GradientRing radiusClass={radius} thickness={1.5} glow hoverGlow />
-      <div
-        className={[
-          "relative bg-brand-dark/55 backdrop-blur",
-          radius,
-          bodyClassName,
-        ].join(" ")}
-      >
+      <div className={["relative", radius, bodyClassName].join(" ")}>
         {children}
       </div>
     </div>
   );
 }
 
-function GradientFrame({ children, className = "" }) {
+function SectionHeader({ title, rightLabel, onRightClick, icon: Icon }) {
   return (
-    <div
-      className={`rounded-[28px] p-[1px] ${className}`}
-      style={{
-        background:
-          "linear-gradient(135deg, rgba(132,29,79,.38), rgba(30,108,134,.24), rgba(255,255,255,.06))",
-      }}
-    >
-      <div className="rounded-[27px] border border-white/8 bg-[rgba(1,25,33,.68)] backdrop-blur-xl">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function SectionHeader({ title, rightLabel, onRightClick }) {
-  return (
-    <div className="mb-6 flex items-end justify-between gap-4">
-      <div className="flex items-center gap-3">
-        <span className={`h-4 w-[2px] rounded-full ${ACCENT_GRADIENT}`} />
-        <h2 className="text-2xl font-extrabold uppercase text-white">
+    <div className="mb-5 flex items-end justify-between gap-4 border-b border-white/10 pb-3">
+      <div className="flex items-center gap-2">
+        {Icon && <Icon className="h-4 w-4 text-white/40" />}
+        <h2 className="text-sm font-black uppercase tracking-widest text-white">
           {title}
         </h2>
       </div>
-
       {rightLabel ? (
         <button
           onClick={onRightClick}
-          className="inline-flex items-center gap-2 text-base font-semibold  text-white transition hover:text-white"
+          className="group inline-flex items-center gap-1 text-xs font-semibold text-white/50 hover:text-white"
         >
           {rightLabel}
-          <ChevronRight className="h-4 w-4 text-brand-cyan" />
+          <ChevronRight className="h-3.5 w-3.5 opacity-70 group-hover:opacity-100" />
         </button>
       ) : null}
     </div>
   );
 }
 
-function PrimaryButton({ children, onClick, className = "" }) {
+function ActionButton({
+  children,
+  variant = "primary",
+  icon: Icon,
+  onClick,
+  className = "",
+}) {
+  const base =
+    "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300";
+  const styles = {
+    primary: "bg-white text-black hover:scale-[1.02] hover:bg-white/90",
+    outline:
+      "border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/40",
+    ghost: "text-white/70 hover:text-white hover:bg-white/5",
+    gradient:
+      "bg-gradient-to-r from-brand-primary to-brand-cyan text-white shadow-[0_0_30px_rgba(132,29,79,.35)] hover:shadow-[0_0_45px_rgba(132,29,79,.5)] hover:scale-[1.02]",
+  };
   return (
     <button
       onClick={onClick}
-      className={[
-        "inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-300 hover:scale-[1.01]",
-        className,
-      ].join(" ")}
-      style={{ background: GRADIENT }}
+      className={[base, styles[variant], className].join(" ")}
     >
+      {Icon && <Icon className="h-4 w-4" />}
       {children}
     </button>
   );
 }
 
-function HeroScoreCard({ value, label, sublabel, accent = "primary" }) {
+function PosterCard({ item, showReason = true, className = "" }) {
   return (
-    <div className="flex flex-col items-center text-center">
-      <div
-        className={[
-          "grid h-13 w-13 place-items-center rounded-[16px] border text-[28px] font-black text-white shadow-[0_12px_24px_rgba(0,0,0,.16)]",
-          accent === "cyan"
-            ? "border-brand-cyan/45 bg-brand-cyan/50"
-            : "border-brand-primary/45 bg-brand-primary/55",
-        ].join(" ")}
-      >
-        {value}
-      </div>
-      <p className="mt-2 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white">
-        {label}
-      </p>
-      <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.1em] text-white/82">
-        {sublabel}
-      </p>
-    </div>
-  );
-}
-
-function HeroMeter() {
-  return (
-    <div className="w-full max-w-[460px]">
-      <div className="rounded-full border border-[#2a7590]/70 bg-black/18 p-1 shadow-[inset_0_0_0_1px_rgba(0,0,0,.15)]">
-        <div className="grid h-9 grid-cols-9 overflow-hidden rounded-full">
-          {Array.from({ length: 9 }).map((_, index) => (
-            <div
-              key={index}
-              className={[
-                "border-r border-black/15 last:border-r-0",
-                index < 4
-                  ? "bg-[#3a83ad]"
-                  : index < 7
-                    ? "bg-[#5f5c97]"
-                    : "bg-[#9e2b72]",
-              ].join(" ")}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function HeroActionButton({ icon: Icon, accent = "cyan" }) {
-  return (
-    <button
-      className={[
-        "group relative grid h-12 w-12 place-items-center rounded-[14px] border bg-black/18 text-white/88 backdrop-blur transition hover:bg-black/28",
-        accent === "primary"
-          ? "border-brand-primary/45 shadow-[0_0_0_1px_rgba(132,29,79,.25)]"
-          : "border-white/30 shadow-[0_0_0_1px_rgba(255,255,255,.08)]",
-      ].join(" ")}
-    >
-      <Icon
-        className={[
-          "h-5 w-5 transition-transform group-hover:scale-110",
-          accent === "primary" ? "text-brand-primary" : "text-white/90",
-        ].join(" ")}
-      />
-    </button>
-  );
-}
-
-function HeroAudienceStack() {
-  return (
-    <div className="flex items-center -space-x-3">
-      {HERO_AUDIENCE.map((avatar, index) => (
+    <div className={["group cursor-pointer", className].join(" ")}>
+      <div className="relative aspect-[2/3] overflow-hidden rounded-2xl border border-white/5 transition-all duration-300 group-hover:border-brand-cyan/40">
         <img
-          key={avatar}
-          src={avatar}
-          alt={`Fan ${index + 1}`}
-          className="h-12 w-12 rounded-full object-cover ring-2 ring-black/30"
+          src={item.poster || item.image}
+          alt={item.title || item.name}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-      ))}
-      <div className="grid h-12 w-12 place-items-center rounded-full bg-black/45 text-xs font-extrabold text-white ring-2 ring-black/30">
-        +20
-      </div>
-    </div>
-  );
-}
-
-function HeroBackdropArtwork() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,#8d8518_0%,#b7aa23_16%,#e9dc43_48%,#978f1c_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.36)_0%,rgba(0,0,0,.08)_20%,rgba(0,0,0,.06)_72%,rgba(0,0,0,.42)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_46%_54%,rgba(255,255,255,.22),transparent_16%),radial-gradient(circle_at_67%_23%,rgba(255,255,255,.14),transparent_18%)]" />
-
-      <div className="absolute left-[46%] top-[30%] hidden h-[360px] w-[360px] -translate-x-1/2 rounded-full border border-[#8f6015]/45 bg-[radial-gradient(circle_at_42%_34%,rgba(255,245,190,.95),rgba(234,206,97,.93)_44%,rgba(177,128,25,.88)_76%,rgba(112,78,12,.88)_100%)] shadow-[0_0_0_10px_rgba(255,239,174,.14),0_30px_80px_rgba(0,0,0,.18)] lg:block" />
-      <div className="absolute left-[46%] top-[30%] hidden h-[360px] w-[360px] -translate-x-1/2 lg:block">
-        <div className="absolute inset-[16px] rounded-full border border-[#f7e69e]/35" />
-        <div className="absolute left-[36%] top-[39%] h-5 w-5 rounded-full bg-[#d2b04a]/75 shadow-[0_0_12px_rgba(0,0,0,.08)]" />
-        <div className="absolute left-[58%] top-[39%] h-5 w-5 rounded-full bg-[#d2b04a]/75 shadow-[0_0_12px_rgba(0,0,0,.08)]" />
-        <div className="absolute left-[30%] top-[55%] h-[74px] w-[136px] rounded-full border-b-[12px] border-[#c4912a]/70 border-l-[10px] border-r-[10px] border-t-0 opacity-80" />
-      </div>
-
-      <div
-        className="absolute right-[-5%] top-[16%] hidden h-[320px] w-[520px] rounded-[180px] bg-[radial-gradient(circle_at_28%_35%,rgba(242,220,182,.96),rgba(182,120,66,.92)_55%,rgba(88,48,18,.92)_100%)] shadow-[0_20px_70px_rgba(0,0,0,.24)] lg:block"
-        style={{ transform: "rotate(-12deg)" }}
-      />
-      <div
-        className="absolute right-[28%] top-[16%] hidden h-[18px] w-[330px] rounded-full bg-[#6d5633] shadow-[0_0_0_3px_rgba(209,186,144,.25)] lg:block"
-        style={{ transform: "rotate(-52deg)" }}
-      />
-      <div
-        className="absolute right-[34%] top-[42%] hidden h-[36px] w-[84px] rounded-full bg-[#efe0c8] ring-1 ring-[#c7aa80]/80 lg:block"
-        style={{ transform: "rotate(-46deg)" }}
-      />
-    </div>
-  );
-}
-
-function HeroTabsBar({ onNavigateSection, onWatch }) {
-  return (
-    <div className="border-t border-white/12 bg-black/88 px-5 sm:px-8">
-      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 py-4">
-        {HERO_TABS.map((tab) => (
-          <button
-            key={tab.label}
-            onClick={() =>
-              tab.action === "watch" ? onWatch() : onNavigateSection(tab.target)
-            }
-            className={[
-              "font-semibold uppercase  transition",
-              tab.active
-                ? "bg-gradient-to-r from-brand-primary to-brand-cyan bg-clip-text text-transparent"
-                : "text-white hover:text-brand-cyan",
-            ].join(" ")}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function SectionBandTitle({ title, className = "" }) {
-  return (
-    <div className={className}>
-      <h2 className="text-[26px] font-black uppercase tracking-[0.03em] text-white lg:text-[28px]">
-        {title}
-      </h2>
-      <div className="mt-3 h-px w-full bg-white/28" />
-    </div>
-  );
-}
-
-function SectionNavButton({ direction = "right" }) {
-  const Icon = direction === "left" ? ChevronLeft : ChevronRight;
-  return (
-    <button className="grid h-14 w-14 place-items-center rounded-full border border-brand-primary/45 bg-black/92 text-white/88 shadow-[0_0_0_1px_rgba(30,108,134,.18)] transition hover:border-brand-cyan/70 hover:text-brand-cyan">
-      <Icon className="h-7 w-7" />
-    </button>
-  );
-}
-
-function EpisodeRow({ item, upcoming = false }) {
-  return (
-    <div className="flex items-center justify-between gap-4 border-b border-white/18 py-4">
-      <div className="flex min-w-0 items-center gap-3.5">
-        <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-brand-primary/38 text-[15px] font-medium text-white shadow-[0_0_0_1px_rgba(30,108,134,.12)]">
-          {item.network}
-        </div>
-        <div className="min-w-0">
-          <p className="truncate font-semibold uppercase tracking-[0.015em] text-white">
-            {item.title}
-          </p>
-          <p className="mt-0.5 font-medium uppercase text-white/78 lg:text-[14px]">
-            {item.meta}
-          </p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        {item.match && (
+          <span className="absolute left-2 top-2 rounded-full bg-brand-primary/90 px-2 py-1 text-[10px] font-bold text-white">
+            {item.match} match
+          </span>
+        )}
+        <div className="absolute bottom-0 left-0 right-0 p-3">
+          <h3 className="text-sm font-bold text-white">
+            {item.title || item.name}
+          </h3>
+          {showReason && item.reason && (
+            <p className="mt-1 text-[10px] leading-tight text-white/60">
+              {item.reason}
+            </p>
+          )}
+          {showReason && item.friend && (
+            <p className="mt-1 text-[10px] text-white/60">
+              Recommandé par {item.friend} · {item.note}
+            </p>
+          )}
+          {item.status && (
+            <p className="mt-1 text-[10px] font-semibold text-brand-cyan">
+              {item.status}
+            </p>
+          )}
+          {item.price && (
+            <p className="mt-1 text-sm font-bold text-white">{item.price}</p>
+          )}
         </div>
       </div>
-      {upcoming ? (
-        <p className="shrink-0 text-right text-[13px] font-medium uppercase tracking-[0.02em] text-white/82 lg:text-[14px]">
-          {item.date}
+    </div>
+  );
+}
+
+function HorizontalCarousel({ children, gap = "gap-5" }) {
+  const ref = useRef(null);
+  const scroll = (dir) => {
+    if (ref.current) {
+      ref.current.scrollBy({
+        left: dir === "left" ? -360 : 360,
+        behavior: "smooth",
+      });
+    }
+  };
+  return (
+    <div className="relative">
+      <div
+        ref={ref}
+        className={[
+          "flex snap-x snap-mandatory overflow-x-auto pb-4",
+          gap,
+        ].join(" ")}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {children}
+      </div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/60 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black/60 to-transparent" />
+      <div className="absolute right-0 top-0 flex -translate-y-1/2 gap-2 md:-top-10">
+        <button
+          onClick={() => scroll("left")}
+          className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/60 text-white/70 backdrop-blur transition hover:border-brand-cyan/50 hover:text-white"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          onClick={() => scroll("right")}
+          className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/60 text-white/70 backdrop-blur transition hover:border-brand-cyan/50 hover:text-white"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// Hero + Navigation
+// ============================================================
+function HeroSection() {
+  const navigate = useNavigate();
+
+  return (
+    <section className="relative flex min-h-[460px] w-full items-center overflow-hidden rounded-md bg-[#1c1c1c]">
+      {/* Background */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-40"
+        style={{ backgroundImage: `url(${SERIES.backdrop})` }}
+      />
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#121212] via-[#121212]/70 to-transparent" />
+
+      {/* Hero Content */}
+      <div className="relative z-20 max-w-xl space-y-4 p-8 lg:p-12">
+        <div className="flex gap-2">
+          <span className="rounded-sm bg-brand-primary px-2 py-0.5 text-[11px] font-extrabold text-black">
+            Top 10 en France
+          </span>
+          <span className="rounded-sm bg-neutral-800 px-2 py-0.5 text-[11px] font-semibold text-gray-300">
+            {SERIES.platform}
+          </span>
+        </div>
+
+        <h1 className="text-4xl font-black tracking-tight text-white lg:text-5xl">
+          {SERIES.title}
+        </h1>
+
+        <div className="flex items-center gap-3 text-xs font-semibold text-gray-400">
+          <span>{SERIES.years}</span>
+          <span>•</span>
+          <span>{SERIES.avgEpisodeDuration}</span>
+          <span>•</span>
+          <span className="text-gray-300">
+            {SERIES.genres.slice(0, 3).join(" / ")}
+          </span>
+        </div>
+
+        <p className="text-sm leading-relaxed text-gray-400">
+          {SERIES.synopsis}
         </p>
-      ) : (
-        <div className="flex shrink-0 items-center gap-3">
-          <button className="grid h-11 w-11 place-items-center rounded-xl border border-brand-primary/38 bg-[#112637] text-brand-primary shadow-[0_0_0_1px_rgba(30,108,134,.15)] transition hover:text-white">
-            <Play className="ml-0.5 h-5 w-5" />
-          </button>
-          <button className="grid h-11 w-11 place-items-center rounded-xl border border-white/38 text-white transition hover:border-brand-cyan hover:text-brand-cyan">
-            <Eye className="h-5 w-5" />
-          </button>
-        </div>
-      )}
-    </div>
+
+        <button
+          onClick={() => navigate("/series/watch")}
+          className="group flex items-center gap-2 pt-2 text-xs font-bold text-white transition-colors hover:text-brand-primary"
+        >
+          <span>Continuer le visionnage</span>
+          <ChevronRight className="h-4 w-4 transform transition-transform group-hover:translate-x-1" />
+        </button>
+      </div>
+
+      {/* Large Center Play Button */}
+      <div className="absolute left-1/2 top-1/2 z-20 hidden -translate-x-1/2 -translate-y-1/2 md:block">
+        <button
+          onClick={() => navigate("/series/watch")}
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-primary text-black shadow-lg shadow-brand-primary/20 transition-transform hover:scale-105"
+        >
+          <Play className="ml-1 h-6 w-6 fill-black" />
+        </button>
+      </div>
+    </section>
   );
 }
 
-function CastRail() {
+function CastingSection() {
   return (
-    <div className="pt-10">
-      <SectionBandTitle title="CASTING DE STRANGER THINGS" />
-      <div className="relative mt-8">
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-          {CAST.map((member, index) => (
-            <div
-              key={`${member.name}-${index}`}
-              className="flex items-center gap-4 xl:gap-5"
-            >
-              <div className="h-22 w-22 shrink-0 overflow-hidden rounded-full border border-brand-primary/40 shadow-[0_0_0_3px_rgba(30,108,134,.18)] lg:h-24 lg:w-24">
+    <section id="casting" className="scroll-mt-28">
+      <SectionHeader title="Casting" icon={Users} />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {CAST.map((member) => (
+          <div
+            key={member.id}
+            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-brand-cyan/30 hover:bg-white/[0.05]"
+          >
+            <div className="flex items-center gap-4">
+              <div className="h-16 w-16 overflow-hidden rounded-full ring-2 ring-white/10 transition group-hover:ring-brand-cyan/50">
                 <img
                   src={member.avatar}
                   alt={member.name}
@@ -671,643 +882,1120 @@ function CastRail() {
                 />
               </div>
               <div className="min-w-0">
-                <p className="text-[16px] font-black uppercase leading-tight text-white lg:text-[17px]">
+                <p className="font-bold text-white group-hover:text-brand-cyan">
                   {member.name}
                 </p>
-                <p className="mt-1 text-[14px] uppercase text-white/76 lg:text-[15px]">
+                <p className="text-sm text-white/60">{member.character}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-white/40">
                   {member.role}
                 </p>
               </div>
             </div>
-          ))}
-        </div>
-
-        <div className="absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-1/2 xl:block">
-          <SectionNavButton direction="right" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AdvertisementBlock() {
-  return (
-    <div className="rounded-sm bg-white/60 px-4 py-10 text-center text-3xl font-black uppercase tracking-[0.2em] text-black">
-      PUB
-    </div>
-  );
-}
-
-function MediaCard({ item, tall = true, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="group relative w-full overflow-hidden rounded-[24px] text-left"
-    >
-      <GradientRing radiusClass="rounded-[24px]" thickness={1.5} />
-      <div className="relative rounded-[24px] bg-brand-dark/55 backdrop-blur">
-        <div
-          className={[
-            "relative overflow-hidden rounded-[24px]",
-            tall ? "aspect-[16/12]" : "aspect-[16/9]",
-          ].join(" ")}
-        >
-          <img
-            src={item.image}
-            alt={item.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-black/5" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="grid h-12 w-12 place-items-center rounded-full bg-black/45 ring-1 ring-white/10 backdrop-blur">
-              <Play className="ml-0.5 h-4.5 w-4.5 fill-white text-white" />
-            </div>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 p-5">
-            <p className="text-[13px] font-extrabold uppercase tracking-[0.12em] text-white">
-              {item.title}
-            </p>
-            <p className="mt-1 text-[12px] text-white/60">{item.subtitle}</p>
-          </div>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-function InnerGradientBorder() {
-  return (
-    <>
-      {/* Ring principal */}
-      <div
-        className="pointer-events-none absolute inset-4 rounded-2xl"
-        style={{
-          background: GRADIENT,
-          WebkitMask:
-            "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
-          padding: "1.5px",
-        }}
-      />
-
-      {/* Glow subtil au hover */}
-      <div
-        className="pointer-events-none absolute inset-4 rounded-2xl opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-60"
-        style={{
-          background: GRADIENT,
-          WebkitMask:
-            "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
-          padding: "1.5px",
-        }}
-      />
-    </>
-  );
-}
-
-export function NewsCard({ item }) {
-  return (
-    <article className="group relative w-full overflow-hidden rounded-3xl">
-      {/* Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${item.img})` }}
-      />
-
-      {/* Overlay sombre */}
-      <div className="absolute inset-0 bg-black/55" />
-
-      {/* Contenu principal */}
-      <div className="relative rounded-3xl bg-brand-dark/35 backdrop-blur-[2px] p-6 sm:p-8">
-        {/* ✅ Cadre intérieur gradient */}
-        <InnerGradientBorder />
-
-        <div className="relative flex min-h-[240px] flex-col items-center justify-center text-center">
-          <h3 className="max-w-[34rem] text-lg font-extrabold uppercase tracking-wide text-white sm:text-xl">
-            {item.title}
-          </h3>
-
-          <div className="my-5 h-px w-56 bg-white/55" />
-
-          <p className="max-w-[36rem] text-sm leading-relaxed text-white/80">
-            {item.excerpt}
-          </p>
-
-          {/* Bouton */}
-          <div className="mt-6 relative inline-flex rounded-full">
-            <span
-              className="pointer-events-none absolute inset-0 rounded-full"
-              style={{
-                background: GRADIENT,
-                WebkitMask:
-                  "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-                WebkitMaskComposite: "xor",
-                maskComposite: "exclude",
-                padding: "1.5px",
-              }}
-            />
-            <button className="relative rounded-full bg-brand-wine/55 px-6 py-2 text-xs font-semibold uppercase tracking-wide text-white transition-all duration-300 hover:bg-brand-wine/80">
-              En savoir plus
-            </button>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function ShopCard({ item, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="group relative overflow-hidden rounded-[24px] text-left"
-    >
-      <GradientRing radiusClass="rounded-[24px]" thickness={1.5} />
-      <div className="relative rounded-[24px] bg-brand-dark/55 p-4 backdrop-blur">
-        <div className="overflow-hidden rounded-[18px] bg-black/20">
-          <img
-            src={item.image}
-            alt={item.title}
-            className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-          />
-        </div>
-        <div className="px-1 pb-1 pt-5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/45">
-            {item.type}
-          </p>
-          <h3 className="mt-2 text-[14px] font-semibold text-white">
-            {item.title}
-          </h3>
-          <div className="mt-3 flex items-center justify-between gap-3">
-            <span className="text-[14px] font-extrabold text-white">
-              {item.price}
-            </span>
-            <span className="rounded-full border border-brand-cyan/20 bg-black/25 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand-cyan">
-              série dérivée
-            </span>
-          </div>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-function SimilarSeriesCard({ item, onClick }) {
-  return (
-    <button onClick={onClick} className="group text-left">
-      <div className="overflow-hidden rounded-[20px] border border-white/10 bg-black/20 shadow-[0_14px_30px_rgba(0,0,0,.18)]">
-        <img
-          src={item.image}
-          alt={item.title}
-          className="aspect-[2/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-        />
-      </div>
-      <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white/75 group-hover:text-white">
-        {item.title}
-      </p>
-    </button>
-  );
-}
-
-function SeriesCommentItem({ comment }) {
-  return (
-    <GradientFrame>
-      <div className="p-6">
-        <div className="flex gap-4">
-          <div
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(132,29,79,.95), rgba(30,108,134,.95))",
-            }}
-          >
-            {comment.avatar}
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <p className="text-sm font-semibold text-white">
-                {comment.author}
-              </p>
-              <span className="text-white/25">•</span>
-              <p className="text-xs uppercase tracking-[0.16em] text-white/70">
-                {comment.time}
-              </p>
-              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-xs">
-                {comment.reaction}
-              </span>
-            </div>
-
-            <p className="mt-3 text-sm leading-7">{comment.content}</p>
-
-            <div className="mt-4 flex items-center gap-3">
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs  transition hover:bg-white/[0.07] hover:text-white">
-                J’aime ({comment.likes})
-              </button>
-
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs transition hover:bg-white/[0.07] hover:text-white">
-                Répondre
-              </button>
-
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs  transition hover:bg-white/[0.07] hover:text-white">
-                Signaler
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </GradientFrame>
-  );
-}
-
-function SeriesCommentsComposer() {
-  return (
-    <div className="space-y-5">
-      <div className="space-y-4">
-        {SERIES_COMMENTS.map((comment) => (
-          <SeriesCommentItem key={comment.id} comment={comment} />
         ))}
       </div>
 
-      <GradientFrame>
-        <div className="p-6">
-          <div className="rounded-[22px] border border-[#841D4F]/18 bg-[linear-gradient(90deg,rgba(132,29,79,.10),rgba(30,108,134,.04))] px-5 py-4 text-sm text-white">
-            Rejoignez la discussion ou partagez votre avis sur cette série.
-          </div>
+      <div className="mt-8">
+        <h3 className="mb-4 flex items-center gap-2 text-sm font-extrabold uppercase tracking-wide text-white/70">
+          <Clapperboard className="h-4 w-4 text-brand-cyan" />
+          Équipe créative
+        </h3>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {CREW.map((person) => (
+            <div
+              key={person.id}
+              className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 transition hover:border-white/10"
+            >
+              <p className="font-semibold text-white">{person.name}</p>
+              <p className="text-xs text-white/50">{person.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-xs uppercase tracking-[0.18em]">
-                Pseudo
-              </label>
-              <input
-                placeholder="Saisir un pseudo"
-                className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none focus:border-white/25"
+function ActualitesSection() {
+  return (
+    <section id="actualites" className="scroll-mt-28">
+      <SectionHeader title="Actualités" icon={Newspaper} />
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {NEWS.map((item) => (
+          <article
+            key={item.id}
+            className="group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:border-brand-cyan/30 hover:bg-white/[0.05]"
+          >
+            <div className="relative aspect-[16/10] overflow-hidden">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
+              <div className="absolute left-3 top-3 rounded-full bg-brand-primary/90 px-2.5 py-1 text-[10px] font-bold text-white">
+                {item.category}
+              </div>
             </div>
-
-            <div>
-              <label className="mb-2 block text-xs uppercase tracking-[0.18em]">
-                Email
-              </label>
-              <input
-                placeholder="Vous pouvez aussi ajouter un email"
-                className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none  focus:border-white/25"
-              />
+            <div className="p-4">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-white/40">
+                {item.date}
+              </p>
+              <h3 className="mt-2 line-clamp-2 text-sm font-bold text-white group-hover:text-brand-cyan">
+                {item.title}
+              </h3>
             </div>
-          </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-          <div className="mt-4 rounded-[24px] border border-white/10 bg-white/[0.03]">
-            <div className="flex flex-wrap items-center gap-4 border-b border-white/10 px-4 py-3 text-sm text-white/55">
-              <span className="font-semibold text-white/70">H1</span>
-              <span>H2</span>
-              <span>B</span>
-              <span>I</span>
-              <span>U</span>
-              <span>•</span>
-              <span>Liste</span>
+function PresentationSection() {
+  const details = [
+    { label: "Créateurs", value: SERIES.creators.join(", ") },
+    { label: "Studios", value: SERIES.studios.join(", ") },
+    { label: "Pays", value: SERIES.country },
+    { label: "Langue", value: SERIES.language },
+    { label: "Durée", value: SERIES.avgEpisodeDuration },
+    {
+      label: "Format",
+      value: `${SERIES.seasons} saisons · ${SERIES.episodes} épisodes`,
+    },
+    { label: "Années", value: SERIES.years },
+    { label: "Plateforme", value: SERIES.platform },
+  ];
+
+  return (
+    <section id="presentation" className="scroll-mt-28">
+      <SectionHeader title="Présentation" icon={BookOpen} />
+
+      <div className="grid gap-6 lg:grid-cols-12">
+        <div className="lg:col-span-7 space-y-4">
+          <p className="text-[10px] font-black uppercase tracking-widest text-white/40">
+            Synopsis
+          </p>
+          <p className="text-lg leading-8 text-white/90 md:text-xl md:leading-9">
+            {SERIES.synopsis}
+          </p>
+          <p className="text-sm leading-7 text-white/60">{SERIES.universe}</p>
+        </div>
+
+        <div className="lg:col-span-5">
+          <div className="rounded-md border border-white/10 bg-[#141414] p-5">
+            <p className="mb-4 text-[10px] font-black uppercase tracking-widest text-white/40">
+              Détails
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {details.map((item) => (
+                <div key={item.label}>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/30">
+                    {item.label}
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-white/90">
+                    {item.value}
+                  </p>
+                </div>
+              ))}
             </div>
-
-            <textarea
-              rows="8"
-              placeholder="Ajoutez votre commentaire ici..."
-              className="w-full resize-none bg-transparent px-4 py-4 text-sm text-white outline-none"
-            />
-          </div>
-
-          <div className="mt-5 flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex h-20 w-[300px] items-center rounded-2xl border border-white/10 bg-white/[0.035] px-4 text-sm text-white/60">
-              Captcha
-            </div>
-
-            <PrimaryButton>
-              <Send className="h-4 w-4" />
-              Commenter
-            </PrimaryButton>
           </div>
         </div>
-      </GradientFrame>
+      </div>
+    </section>
+  );
+}
+
+function ProgressionSection() {
+  return (
+    <section id="progression" className="scroll-mt-28">
+      <SectionHeader title="Votre progression" icon={TrendingUp} />
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-md border border-white/10 bg-[#141414] p-4">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-white/30">
+            Vu jusqu'à
+          </p>
+          <p className="mt-1 text-xl font-black text-white">
+            S{PROGRESS.season.toString().padStart(2, "0")}E
+            {PROGRESS.episode.toString().padStart(2, "0")}
+          </p>
+        </div>
+        <div className="rounded-md border border-white/10 bg-[#141414] p-4">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-white/30">
+            Progression
+          </p>
+          <p className="mt-1 text-xl font-black text-white">
+            {PROGRESS.percentage}%
+          </p>
+          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/10">
+            <div
+              className="h-full bg-brand-primary"
+              style={{ width: `${PROGRESS.percentage}%` }}
+            />
+          </div>
+        </div>
+        <div className="rounded-md border border-white/10 bg-[#141414] p-4">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-white/30">
+            Prochain épisode
+          </p>
+          <p className="mt-1 text-xl font-black text-white">
+            {PROGRESS.nextEpisode.code}
+          </p>
+          <p className="text-xs text-white/60">{PROGRESS.nextEpisode.title}</p>
+        </div>
+        <div className="rounded-md border border-white/10 bg-[#141414] p-4">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-white/30">
+            Temps restant
+          </p>
+          <p className="mt-1 text-xl font-black text-white">
+            {PROGRESS.timeRemaining}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SaisonsSection() {
+  const navigate = useNavigate();
+
+  return (
+    <section id="saisons" className="scroll-mt-28">
+      <SectionHeader
+        title="Les saisons"
+        rightLabel="Voir toutes les saisons"
+        onRightClick={() => navigate("/series/seasons")}
+        icon={Tv}
+      />
+      <div className="space-y-1">
+        {SEASONS.map((season) => (
+          <div
+            key={season.id}
+            onClick={() => navigate(`/series/season/${season.number}`)}
+            className={[
+              "flex cursor-pointer items-center justify-between rounded-md px-4 py-3 text-xs font-medium transition-all",
+              season.progress === 100
+                ? "bg-brand-primary/90 text-black"
+                : season.progress > 0
+                  ? "bg-[#1a1a1a] text-white border-l-2 border-brand-primary"
+                  : "bg-[#141414] text-gray-300 hover:bg-[#1a1a1a]",
+            ].join(" ")}
+          >
+            <div className="flex items-center gap-4">
+              <span
+                className={[
+                  "w-20 font-bold",
+                  season.progress === 100 ? "text-black/70" : "text-white/40",
+                ].join(" ")}
+              >
+                Saison {season.number}
+              </span>
+              <span className={season.progress === 100 ? "font-black" : ""}>
+                {season.episodes} épisodes
+              </span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span
+                className={[
+                  "hidden sm:inline",
+                  season.progress === 100 ? "text-black/70" : "text-white/40",
+                ].join(" ")}
+              >
+                {season.year}
+              </span>
+              {season.progress > 0 && (
+                <span
+                  className={[
+                    "font-bold",
+                    season.progress === 100 ? "text-black" : "text-white",
+                  ].join(" ")}
+                >
+                  {season.progress}%
+                </span>
+              )}
+              <ChevronRight
+                className={[
+                  "h-4 w-4",
+                  season.progress === 100 ? "text-black" : "text-white/60",
+                ].join(" ")}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function VideosSection() {
+  const [playing, setPlaying] = useState(null);
+
+  return (
+    <section id="videos" className="scroll-mt-28">
+      <SectionHeader title="Bandes-annonces et vidéos" icon={Film} />
+
+      <div className="grid gap-3 md:grid-cols-3">
+        {VIDEOS.map((video, idx) => (
+          <div
+            key={video.id}
+            onClick={() => setPlaying(video.id)}
+            className={[
+              "group flex cursor-pointer items-center gap-4 rounded-md p-3 transition-all",
+              idx === 0
+                ? "bg-[#1a1a1a] border border-white/10"
+                : "bg-[#141414] hover:bg-[#1a1a1a]",
+            ].join(" ")}
+          >
+            <div className="relative flex h-14 w-24 shrink-0 items-center justify-center overflow-hidden rounded bg-neutral-900">
+              <img
+                src={video.thumbnail}
+                alt={video.title}
+                className="absolute inset-0 h-full w-full object-cover opacity-60 transition group-hover:opacity-40"
+              />
+              <Play className="relative h-4 w-4 fill-white text-white" />
+            </div>
+            <div className="min-w-0">
+              <h4 className="truncate text-sm font-bold text-white">
+                {video.title}
+              </h4>
+              <p className="mt-0.5 text-[11px] text-white/40">
+                {video.type} · {video.duration}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {playing && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 backdrop-blur"
+            onClick={() => setPlaying(null)}
+          >
+            <div
+              className="relative w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setPlaying(null)}
+                className="absolute right-3 top-3 z-10 grid h-8 w-8 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <div className="aspect-video">
+                <iframe
+                  src={VIDEOS.find((v) => v.id === playing)?.url}
+                  title="Bande-annonce"
+                  className="h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+
+function CommunauteSection() {
+  const featuredQuote = COMMUNITY.quotes[0];
+
+  return (
+    <section id="communaute" className="scroll-mt-28">
+      <SectionHeader title="Communauté" icon={MessageCircle} />
+
+      {/* Stats + hashtags */}
+      <GlassPanel radius="rounded-[28px]" bodyClassName="mb-6 p-5 md:p-6">
+        <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 text-center">
+              <p className="text-2xl font-black text-white">
+                {COMMUNITY.stats.members}
+              </p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+                Membres
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 text-center">
+              <p className="text-2xl font-black text-brand-cyan">
+                {COMMUNITY.stats.online}
+              </p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+                En ligne
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 text-center">
+              <p className="text-2xl font-black text-white">
+                {COMMUNITY.stats.discussions}
+              </p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+                Discussions
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 text-center">
+              <p className="text-2xl font-black text-green-400">
+                {COMMUNITY.stats.today}
+              </p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+                Aujourd'hui
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 md:justify-end">
+            {COMMUNITY.hashtags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-semibold text-white/70 transition hover:border-brand-cyan/30 hover:text-white"
+              >
+                <Hash className="h-3 w-3" />
+                {tag.replace("#", "")}
+              </span>
+            ))}
+          </div>
+        </div>
+      </GlassPanel>
+
+      <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
+        {/* Activity feed */}
+        <GlassPanel radius="rounded-[28px]" bodyClassName="p-6 md:p-8">
+          <div className="mb-6 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-brand-cyan" />
+              <h3 className="font-bold uppercase tracking-wide text-white">
+                Fil d'activité
+              </h3>
+            </div>
+            <span className="rounded-full bg-brand-cyan/15 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-cyan">
+              Live
+            </span>
+          </div>
+
+          <div className="space-y-4">
+            {/* Discussion item */}
+            {COMMUNITY.discussions.slice(0, 2).map((item) => (
+              <motion.div
+                key={item.id}
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+                className="group cursor-pointer rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-brand-cyan/40"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-white/10">
+                    <img
+                      src={item.avatar}
+                      alt={item.author}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-white">
+                        {item.author}
+                      </span>
+                      <span className="text-[10px] text-white/40">
+                        a lancé une discussion
+                      </span>
+                      <span className="rounded-full bg-brand-cyan/15 px-2 py-0.5 text-[10px] font-bold text-brand-cyan">
+                        {item.tag}
+                      </span>
+                    </div>
+                    <p className="mt-1 font-semibold text-white group-hover:text-brand-cyan">
+                      {item.title}
+                    </p>
+                    <div className="mt-2 flex items-center gap-4 text-xs text-white/50">
+                      <span className="flex items-center gap-1">
+                        <MessageCircle className="h-3 w-3" /> {item.replies}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Heart className="h-3 w-3" /> {item.likes}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* Poll item */}
+            <motion.div
+              whileHover={{ x: 4 }}
+              transition={{ duration: 0.2 }}
+              className="group cursor-pointer rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-brand-cyan/40"
+            >
+              <div className="flex items-start gap-4">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-brand-primary/20">
+                  <Trophy className="h-5 w-5 text-brand-primary" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs text-white/40">Sondage populaire</p>
+                  <p className="font-semibold text-white group-hover:text-brand-cyan">
+                    {COMMUNITY.polls[0].question}
+                  </p>
+                  <div className="mt-2 flex items-center gap-2 text-xs text-white/60">
+                    {COMMUNITY.polls[0].options.slice(0, 2).map((o) => (
+                      <span
+                        key={o.label}
+                        className="rounded-full bg-white/[0.05] px-2 py-1"
+                      >
+                        {o.label} {o.percent}%
+                      </span>
+                    ))}
+                    <span className="text-white/40">
+                      {COMMUNITY.polls[0].votes.toLocaleString()} votes
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Theory item */}
+            <motion.div
+              whileHover={{ x: 4 }}
+              transition={{ duration: 0.2 }}
+              className="group cursor-pointer rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-brand-cyan/40"
+            >
+              <div className="flex items-start gap-4">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-brand-cyan/15">
+                  <Sparkles className="h-5 w-5 text-brand-cyan" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs text-white/40">Théorie validée</p>
+                  <p className="font-semibold text-white group-hover:text-brand-cyan">
+                    {COMMUNITY.theories[0].title}
+                  </p>
+                  <p className="mt-1 text-xs text-white/50">
+                    {COMMUNITY.theories[0].supporters.toLocaleString()} soutiens
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Quote item */}
+            <motion.div
+              whileHover={{ x: 4 }}
+              transition={{ duration: 0.2 }}
+              className="group cursor-pointer rounded-2xl border-l-4 border-brand-cyan bg-white/[0.03] p-4 transition hover:bg-white/[0.05]"
+            >
+              <Quote className="h-5 w-5 text-brand-cyan" />
+              <p className="mt-2 text-sm italic text-white/80">
+                « {featuredQuote.text} »
+              </p>
+              <p className="mt-2 text-xs font-bold text-white/40">
+                — {featuredQuote.character}
+              </p>
+            </motion.div>
+          </div>
+
+          <button className="mt-6 w-full rounded-2xl border border-white/10 bg-white/[0.03] py-3 text-sm font-semibold text-white/70 transition hover:border-brand-cyan/30 hover:text-white">
+            Voir toute l'activité
+          </button>
+        </GlassPanel>
+
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Top contributors */}
+          <GlassPanel radius="rounded-[28px]" bodyClassName="p-6 md:p-8">
+            <h3 className="mb-5 flex items-center gap-2 font-bold uppercase tracking-wide text-white">
+              <Users className="h-5 w-5 text-brand-cyan" />
+              Top contributeurs
+            </h3>
+            <div className="space-y-3">
+              {COMMUNITY.contributors.map((user, index) => (
+                <div
+                  key={user.name}
+                  className="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/[0.03] p-3 transition hover:bg-white/[0.05]"
+                >
+                  <span className="w-5 text-center text-sm font-black text-white/20">
+                    {index + 1}
+                  </span>
+                  <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-white/10">
+                    <img
+                      src={user.avatar}
+                      alt={user.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-white">{user.name}</p>
+                    <p className="text-[10px] text-white/50">
+                      {user.posts} posts
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </GlassPanel>
+
+          {/* Trending hashtags */}
+          <GlassPanel radius="rounded-[28px]" bodyClassName="p-6 md:p-8">
+            <h3 className="mb-4 flex items-center gap-2 font-bold uppercase tracking-wide text-white">
+              <Hash className="h-5 w-5 text-brand-primary" />
+              Tendances
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {COMMUNITY.hashtags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-semibold text-white/70 transition hover:border-brand-cyan/30 hover:text-white"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </GlassPanel>
+
+          {/* Featured creations */}
+          <GlassPanel radius="rounded-[28px]" bodyClassName="p-6 md:p-8">
+            <h3 className="mb-4 flex items-center gap-2 font-bold uppercase tracking-wide text-white">
+              <Palette className="h-5 w-5 text-brand-primary" />
+              Créations en vedette
+            </h3>
+            <div className="space-y-3">
+              {COMMUNITY.creations.slice(0, 3).map((creation) => (
+                <div
+                  key={creation.id}
+                  className="group flex cursor-pointer gap-3 overflow-hidden rounded-xl transition hover:bg-white/[0.05]"
+                >
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-white/5">
+                    <img
+                      src={creation.image}
+                      alt={creation.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <p className="text-sm font-bold text-white">
+                      {creation.title}
+                    </p>
+                    <p className="text-[10px] text-white/60">
+                      {creation.type} · {creation.author}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </GlassPanel>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BoutiqueSection() {
+  return (
+    <section id="boutique" className="scroll-mt-28">
+      <SectionHeader title="Boutique officielle" icon={ShoppingBag} />
+      <HorizontalCarousel>
+        {SHOP.map((product) => (
+          <div key={product.id} className="w-[220px] shrink-0 snap-start">
+            <PosterCard item={product} showReason={false} />
+            <div className="mt-2 flex items-center justify-between px-1">
+              <span
+                className={[
+                  "text-[10px] font-semibold",
+                  product.status === "En stock"
+                    ? "text-green-400"
+                    : "text-brand-cyan",
+                ].join(" ")}
+              >
+                {product.status}
+              </span>
+              <span className="flex items-center gap-1 text-[10px] font-bold text-white/60">
+                <Star className="h-3 w-3 fill-brand-primary text-brand-primary" />
+                {product.popularity}
+              </span>
+            </div>
+          </div>
+        ))}
+      </HorizontalCarousel>
+    </section>
+  );
+}
+
+function GalerieSection() {
+  const [lightbox, setLightbox] = useState(null);
+  const [filter, setFilter] = useState("Tout");
+
+  const filters = ["Tout", ...Array.from(new Set(GALLERY.map((i) => i.type)))];
+  const filtered =
+    filter === "Tout" ? GALLERY : GALLERY.filter((i) => i.type === filter);
+  const featured = filtered[0];
+  const rest = filtered.slice(1);
+
+  return (
+    <section id="galerie" className="scroll-mt-28">
+      <SectionHeader title="Galerie" icon={ImageIcon} />
+
+      {/* Filters */}
+      <div className="mb-6 flex flex-wrap gap-2">
+        {filters.map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={[
+              "rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all",
+              filter === f
+                ? "bg-gradient-to-r from-brand-primary to-brand-cyan text-white shadow-[0_0_15px_rgba(132,29,79,.35)]"
+                : "border border-white/10 bg-white/[0.03] text-white/60 hover:border-white/20 hover:text-white",
+            ].join(" ")}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      {filtered.length > 0 && (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {/* Featured */}
+          <motion.div
+            key={`featured-${featured.id}`}
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="group relative cursor-pointer overflow-hidden rounded-[28px] border border-white/10 md:row-span-2"
+            onClick={() => setLightbox(featured)}
+          >
+            <img
+              src={featured.image}
+              alt={featured.title}
+              className="h-full min-h-[320px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+            <div className="absolute left-4 top-4 rounded-full bg-brand-primary px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white">
+              {featured.type}
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <p className="text-xl font-black text-white">{featured.title}</p>
+              <p className="text-sm text-white/70">Cliquez pour agrandir</p>
+            </div>
+            <div className="absolute inset-0 grid place-items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="grid h-14 w-14 place-items-center rounded-full bg-white/20 backdrop-blur">
+                <ImageIcon className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Rest grid */}
+          {rest.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+              className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10"
+              onClick={() => setLightbox(item)}
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur">
+                {item.type}
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 translate-y-full p-4 transition-transform duration-300 group-hover:translate-y-0">
+                <p className="text-xs font-bold text-white">{item.title}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 backdrop-blur"
+            onClick={() => setLightbox(null)}
+          >
+            <div
+              className="relative max-h-full max-w-5xl overflow-hidden rounded-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setLightbox(null)}
+                className="absolute right-3 top-3 z-10 grid h-8 w-8 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <img
+                src={lightbox.image}
+                alt={lightbox.title}
+                className="max-h-[85vh] w-auto rounded-2xl object-contain"
+              />
+              <p className="mt-3 text-center text-sm font-semibold text-white">
+                {lightbox.title}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+
+function SimilarCard({ item }) {
+  return (
+    <div className="group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.01] transition hover:border-brand-cyan/40">
+      <div className="relative aspect-[2/3] overflow-hidden">
+        <img
+          src={item.poster}
+          alt={item.title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <p className="text-lg font-black text-white group-hover:text-brand-cyan">
+            {item.title}
+          </p>
+          <p className="mt-1 text-xs leading-relaxed text-white/60">
+            {item.reason}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
 
-function TopBar() {
+function FriendCard({ item }) {
   return (
-    <header className="sticky top-0 z-40 border-b border-white/5 bg-black/70 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-5">
-        <button className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-white/75 transition hover:bg-white/[0.06] hover:text-white">
-          <Menu className="h-4 w-4" />
-        </button>
-
-        <button className="shrink-0">
-          <img src={logo} alt="Series Addict" className="h-8 w-auto sm:h-10" />
-        </button>
-
-        <div className="flex items-center gap-3">
-          <div className="hidden text-right sm:block">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
-              Hello Charlotte
-            </p>
-            <p className="text-sm font-semibold text-white">Rédactrice</p>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80"
-            alt="Charlotte"
-            className="h-10 w-10 rounded-full object-cover ring-1 ring-white/10"
-          />
+    <div className="group flex cursor-pointer gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-3 transition hover:border-brand-cyan/40 hover:bg-white/[0.05]">
+      <div className="relative h-24 w-16 shrink-0 overflow-hidden rounded-xl">
+        <img
+          src={item.poster}
+          alt={item.title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+      </div>
+      <div className="flex flex-col justify-center">
+        <p className="font-bold text-white group-hover:text-brand-cyan">
+          {item.title}
+        </p>
+        <div className="mt-1 flex items-center gap-2 text-xs text-white/60">
+          <span className="rounded-full bg-brand-primary/20 px-2 py-0.5 text-[10px] font-bold text-brand-primary">
+            {item.friend}
+          </span>
+          <span>a regardé</span>
         </div>
+        <div className="mt-2 flex items-center gap-1 text-xs font-bold text-white/70">
+          <Star className="h-3 w-3 fill-brand-primary text-brand-primary" />
+          {item.note}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PersonalizedCard({ item, featured = false }) {
+  return (
+    <div
+      className={[
+        "group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 transition hover:border-brand-cyan/40",
+        featured ? "md:col-span-2 md:row-span-2" : "",
+      ].join(" ")}
+    >
+      <img
+        src={item.poster}
+        alt={item.title}
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+      <div className="absolute left-3 top-3 rounded-full bg-gradient-to-r from-brand-primary to-brand-cyan px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white">
+        Match {item.match}
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 p-4">
+        <p
+          className={[
+            "font-black text-white group-hover:text-brand-cyan",
+            featured ? "text-2xl" : "text-base",
+          ].join(" ")}
+        >
+          {item.title}
+        </p>
+        {featured && (
+          <p className="mt-1 max-w-xs text-sm text-white/70">
+            Recommandée spécialement pour vous selon votre historique.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RecommandationsSection() {
+  return (
+    <section id="recommandations" className="scroll-mt-28">
+      <SectionHeader title="Recommandations" icon={Sparkles} />
+
+      <div className="space-y-12">
+        {/* Similar series grid */}
+        <div>
+          <h3 className="mb-4 text-sm font-extrabold uppercase tracking-wide text-white/70">
+            Parce que vous avez aimé {SERIES.title}
+          </h3>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {RECOMMENDATIONS.similar.map((item) => (
+              <SimilarCard key={item.title} item={item} />
+            ))}
+          </div>
+        </div>
+
+        {/* Friends watching */}
+        <GlassPanel radius="rounded-[28px]" bodyClassName="p-6 md:p-8">
+          <h3 className="mb-5 flex items-center gap-2 text-sm font-extrabold uppercase tracking-wide text-white/70">
+            <Users className="h-4 w-4 text-brand-cyan" />
+            Vos amis ont adoré
+          </h3>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {RECOMMENDATIONS.friends.map((item) => (
+              <FriendCard key={item.title} item={item} />
+            ))}
+          </div>
+        </GlassPanel>
+
+        {/* Personalized with featured */}
+        <div>
+          <h3 className="mb-4 text-sm font-extrabold uppercase tracking-wide text-white/70">
+            Pour vous
+          </h3>
+          <div className="grid h-[420px] gap-4 md:grid-cols-3 md:grid-rows-2">
+            <PersonalizedCard item={RECOMMENDATIONS.personalized[0]} featured />
+            {RECOMMENDATIONS.personalized.slice(1).map((item) => (
+              <PersonalizedCard key={item.title} item={item} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const CHANNELS = [
+  "ACCUEIL",
+  "SÉRIES",
+  "FILMS",
+  "CS HORROR",
+  "CS MYSTERY",
+  "DOCUMENTAIRES",
+  "FAMILY",
+];
+
+const MAIN_NAV = [
+  "TV program",
+  "Archiv",
+  "Reklama",
+  "Jak naladit",
+  "O nás",
+  "Kontakt",
+];
+
+function TopChannelsBar() {
+  return (
+    <div className="w-full border-b border-neutral-800 bg-[#181818] text-[11px] font-bold tracking-wider text-gray-400">
+      <div className="mx-auto flex h-12 max-w-7xl items-center justify-center gap-6 overflow-x-auto px-6 md:justify-start">
+        {CHANNELS.map((channel) => (
+          <span
+            key={channel}
+            className={[
+              "cursor-pointer whitespace-nowrap rounded px-3 py-1.5 transition-colors",
+              channel === "CS HORROR"
+                ? "border border-neutral-700 bg-neutral-800 text-white"
+                : "hover:text-white",
+            ].join(" ")}
+          >
+            {channel}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MainHeader() {
+  return (
+    <header className="mx-auto flex max-w-7xl items-center justify-between border-b border-neutral-900 px-6 py-4">
+      <div className="flex items-center gap-12">
+        <div className="flex cursor-pointer items-center gap-1 text-xl font-black tracking-tight text-white">
+          <span className="text-brand-primary">CS</span>
+          <span>HORROR</span>
+        </div>
+        <nav className="hidden items-center gap-6 text-sm font-medium lg:flex">
+          {MAIN_NAV.map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="text-gray-400 transition-colors hover:text-white"
+            >
+              {item}
+            </a>
+          ))}
+        </nav>
+      </div>
+      <div className="flex items-center gap-4 text-gray-400">
+        <Search className="h-5 w-5 cursor-pointer transition-colors hover:text-white" />
+        <User className="h-5 w-5 cursor-pointer transition-colors hover:text-white" />
       </div>
     </header>
   );
 }
 
-export default function SeriesDetailsPage() {
+function HeroCards() {
   const navigate = useNavigate();
-  const scrollToSection = (id) => {
-    if (!id) return;
-    const node = document.getElementById(id);
-    node?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  return (
+    <section className="grid grid-cols-1 gap-3 md:grid-cols-3">
+      {VIDEOS.slice(0, 3).map((video, idx) => (
+        <div
+          key={video.id}
+          onClick={() => navigate("/series/watch")}
+          className={[
+            "flex cursor-pointer items-center gap-4 rounded-md p-3 transition-all",
+            idx === 0
+              ? "border border-neutral-700 bg-neutral-800/80"
+              : "bg-[#181818] hover:bg-neutral-800",
+          ].join(" ")}
+        >
+          <div className="relative flex h-14 w-24 shrink-0 items-center justify-center overflow-hidden rounded bg-neutral-900">
+            <img
+              src={video.thumbnail}
+              alt={video.title}
+              className="absolute inset-0 h-full w-full object-cover opacity-50"
+            />
+            <Play className="relative h-4 w-4 fill-gray-400 text-gray-400" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold leading-tight text-white">
+              {video.title}
+            </h4>
+            <p className="mt-0.5 text-[11px] text-gray-500">
+              {video.type} · {video.duration}
+            </p>
+          </div>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function FeaturedGrid() {
+  const navigate = useNavigate();
+  const activeSeason =
+    SEASONS.find((s) => s.progress > 0 && s.progress < 100) || SEASONS[0];
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <TopBar />
-
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute left-[-6%] top-[8%] h-[360px] w-[360px] rounded-full bg-brand-primary/15 blur-3xl" />
-        <div className="absolute right-[-8%] top-[18%] h-[320px] w-[320px] rounded-full bg-brand-cyan/12 blur-3xl" />
-        <div className="absolute bottom-[10%] left-[28%] h-[280px] w-[280px] rounded-full bg-brand-wine/14 blur-3xl" />
+    <section className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+      {/* Program lineup */}
+      <div className="space-y-4 lg:col-span-5">
+        <h3 className="text-xs font-black uppercase tracking-widest text-white">
+          Les saisons
+        </h3>
+        <div className="space-y-1">
+          {SEASONS.map((season) => (
+            <div
+              key={season.id}
+              onClick={() => navigate(`/series/season/${season.number}`)}
+              className={[
+                "flex cursor-pointer items-center justify-between rounded-md px-4 py-2.5 text-xs font-medium transition-all",
+                season.progress === 100
+                  ? "bg-brand-primary font-bold text-black"
+                  : season.number === activeSeason.number
+                    ? "border-l-2 border-brand-primary bg-neutral-800/90 text-white"
+                    : "bg-[#161616] text-gray-300 hover:bg-neutral-800",
+              ].join(" ")}
+            >
+              <div className="flex items-center gap-4">
+                <span
+                  className={[
+                    "w-16",
+                    season.progress === 100 ? "text-black/70" : "text-gray-500",
+                  ].join(" ")}
+                >
+                  Saison {season.number}
+                </span>
+                <span
+                  className={
+                    season.progress === 100 ? "font-black" : "text-white"
+                  }
+                >
+                  {season.episodes} épisodes
+                </span>
+              </div>
+              <ArrowRight
+                className={[
+                  "h-4 w-4",
+                  season.progress === 100 ? "text-black" : "text-white/60",
+                ].join(" ")}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
-      <main className="relative z-10">
-        <section className="border-b border-white/5">
-          <div className="mx-auto pb-8 pt-4">
-            <div className="relative overflow-hidden border border-brand-primary/30 shadow-[0_24px_80px_rgba(0,0,0,.25)]">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-brand-primary/70" />
-              <HeroBackdropArtwork />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.06)_0%,rgba(0,0,0,.12)_38%,rgba(0,0,0,.46)_82%,rgba(0,0,0,.76)_100%)]" />
-
-              <div className="relative flex min-h-[700px] flex-col">
-                <div className="grid flex-1 gap-10 px-6 py-9 sm:px-8 lg:grid-cols-[310px_minmax(0,1fr)] lg:gap-16 lg:px-14 lg:py-12">
-                  <div className="lg:col-span-2 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                    <div className="max-w-[720px]">
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                        <h1 className="text-[38px] font-black uppercase tracking-[0.045em] text-white lg:text-[46px]">
-                          {SERIES.title}
-                        </h1>
-                        <span className="pt-1 text-[12px] font-bold uppercase tracking-[0.16em] text-white/78">
-                          {SERIES.years}
-                        </span>
-                      </div>
-                      <p className="mt-1 text-lg italic text-white/88">
-                        ({SERIES.originalTitle})
-                      </p>
-
-                      <div className="mt-6 flex flex-wrap gap-2">
-                        {[SERIES.platform, SERIES.runtime, SERIES.age].map(
-                          (item) => (
-                            <span
-                              key={item}
-                              className="rounded-full bg-black/38 px-3.5 py-2 text-[12px] font-extrabold uppercase tracking-[0.08em] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.06)]"
-                            >
-                              {item}
-                            </span>
-                          ),
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="w-full max-w-[610px]">
-                      <div className="flex flex-col gap-5 lg:items-end">
-                        <HeroMeter />
-                        <div className="flex flex-wrap justify-end gap-4">
-                          <HeroScoreCard
-                            value={SERIES.publicScore}
-                            label="Sur"
-                            sublabel={SERIES.votes}
-                          />
-                          <HeroScoreCard
-                            value={SERIES.myScore}
-                            label="Ma note"
-                            sublabel=""
-                            accent="cyan"
-                          />
-                          <HeroScoreCard
-                            value={SERIES.saScore}
-                            label="Note SA"
-                            sublabel=""
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-7">
-                    <div className="relative mx-auto w-full max-w-[310px] overflow-hidden rounded-[22px] border border-brand-cyan/65 bg-black/20 shadow-[0_25px_70px_rgba(0,0,0,.45)]">
-                      <span className="absolute left-4 top-4 z-10 rounded-md bg-[#8F1B1B] px-3 py-1 text-xs font-extrabold uppercase tracking-[0.12em] text-white shadow-[0_8px_18px_rgba(0,0,0,.22)]">
-                        {SERIES.status}
-                      </span>
-                      <img
-                        src={SERIES.poster}
-                        alt={SERIES.title}
-                        className="aspect-[2/3] w-full object-cover"
-                      />
-                    </div>
-
-                    <button
-                      onClick={() => navigate("/trailers")}
-                      className="group relative mx-auto w-full max-w-[310px] rounded-full p-[1.5px]"
-                    >
-                      <span
-                        className="pointer-events-none absolute inset-0 rounded-full"
-                        style={{
-                          background: GRADIENT,
-                          WebkitMask:
-                            "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-                          WebkitMaskComposite: "xor",
-                          maskComposite: "exclude",
-                          padding: "1.5px",
-                        }}
-                      />
-                      <span className="relative flex items-center justify-center gap-3 rounded-full bg-black/78 px-6 py-4 text-lg font-medium text-white/88 backdrop-blur transition group-hover:bg-black/88">
-                        <Play className="h-5 w-5 text-brand-primary" />
-                        <span>Regarder la série</span>
-                      </span>
-                    </button>
-                  </div>
-
-                  <div className="flex items-end">
-                    <div className="w-full max-w-[920px] pt-6 lg:pt-0">
-                      <div className="flex flex-wrap items-center gap-4">
-                        <HeroActionButton icon={Plus} />
-                        <HeroActionButton
-                          icon={CalendarDays}
-                          accent="primary"
-                        />
-                        <HeroActionButton
-                          icon={MessageCircle}
-                          accent="primary"
-                        />
-                        <HeroActionButton icon={Eye} />
-                        <HeroActionButton icon={Pencil} />
-                        <HeroAudienceStack />
-                      </div>
-
-                      <p className="mt-7 text-[15px] font-extrabold uppercase tracking-[0.08em] text-white">
-                        {SERIES.genres.join(" - ")}
-                      </p>
-
-                      <div className="mt-4 space-y-1.5 text-[16px] text-white/88 lg:text-[17px]">
-                        <p>
-                          <span className="font-semibold">
-                            {SERIES.country}
-                          </span>
-                        </p>
-                        <p>
-                          <span className="font-semibold">Créée par :</span>{" "}
-                          <span className="italic text-white/85">
-                            {SERIES.creator}
-                          </span>
-                        </p>
-                      </div>
-
-                      <p className="mt-7 max-w-[980px] text-[15px] leading-7 text-white/90 lg:text-[16px]">
-                        {SERIES.synopsis}
-                      </p>
-
-                      <div className="mt-7 flex flex-wrap gap-x-3 gap-y-2 text-[12px] font-medium text-white/84">
-                        {HERO_HASHTAGS.map((tag) => (
-                          <span key={tag}>{tag}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <HeroTabsBar
-                  onNavigateSection={scrollToSection}
-                  onWatch={() => navigate("/trailers")}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl  space-y-14 px-4 py-12 sm:px-5 lg:py-14">
-          <SeriesSeasonsRefactor
-            UPCOMING_EPISODES={UPCOMING_EPISODES}
-            SEASON_FEATURE={SEASON_FEATURE}
-            LAST_EPISODES={LAST_EPISODES}
-            CAST={CAST}
-          />
-
-          <AdvertisementBlock />
-
-          <div
-            id="series-trailers"
-            className="grid gap-12 lg:grid-cols-[1.4fr_.8fr]"
-          >
-            <div>
-              <SectionHeader
-                title="Vidéos de la série"
-                rightLabel="Tous les trailers"
-                onRightClick={() => navigate("/trailers")}
-              />
-              <div className="grid gap-6 md:grid-cols-2">
-                {VIDEOS.map((item) => (
-                  <MediaCard
-                    key={item.title}
-                    item={item}
-                    onClick={() => navigate("/trailers")}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <SectionHeader
-                title="Collections"
-                rightLabel="Voir les collections"
-                onRightClick={() => navigate("/collections")}
-              />
-              {COLLECTIONS.map((item) => (
-                <MediaCard
-                  key={item.title}
-                  item={item}
-                  tall
-                  onClick={() => navigate("/collections")}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div id="series-news">
-            <SectionHeader
-              title="Dernières actus de la série"
-              rightLabel="Toutes les actus"
-              onRightClick={() => navigate("/news")}
+      {/* Big feature card */}
+      <div className="lg:col-span-7">
+        <div className="relative overflow-hidden rounded-md border border-neutral-800 bg-[#181818]">
+          <div className="relative h-56 w-full overflow-hidden bg-neutral-900">
+            <img
+              src={SERIES.backdrop}
+              alt="Feature showcase"
+              className="h-full w-full object-cover opacity-60"
             />
-            <div className="grid gap-6 lg:grid-cols-3">
-              {NEWS.map((item) => (
-                <NewsCard key={item.title} item={item} />
-              ))}
-            </div>
+            <span className="absolute left-4 top-4 z-10 rounded-sm bg-brand-primary px-2 py-0.5 text-[10px] font-extrabold text-black">
+              En cours
+            </span>
+            <button
+              onClick={() => navigate("/series/watch")}
+              className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary text-black shadow-lg"
+            >
+              <Play className="ml-0.5 h-4 w-4 fill-black" />
+            </button>
           </div>
-
-          <AdvertisementBlock />
-
-          <section className="mx-auto max-w-7xl px-5 py-12 md:py-12">
-            <SectionHeader
-              title="Shopping"
-              rightLabel="Tout le shop"
-              onRightClick={() => navigate("/shop")}
-            />
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {shopProducts.map((item) => (
-                <ProductCard key={item.id} item={item} />
-              ))}
+          <div className="space-y-2 p-5">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-black text-white">
+                {PROGRESS.nextEpisode.code} · {PROGRESS.nextEpisode.title}
+              </h2>
+              <span className="rounded border border-neutral-600 px-1 text-[9px] font-bold text-gray-400">
+                HD
+              </span>
             </div>
-          </section>
-
-          <div id="series-similaires">
-            <SectionHeader
-              title="Séries similaires à la série"
-              rightLabel="Toutes les recos"
-              onRightClick={() => navigate("/series")}
-            />
-            <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-              {SIMILAR_SERIES.map((item) => (
-                <SimilarSeriesCard
-                  key={item.title}
-                  item={item}
-                  onClick={() => navigate("/series")}
-                />
-              ))}
-            </div>
+            <p className="text-[11px] font-semibold text-gray-500">
+              {SERIES.years} │ {SERIES.genres.join(" / ")}
+            </p>
+            <p className="pt-1 text-xs leading-relaxed text-gray-400">
+              {PROGRESS.nextEpisode.synopsis}
+            </p>
           </div>
-
-          <div id="series-avis">
-            <SectionHeader
-              title="Avis des seriesaddict"
-              rightLabel="Tous les avis"
-              onRightClick={() => navigate("/user-space")}
-            />
-            <SeriesCommentsComposer />
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t border-white/5 px-4 py-10 sm:px-5">
-        <div className="mx-auto flex max-w-7xl items-center justify-center">
-          <img
-            src={logo}
-            alt="Series Addict"
-            className="h-10 w-auto opacity-90"
-          />
         </div>
-      </footer>
+      </div>
+    </section>
+  );
+}
+
+export default function SeriesDetailsPage() {
+  return (
+    <div className="min-h-screen w-full bg-[#121212] font-sans text-gray-300">
+      <TopChannelsBar />
+      <MainHeader />
+
+      <main className="mx-auto max-w-7xl space-y-12 px-6 py-6">
+        <HeroSection />
+        <HeroCards />
+        <FeaturedGrid />
+
+        <CastingSection />
+        <ActualitesSection />
+        <CommunauteSection />
+        <BoutiqueSection />
+        <GalerieSection />
+        <RecommandationsSection />
+      </main>
     </div>
   );
 }

@@ -47,7 +47,12 @@ const BRAND_GRADIENT_TEXT = "bg-gradient-to-r from-brand-primary to-brand-cyan";
 const TABS = [
   { key: "feed", label: "Feed", to: "/my/feed", icon: LayoutGrid },
   { key: "library", label: "Sériethèque", to: "/my/series", icon: Library },
-  { key: "calendar", label: "Calendrier", to: "/calendar", icon: CalendarDays },
+  {
+    key: "calendar",
+    label: "Calendrier",
+    to: "/my/calendar",
+    icon: CalendarDays,
+  },
   { key: "watchlist", label: "A voir", to: "/my/watchlist", icon: Bookmark },
   { key: "lists", label: "Listes", to: "/lists", icon: List },
   { key: "friends", label: "Amis", to: "/members", icon: Users },

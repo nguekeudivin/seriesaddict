@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
   ChevronRight,
@@ -45,6 +46,9 @@ const SEASONS = [
       "https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=900&q=80",
     watched: true,
     progress: "8/8",
+    rating: 4.7,
+    votes: 1240,
+    userRating: 5,
   },
   {
     id: 2,
@@ -59,6 +63,9 @@ const SEASONS = [
       "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=900&q=80",
     watched: true,
     progress: "9/9",
+    rating: 4.5,
+    votes: 980,
+    userRating: 4,
   },
   {
     id: 3,
@@ -73,6 +80,9 @@ const SEASONS = [
       "https://images.unsplash.com/photo-1523598455533-144bae1f0b14?auto=format&fit=crop&w=900&q=80",
     watched: false,
     progress: "5/8",
+    rating: 4.2,
+    votes: 856,
+    userRating: 0,
   },
   {
     id: 4,
@@ -87,6 +97,9 @@ const SEASONS = [
       "https://images.unsplash.com/photo-1527049979667-990f1d0d8e7f?auto=format&fit=crop&w=900&q=80",
     watched: false,
     progress: "0/9",
+    rating: 4.6,
+    votes: 1124,
+    userRating: 0,
   },
 ];
 
@@ -99,6 +112,8 @@ const EPISODES = [
     airDate: "15 juil. 2016",
     watched: true,
     rating: 4.5,
+    poster:
+      "https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 2,
@@ -108,6 +123,8 @@ const EPISODES = [
     airDate: "15 juil. 2016",
     watched: true,
     rating: 4.8,
+    poster:
+      "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 3,
@@ -117,6 +134,8 @@ const EPISODES = [
     airDate: "15 juil. 2016",
     watched: true,
     rating: 4.6,
+    poster:
+      "https://images.unsplash.com/photo-1523598455533-144bae1f0b14?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 4,
@@ -126,6 +145,8 @@ const EPISODES = [
     airDate: "15 juil. 2016",
     watched: true,
     rating: 4.7,
+    poster:
+      "https://images.unsplash.com/photo-1527049979667-990f1d0d8e7f?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 5,
@@ -135,6 +156,8 @@ const EPISODES = [
     airDate: "15 juil. 2016",
     watched: true,
     rating: 4.9,
+    poster:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 6,
@@ -144,6 +167,8 @@ const EPISODES = [
     airDate: "15 juil. 2016",
     watched: true,
     rating: 4.8,
+    poster:
+      "https://images.unsplash.com/photo-1519681393798-3828fb4090bb?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 7,
@@ -153,6 +178,8 @@ const EPISODES = [
     airDate: "15 juil. 2016",
     watched: true,
     rating: 4.5,
+    poster:
+      "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 8,
@@ -162,6 +189,8 @@ const EPISODES = [
     airDate: "15 juil. 2016",
     watched: true,
     rating: 4.9,
+    poster:
+      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80",
   },
 ];
 
@@ -217,7 +246,48 @@ function SectionHeader({ title, rightLabel, onRightClick }) {
   );
 }
 
-function SeasonCard({ season, isActive, onClick }) {
+function StarRating({ value, onChange, max = 5, size = "h-4 w-4" }) {
+  const [hover, setHover] = useState(0);
+
+  return (
+    <div className="flex items-center gap-0.5">
+      {[...Array(max)].map((_, i) => {
+        const star = i + 1;
+        const filled = star <= (hover || value);
+        return (
+          <button
+            key={star}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onChange?.(star);
+            }}
+            onMouseEnter={(e) => {
+              e.stopPropagation();
+              setHover(star);
+            }}
+            onMouseLeave={(e) => {
+              e.stopPropagation();
+              setHover(0);
+            }}
+            className="p-0.5 transition hover:scale-110"
+          >
+            <Star
+              className={[
+                size,
+                filled
+                  ? "fill-brand-primary text-brand-primary"
+                  : "text-white/20",
+              ].join(" ")}
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function SeasonCard({ season, isActive, onClick, onToggleWatched, onRate }) {
   return (
     <button
       onClick={onClick}
@@ -272,6 +342,33 @@ function SeasonCard({ season, isActive, onClick }) {
               {season.watched ? "Terminée" : `En cours · ${season.progress}`}
             </span>
           </div>
+          <div className="mt-3 flex items-center justify-between gap-3">
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-center gap-1.5 text-sm text-white/90">
+                <Star className="h-3.5 w-3.5 fill-brand-primary text-brand-primary" />
+                <span className="font-semibold">{season.rating}</span>
+                <span className="text-xs text-white/50">
+                  ({season.votes} notes)
+                </span>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleWatched();
+              }}
+              className={[
+                "grid h-9 w-9 place-items-center rounded-full transition",
+                season.watched
+                  ? "bg-brand-cyan/20 text-brand-cyan"
+                  : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white",
+              ].join(" ")}
+              title={season.watched ? "Marquer non vue" : "Marquer comme vue"}
+            >
+              <Eye className="h-4 w-4" />
+            </button>
+          </div>
           <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
             <div
               className="h-full rounded-full bg-gradient-to-r from-brand-primary to-brand-cyan transition-all duration-500"
@@ -296,8 +393,17 @@ function EpisodeRow({ episode, isLast }) {
         !isLast && "border-b border-white/10",
       ].join(" ")}
     >
-      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/5 text-lg font-bold text-white">
-        {episode.number}
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-white/5">
+        <img
+          src={episode.poster}
+          alt={episode.title}
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 grid place-items-center bg-black/40">
+          <span className="text-lg font-bold text-white drop-shadow">
+            {episode.number}
+          </span>
+        </div>
       </div>
       <div className="min-w-0 flex-1">
         <h4 className="truncate font-semibold text-white">{episode.title}</h4>
@@ -332,8 +438,34 @@ function EpisodeRow({ episode, isLast }) {
 }
 
 export default function SerieSeasonsPage() {
-  const [activeSeason, setActiveSeason] = useState(SEASONS[2]);
+  const navigate = useNavigate();
+  const [seasons, setSeasons] = useState(SEASONS);
+  const [activeSeasonId, setActiveSeasonId] = useState(SEASONS[2].id);
   const [showAllEpisodes, setShowAllEpisodes] = useState(false);
+
+  const activeSeason = seasons.find((s) => s.id === activeSeasonId);
+
+  const toggleSeasonWatched = (seasonId) => {
+    setSeasons((prev) =>
+      prev.map((s) =>
+        s.id === seasonId
+          ? {
+              ...s,
+              watched: !s.watched,
+              progress: s.watched
+                ? `0/${s.episodes}`
+                : `${s.episodes}/${s.episodes}`,
+            }
+          : s,
+      ),
+    );
+  };
+
+  const rateSeason = (seasonId, rating) => {
+    setSeasons((prev) =>
+      prev.map((s) => (s.id === seasonId ? { ...s, userRating: rating } : s)),
+    );
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -372,12 +504,14 @@ export default function SerieSeasonsPage() {
           <div>
             <SectionHeader title="Explorer les saisons" />
             <div className="grid gap-4 sm:grid-cols-2">
-              {SEASONS.map((season) => (
+              {seasons.map((season) => (
                 <SeasonCard
                   key={season.id}
                   season={season}
                   isActive={activeSeason.id === season.id}
-                  onClick={() => setActiveSeason(season)}
+                  onClick={() => setActiveSeasonId(season.id)}
+                  onToggleWatched={() => toggleSeasonWatched(season.id)}
+                  onRate={(rating) => rateSeason(season.id, rating)}
                 />
               ))}
             </div>
@@ -403,6 +537,15 @@ export default function SerieSeasonsPage() {
                       showAllEpisodes && "rotate-180",
                     ].join(" ")}
                   />
+                </button>
+                <button
+                  onClick={() =>
+                    navigate(`/series/season/${activeSeason.number}`)
+                  }
+                  className="ml-2 inline-flex items-center gap-2 rounded-full bg-brand-primary/15 px-4 py-2 text-xs font-semibold text-brand-cyan transition hover:bg-brand-primary/25"
+                >
+                  Voir cette saison
+                  <ChevronRight className="h-3.5 w-3.5" />
                 </button>
               </div>
 

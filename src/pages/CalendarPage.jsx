@@ -1,21 +1,30 @@
 import React from "react";
 import {
-  Search,
+  startOfWeek,
+  addDays,
+  formatDateKey,
+  formatDayLabel,
+  weekRangeLabel,
+} from "../utils/date.js";
+import {
+  ChevronLeft,
   ChevronRight,
   Calendar as CalIcon,
-  Clock,
   Filter,
   TrendingUp,
   Flame,
   Sparkles,
-  ArrowRight,
+  Eye,
+  Play,
+  Bell,
 } from "lucide-react";
 
 /**
  * CalendarPage.jsx — Calendrier des sorties (Semaine + Liste)
  * - max-w-7xl
  * - Toolbar premium (recherche, filtres, toggle view)
- * - Week view: colonnes jours (scroll horizontal desktop / stack mobile)
+ * - Week view: grille 7 jours visibles d'un coup (1 colonne mobile)
+ * - Navigation rapide semaine/mois + retour à aujourd'hui
  * - List view: timeline propre + sections par date
  */
 
@@ -44,13 +53,8 @@ const PLATFORMS = [
   { key: "prime", label: "Prime Video" },
 ];
 
-const weekRangeLabel = "Semaine du 16 au 22 février 2026";
-
-const MOCK_WEEK = [
+const MOCK_WEEK_TEMPLATE = [
   {
-    dateKey: "2026-02-16",
-    dayLabel: "LUN.",
-    dayNum: "16",
     items: [
       {
         id: "w1",
@@ -71,9 +75,6 @@ const MOCK_WEEK = [
     ],
   },
   {
-    dateKey: "2026-02-17",
-    dayLabel: "MAR.",
-    dayNum: "17",
     items: [
       {
         id: "w3",
@@ -86,9 +87,6 @@ const MOCK_WEEK = [
     ],
   },
   {
-    dateKey: "2026-02-18",
-    dayLabel: "MER.",
-    dayNum: "18",
     items: [
       {
         id: "w4",
@@ -109,9 +107,6 @@ const MOCK_WEEK = [
     ],
   },
   {
-    dateKey: "2026-02-19",
-    dayLabel: "JEU.",
-    dayNum: "19",
     items: [
       {
         id: "w6",
@@ -140,9 +135,6 @@ const MOCK_WEEK = [
     ],
   },
   {
-    dateKey: "2026-02-20",
-    dayLabel: "VEN.",
-    dayNum: "20",
     items: [
       {
         id: "w9",
@@ -163,9 +155,6 @@ const MOCK_WEEK = [
     ],
   },
   {
-    dateKey: "2026-02-21",
-    dayLabel: "SAM.",
-    dayNum: "21",
     items: [
       {
         id: "w11",
@@ -178,9 +167,6 @@ const MOCK_WEEK = [
     ],
   },
   {
-    dateKey: "2026-02-22",
-    dayLabel: "DIM.",
-    dayNum: "22",
     items: [
       {
         id: "w12",
@@ -210,11 +196,19 @@ const MOCK_WEEK = [
   },
 ];
 
-const TYPE_META = {
-  new_episode: { label: "Nouvel épisode", color: "cyan" },
-  new_season: { label: "Nouvelle saison", color: "primary" },
-  new_show: { label: "Nouvelle série", color: "mix" },
-};
+function generateWeekData(weekStart) {
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = addDays(weekStart, i);
+    const template = MOCK_WEEK_TEMPLATE[i];
+    const dateKey = formatDateKey(d);
+    return {
+      dateKey,
+      dayLabel: formatDayLabel(d),
+      dayNum: String(d.getDate()),
+      items: template.items.map((it) => ({ ...it, id: `${it.id}-${dateKey}` })),
+    };
+  });
+}
 
 function platformLabel(key) {
   const map = {
@@ -363,68 +357,23 @@ function ViewToggle({ value, onChange }) {
   );
 }
 
-function TypePill({ type }) {
-  const meta = TYPE_META[type] || { label: "Sortie", color: "cyan" };
-
-  const style =
-    meta.color === "primary"
-      ? "border-[rgba(132,29,79,0.35)] bg-[rgba(132,29,79,0.22)] text-white/85"
-      : meta.color === "mix"
-        ? "border-[rgba(30,108,134,0.28)] bg-[rgba(60,10,34,0.22)] text-white/85"
-        : "border-[rgba(30,108,134,0.35)] bg-[rgba(30,108,134,0.18)] text-white/85";
-
-  return (
-    <span
-      className={[
-        "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold backdrop-blur",
-        style,
-      ].join(" ")}
-    >
-      {meta.label}
-    </span>
-  );
-}
-
-function EventCard({ it, isToday = false, onOpen }) {
+function EventCard({ it, onOpen }) {
   return (
     <button
       onClick={() => onOpen?.(it)}
-      className="group relative w-full overflow-hidden rounded-2xl text-left"
+      className="group relative w-full overflow-hidden rounded-xl text-left"
       title={it.title}
     >
-      <GradientRing radiusClass="rounded-2xl" thickness={2} />
-      {isToday ? (
-        <GradientRing radiusClass="rounded-2xl" thickness={2} glow hoverGlow />
-      ) : (
-        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/5" />
-      )}
-
-      <div className="relative rounded-2xl bg-brand-dark/55 px-4 py-4 backdrop-blur">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="line-clamp-1 text-sm font-extrabold uppercase tracking-wide text-white">
-              {it.title}
-            </p>
-            <p className="mt-1 text-xs text-white/65">
-              {platformLabel(it.platform)} • {it.meta || "—"}
-            </p>
-          </div>
-
-          <div className="shrink-0 text-right">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[11px] font-semibold text-white/70">
-              <Clock className="h-3.5 w-3.5 text-brand-cyan" />
-              {it.time}
-            </span>
-          </div>
+      <div className="relative rounded-xl bg-brand-dark/55 px-3 py-3 backdrop-blur">
+        <div className="flex items-start justify-between gap-2">
+          <p className="line-clamp-1 text-xs font-extrabold uppercase tracking-wide text-white">
+            {it.title}
+          </p>
         </div>
-
-        <div className="mt-3 flex items-center justify-between gap-3">
-          <TypePill type={it.type} />
-          <span className="inline-flex items-center gap-2 text-xs font-semibold text-white/70">
-            Voir
-            <ArrowRight className="h-4 w-4 text-brand-primary transition-transform duration-300 group-hover:translate-x-0.5" />
-          </span>
-        </div>
+        <p className="mt-1 text-[11px] text-white/65">
+          {platformLabel(it.platform)} • {it.meta || "—"}
+        </p>
+        <p className="mt-2 text-[10px] text-white/50">{it.time}</p>
       </div>
     </button>
   );
@@ -432,72 +381,142 @@ function EventCard({ it, isToday = false, onOpen }) {
 
 function DayColumn({ day, isToday, onOpen }) {
   return (
-    <div className="group relative min-w-[280px] overflow-hidden rounded-2xl">
-      {/* ring */}
-
-      <div className="relative rounded-2xl bg-brand-dark/45 backdrop-blur">
-        {/* Header day */}
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-white/55">
-              {day.dayLabel}
-            </p>
-            <p className="mt-1 text-lg font-extrabold tracking-wide text-white">
-              {day.dayNum}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="rounded-full border border-brand-cyan/20 bg-black/25 px-3 py-1 text-[11px] font-semibold text-white/75">
-              {day.items.length} sorties
-            </span>
-            {isToday ? (
-              <span className="rounded-full border border-brand-cyan/25 bg-[rgba(30,108,134,0.18)] px-3 py-1 text-[11px] font-extrabold text-white/85">
-                Today
-              </span>
-            ) : null}
-          </div>
+    <div
+      className={[
+        "group relative flex flex-col overflow-hidden rounded-2xl backdrop-blur",
+        isToday
+          ? "bg-gradient-to-b from-brand-cyan/15 to-brand-dark/45 ring-1 ring-brand-cyan/40"
+          : "bg-brand-dark/45",
+      ].join(" ")}
+    >
+      <div className="flex items-center justify-between border-b border-white/10 px-3 py-3 md:px-4 md:py-3">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-white/55">
+            {day.dayLabel}
+          </p>
+          <p
+            className={[
+              "mt-0.5 text-base font-extrabold tracking-wide md:text-lg",
+              isToday ? "text-brand-cyan" : "text-white",
+            ].join(" ")}
+          >
+            {day.dayNum}
+          </p>
         </div>
 
-        {/* Items */}
-        <div className="grid gap-3 p-4">
-          {day.items.length ? (
-            day.items.map((it) => (
-              <EventCard
-                key={it.id}
-                it={it}
-                isToday={isToday}
-                onOpen={onOpen}
-              />
-            ))
-          ) : (
-            <div className="rounded-2xl border border-white/10 bg-black/15 px-5 py-10 text-center text-sm text-white/55">
-              Rien de prévu
+        <div className="flex flex-col items-end gap-1">
+          {isToday ? (
+            <span className="rounded-full border border-brand-cyan/25 bg-brand-cyan/20 px-2 py-0.5 text-[10px] font-extrabold text-white">
+              Auj.
+            </span>
+          ) : null}
+          <span className="rounded-full border border-brand-cyan/20 bg-black/25 px-2 py-0.5 text-[10px] font-semibold text-white/75">
+            {day.items.length}
+          </span>
+        </div>
+      </div>
+
+      <div className="grid flex-1 gap-2 p-2 md:p-3">
+        {day.items.length ? (
+          day.items.map((it) => (
+            <EventCard key={it.id} it={it} isToday={isToday} onOpen={onOpen} />
+          ))
+        ) : (
+          <div className="flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl border border-white/10 bg-black/15 px-2 py-6 text-center">
+            <span className="text-xs text-white/55">—</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function HeroReleaseCard({ release, onOpen }) {
+  if (!release) return null;
+  return (
+    <div className="group relative mb-8 overflow-hidden rounded-3xl">
+      <GradientRing radiusClass="rounded-3xl" thickness={2} glow />
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/30 via-brand-wine/20 to-brand-cyan/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30" />
+
+      <div className="relative p-6 md:p-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-xl">
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-brand-primary/80 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+              <Sparkles className="h-3.5 w-3.5" />
+              Prochaine sortie
             </div>
-          )}
+
+            <h2 className="text-2xl font-black uppercase tracking-wide text-white md:text-4xl">
+              {release.title}
+            </h2>
+            <p className="mt-2 text-lg font-semibold text-white/90 md:text-xl">
+              {platformLabel(release.platform)} • {release.meta || "—"}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-white/70">
+              Disponible {release.time} cette semaine.
+            </p>
+
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => onOpen?.(release)}
+                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-black transition hover:bg-white/90"
+              >
+                <Play className="h-4 w-4 fill-black" />
+                Voir la fiche
+              </button>
+              <button
+                onClick={() => {}}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-5 py-2.5 text-xs font-semibold text-white backdrop-blur transition hover:bg-white/10"
+              >
+                <Bell className="h-4 w-4" />
+                Rappel
+              </button>
+            </div>
+          </div>
+
+          <div className="hidden md:block">
+            <div className="grid h-48 w-32 place-items-center rounded-2xl bg-gradient-to-br from-brand-primary to-brand-cyan shadow-2xl ring-1 ring-white/20">
+              <CalIcon className="h-12 w-12 text-white" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function Legend() {
+function WeekSummaryCard({ weekData }) {
+  const total = weekData.reduce((sum, d) => sum + d.items.length, 0);
+  const platforms = new Set(
+    weekData.flatMap((d) => d.items.map((i) => i.platform)),
+  ).size;
+
   return (
     <div className="group relative overflow-hidden rounded-2xl">
+      <GradientRing radiusClass="rounded-2xl" thickness={2} />
+      <GradientRing radiusClass="rounded-2xl" thickness={2} glow hoverGlow />
+
       <div className="relative rounded-2xl bg-brand-dark/55 p-6 backdrop-blur">
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-white/55">
-          Légende
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <TypePill type="new_show" />
-          <TypePill type="new_season" />
-          <TypePill type="new_episode" />
+        <div className="flex items-start gap-4">
+          <div className="grid h-12 w-12 place-items-center rounded-xl bg-brand-primary/20 ring-1 ring-brand-primary/30">
+            <TrendingUp className="h-6 w-6 text-brand-primary" />
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-white/55">
+              Cette semaine
+            </p>
+            <h3 className="mt-1 text-sm font-extrabold uppercase tracking-wide text-white">
+              Résumé des sorties
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-white/70">
+              <strong className="text-white">{total} sorties</strong>{" "}
+              programmées sur{" "}
+              <strong className="text-white">{platforms} plateformes</strong>.
+            </p>
+          </div>
         </div>
-        <p className="mt-4 text-sm text-white/65">
-          Les sorties sont regroupées par jour. Sur mobile, la semaine se lit de
-          haut en bas (scroll naturel). Sur desktop, la semaine est scrollable
-          horizontalement.
-        </p>
       </div>
     </div>
   );
@@ -539,13 +558,12 @@ function ListGroup({ label, items, onOpen }) {
 // ---------------------------
 export default function CalendarPage() {
   const [view, setView] = React.useState("week"); // week | list
-  const [q, setQ] = React.useState("");
   const [platform, setPlatform] = React.useState("all");
-  const [dropdown, setDropdown] = React.useState(false);
-  const [quick, setQuick] = React.useState("week"); // week | upcoming | new
+  const [weekStart, setWeekStart] = React.useState(() =>
+    startOfWeek(new Date()),
+  );
 
-  // Simule "today" sur dimanche pour démo (tu peux brancher Date.now)
-  const TODAY_KEY = "2026-02-22";
+  const TODAY_KEY = formatDateKey(new Date());
 
   const openItem = (it) => {
     // navigate(`/series-details`) ou `/news/...` ou un drawer
@@ -555,17 +573,12 @@ export default function CalendarPage() {
   const platformFiltered = (items) =>
     platform === "all" ? items : items.filter((x) => x.platform === platform);
 
-  const searchFiltered = (items) => {
-    const query = q.trim().toLowerCase();
-    if (!query) return items;
-    return items.filter((x) =>
-      (x.title + " " + (x.meta || "")).toLowerCase().includes(query),
-    );
-  };
+  const prevWeek = () => setWeekStart((s) => addDays(s, -7));
+  const nextWeek = () => setWeekStart((s) => addDays(s, 7));
 
-  const weekData = MOCK_WEEK.map((d) => ({
+  const weekData = generateWeekData(weekStart).map((d) => ({
     ...d,
-    items: searchFiltered(platformFiltered(d.items)),
+    items: platformFiltered(d.items),
   }));
 
   // List view groups derived from week (simple for MVP)
@@ -573,9 +586,13 @@ export default function CalendarPage() {
     .filter((d) => d.items.length)
     .map((d) => ({
       key: d.dateKey,
-      label: `${d.dayLabel} ${d.dayNum} fév 2026`,
+      label: `${d.dayLabel} ${d.dayNum}`,
       items: d.items,
     }));
+
+  const nextRelease = weekData
+    .flatMap((d) => d.items.map((it) => ({ ...it, dateKey: d.dateKey })))
+    .find((it) => it.dateKey >= TODAY_KEY);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -616,7 +633,8 @@ export default function CalendarPage() {
                   Calendrier des sorties
                 </h1>
                 <p className="mt-1 text-sm text-white/70">
-                  {weekRangeLabel} — épisodes, saisons, nouvelles séries.
+                  {weekRangeLabel(weekStart)} — épisodes, saisons, nouvelles
+                  séries.
                 </p>
               </div>
 
@@ -627,98 +645,20 @@ export default function CalendarPage() {
             </div>
 
             {/* Toolbar */}
-            <div className="grid gap-3 lg:grid-cols-[1fr_260px_auto] lg:items-center">
-              <NeonSearch
-                value={q}
-                onChange={setQ}
-                onSubmit={() => {}}
-                placeholder="Rechercher une sortie..."
-              />
-
-              {/* Platform dropdown */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setDropdown((v) => !v)}
-                  className="flex w-full items-center justify-between rounded-full border border-brand-cyan/20 bg-brand-dark/70 px-5 py-3 text-sm text-white/80 hover:text-white"
+            <div className="flex flex-wrap items-center gap-2">
+              {PLATFORMS.map((p) => (
+                <Chip
+                  key={p.key}
+                  active={platform === p.key}
+                  onClick={() => setPlatform(p.key)}
+                  icon={p.key === "all" ? Eye : Filter}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    <Filter className="h-4 w-4 text-brand-cyan" />
-                    {PLATFORMS.find((p) => p.key === platform)?.label ||
-                      "Toutes plateformes"}
-                  </span>
-                  <ChevronRight
-                    className={[
-                      "h-4 w-4 text-brand-cyan transition-transform",
-                      dropdown ? "rotate-90" : "",
-                    ].join(" ")}
-                  />
-                </button>
-
-                {dropdown ? (
-                  <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-2xl border border-brand-cyan/20 bg-black/70 backdrop-blur">
-                    {PLATFORMS.map((p) => (
-                      <button
-                        key={p.key}
-                        onClick={() => {
-                          setPlatform(p.key);
-                          setDropdown(false);
-                        }}
-                        className={[
-                          "flex w-full items-center justify-between px-5 py-3 text-sm",
-                          platform === p.key
-                            ? "bg-brand-wine/55 text-white"
-                            : "text-white/75 hover:bg-white/5 hover:text-white",
-                        ].join(" ")}
-                      >
-                        <span>{p.label}</span>
-                        {platform === p.key ? (
-                          <Sparkles className="h-4 w-4 text-brand-primary" />
-                        ) : null}
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="flex justify-start lg:justify-end">
+                  {p.label}
+                </Chip>
+              ))}
+              <div className="ml-auto flex items-center gap-2">
                 <ViewToggle value={view} onChange={setView} />
               </div>
-            </div>
-
-            {/* Quick chips */}
-            <div className="flex flex-wrap items-center gap-2">
-              <Chip
-                active={quick === "week"}
-                onClick={() => setQuick("week")}
-                icon={CalIcon}
-              >
-                Cette semaine
-              </Chip>
-              <Chip
-                active={quick === "upcoming"}
-                onClick={() => setQuick("upcoming")}
-                icon={TrendingUp}
-              >
-                À venir
-              </Chip>
-              <Chip
-                active={quick === "new"}
-                onClick={() => setQuick("new")}
-                icon={Flame}
-              >
-                Nouveautés
-              </Chip>
-
-              <button
-                onClick={() => {
-                  setQ("");
-                  setPlatform("all");
-                }}
-                className="ml-auto text-xs font-semibold tracking-wide text-brand-cyan hover:text-white"
-              >
-                Réinitialiser
-              </button>
             </div>
 
             <div className="h-px w-full bg-brand-cyan/25" />
@@ -731,106 +671,53 @@ export default function CalendarPage() {
         {view === "week" ? (
           <>
             <section>
-              <SectionHeader
-                title="VUE SEMAINE"
-                rightLabel={weekRangeLabel}
-                onRightClick={() => {}}
-              />
-
-              <div
-                className="
-                  relative overflow-x-auto pb-3
-                  scroll-smooth
-                  [scrollbar-width:none]
-                  [-ms-overflow-style:none]
-                  [&::-webkit-scrollbar]:hidden
-                "
-              >
-                <div className="flex gap-4">
-                  {weekData.map((day) => (
-                    <DayColumn
-                      key={day.dateKey}
-                      day={day}
-                      isToday={day.dateKey === TODAY_KEY}
-                      onOpen={openItem}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
-                <div className="relative rounded-2xl bg-brand-dark/55 p-6 backdrop-blur">
+              <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-brand-cyan/20 bg-brand-dark/55 p-4 backdrop-blur md:flex-row md:items-center md:justify-between">
+                <div>
                   <p className="text-[11px] font-semibold uppercase tracking-wide text-white/55">
-                    Focus
+                    Vue semaine
                   </p>
-                  <h3 className="mt-1 text-sm font-extrabold uppercase tracking-wide text-white">
-                    Aujourd’hui
-                  </h3>
+                  <p className="mt-1 text-sm font-bold text-white md:text-base">
+                    {weekRangeLabel(weekStart)}
+                  </p>
+                </div>
 
-                  <div className="mt-4 grid gap-3">
-                    {(
-                      weekData.find((d) => d.dateKey === TODAY_KEY)?.items || []
-                    )
-                      .slice(0, 3)
-                      .map((it) => (
-                        <EventCard
-                          key={it.id}
-                          it={it}
-                          isToday
-                          onOpen={openItem}
-                        />
-                      ))}
-                    {!weekData.find((d) => d.dateKey === TODAY_KEY)?.items
-                      ?.length ? (
-                      <div className="rounded-2xl border border-white/10 bg-black/15 px-5 py-8 text-center text-sm text-white/55">
-                        Aucune sortie aujourd’hui
-                      </div>
-                    ) : null}
-                  </div>
-
+                <div className="flex flex-wrap items-center gap-2">
                   <button
-                    onClick={() => setView("list")}
-                    className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-brand-cyan hover:text-white"
+                    type="button"
+                    onClick={prevWeek}
+                    className="rounded-full flex items-center gap-2 border border-brand-cyan/25 bg-brand-dark/70 px-4 py-2 text-xs font-semibold text-white/90 transition-all hover:border-brand-cyan/50 hover:bg-brand-cyan/15 hover:text-white"
                   >
-                    Voir en mode liste
+                    <ChevronLeft className="h-4 w-4" />
+                    <span>Semaine précédente</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={nextWeek}
+                    className="rounded-full flex items-center gap-2 border border-brand-cyan/25 bg-brand-dark/70 px-4 py-2 text-xs font-semibold text-white/90 transition-all hover:border-brand-cyan/50 hover:bg-brand-cyan/15 hover:text-white"
+                  >
+                    <span>Semaine suivante</span>
                     <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>
+              </div>
 
-                {/* Right side summary (desktop) */}
-                <div className="space-y-4">
-                  <div className="group relative overflow-hidden rounded-2xl">
-                    <GradientRing radiusClass="rounded-2xl" thickness={1} />
-                    <GradientRing
-                      radiusClass="rounded-2xl"
-                      thickness={1}
-                      glow
-                      hoverGlow
-                    />
-                  </div>
+              {nextRelease ? (
+                <HeroReleaseCard release={nextRelease} onOpen={openItem} />
+              ) : null}
 
-                  <div className="group relative overflow-hidden rounded-2xl">
-                    <GradientRing radiusClass="rounded-2xl" thickness={2} />
-                    <div className="relative rounded-2xl bg-brand-dark/55 p-6 backdrop-blur">
-                      <p className="text-[11px] font-semibold uppercase tracking-wide text-white/55">
-                        Astuce
-                      </p>
-                      <h3 className="mt-1 text-sm font-extrabold uppercase tracking-wide text-white">
-                        Ajouter à mon agenda
-                      </h3>
-                      <p className="mt-3 text-sm text-white/70">
-                        Action UI uniquement (à brancher plus tard): export iCal
-                        / Google Calendar.
-                      </p>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-7">
+                {weekData.map((day) => (
+                  <DayColumn
+                    key={day.dateKey}
+                    day={day}
+                    isToday={day.dateKey === TODAY_KEY}
+                    onOpen={openItem}
+                  />
+                ))}
+              </div>
 
-                      <button className="mt-4 w-full rounded-full border border-brand-cyan/20 bg-brand-wine/60 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-white/90 hover:bg-brand-wine/75">
-                        Ajouter la semaine
-                      </button>
-                    </div>
-                  </div>
-
-                  <Legend />
-                </div>
+              <div className="mt-8">
+                <WeekSummaryCard weekData={weekData} />
               </div>
             </section>
           </>
@@ -841,7 +728,7 @@ export default function CalendarPage() {
           <section>
             <SectionHeader
               title="VUE LISTE"
-              rightLabel={weekRangeLabel}
+              rightLabel={weekRangeLabel(weekStart)}
               onRightClick={() => {}}
             />
 
