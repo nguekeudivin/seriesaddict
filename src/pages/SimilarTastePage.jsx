@@ -467,7 +467,7 @@ function HistoryCard({ item }) {
           <img
             src={item.image}
             alt={item.title}
-            className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
           <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-xs font-bold text-white backdrop-blur">

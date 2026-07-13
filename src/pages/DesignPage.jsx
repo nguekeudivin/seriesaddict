@@ -23,7 +23,7 @@ import TermsPage from "./TermsPage";
 
 export default function DesignPage() {
   return (
-    <ul className="space-y-16 bg-dark">
+    <ul className="space-y-24 bg-dark">
       <li>
         <CalendarPage />
       </li>

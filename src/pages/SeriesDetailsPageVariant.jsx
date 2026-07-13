@@ -2292,6 +2292,43 @@ function PrimaryButton({ children, onClick, className = "" }) {
   );
 }
 
+function NewsSection() {
+  const navigate = useNavigate();
+
+  return (
+    <section id="actualites" className="mt-32 max-w-7xl mx-auto">
+      <SectionHeader
+        title="Actualités"
+        rightLabel="Toutes les actus"
+        onRightClick={() => navigate("/news")}
+      />
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {NEWS.map((item) => (
+          <button
+            key={item.id}
+            className="group relative overflow-hidden rounded-3xl text-left"
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+              style={{ backgroundImage: `url(${item.image})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent" />
+            <div className="relative flex h-80 flex-col justify-end p-5">
+              <span className="inline-flex w-fit rounded-full border border-white/10 bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white/80">
+                {item.category}
+              </span>
+              <h3 className="mt-3 line-clamp-3 text-sm font-bold leading-snug text-white">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-xs text-white/50">{item.date}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function SeriesDetailsPage() {
   const navigate = useNavigate();
   const [activeSeasonIndex, setActiveSeasonIndex] = useState(0);
@@ -2549,6 +2586,8 @@ export default function SeriesDetailsPage() {
             <SeriesCommentsComposer />
           </div>
         </section>
+
+        <NewsSection />
 
         <div className="h-28"></div>
       </main>
