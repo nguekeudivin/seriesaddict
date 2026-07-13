@@ -882,37 +882,68 @@ function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-[700px] w-full overflow-hidden rounded-md text-white select-none">
+    <section className="relative min-h-[85vh] w-full overflow-hidden rounded-2xl text-white select-none">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
           src={SERIES.backdrop}
           alt={SERIES.title}
-          className="h-full w-full object-cover object-top opacity-70"
+          className="h-full w-full object-cover object-top opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#14161d] via-[#14161d]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#14161d] via-transparent to-[#14161d]/40" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-dark/95 via-brand-wine/80 to-brand-primary/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-brand-dark/30" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 flex min-h-[700px] flex-col justify-between py-6 lg:py-20">
-        {/* Contenu principal */}
-        <main className="my-auto grid grid-cols-1 items-center gap-8 pt-4 lg:grid-cols-12">
-          {/* Colonne Gauche : Infos, Titre et Description */}
-          <div className="flex flex-col space-y-5 lg:col-span-7">
-            <h1 className="text-5xl font-black leading-none tracking-tight text-white lg:text-6xl">
-              {SERIES.title}
-            </h1>
+      {/* Decorative accent glow */}
+      <div className="pointer-events-none absolute -right-32 -top-32 z-0 h-[32rem] w-[32rem] rounded-full bg-brand-cyan/20 blur-[100px]" />
+      <div className="pointer-events-none absolute -left-32 bottom-0 z-0 h-80 w-80 rounded-full bg-brand-primary/25 blur-[80px]" />
 
-            <div className="flex items-center space-x-6 text-sm font-medium text-gray-300">
-              <div className="flex items-center space-x-2">
-                <Eye size={16} className="text-gray-400" />
+      <div className="max-w-7xl mx-auto relative z-10 flex min-h-[85vh] flex-col justify-between  py-12 ">
+        {/* Contenu principal */}
+        <main className="my-auto grid grid-cols-1 items-center gap-12 pt-8 lg:grid-cols-12">
+          {/* Colonne Gauche : Infos, Titre et Description */}
+          <div className="flex flex-col space-y-8 lg:col-span-8">
+            <div className="flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-widest text-white/70">
+              <span className="rounded-full border border-brand-primary/40 bg-brand-primary/15 px-4 py-1.5 text-brand-primary-100">
+                {SERIES.platform}
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan" />
+                {SERIES.years}
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-yellow" />
+                {SERIES.status}
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-white/50" />
+                {SERIES.age} · {SERIES.runtime}
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              <h1 className="text-6xl font-black leading-[0.95] tracking-tight text-white lg:text-8xl">
+                {SERIES.title}
+              </h1>
+              <p className="max-w-xl text-lg font-light italic text-brand-cyan-100">
+                {SERIES.tagline}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm font-medium text-white/80">
+              <div className="flex items-center gap-2">
+                <Eye size={18} className="text-brand-cyan" />
                 <span>{SERIES.followers.toLocaleString()}</span>
               </div>
-              <div className="h-4 w-px bg-white/30" />
-              <div className="flex items-center">
-                <Star size={16} className="fill-yellow-400 text-yellow-400" />
-                <span className="ml-2">{SERIES.communityScore}</span>
-                <span className=" font-light ml-4"> 15000 Votes </span>
+              <div className="h-5 w-px bg-white/20" />
+              <div className="flex items-center gap-2">
+                <Star
+                  size={18}
+                  className="fill-brand-yellow text-brand-yellow"
+                />
+                <span className="text-white">{SERIES.communityScore}</span>
+                <span className="text-white/50">· 15 000 votes</span>
               </div>
 
               <div className="flex items-center -space-x-2">
@@ -921,98 +952,129 @@ function HeroSection() {
                     key={user.name}
                     src={user.avatar}
                     alt={user.name}
-                    className="h-7 w-7 rounded-full border-2 border-[#14161d] object-cover"
+                    className="h-8 w-8 rounded-full border-2 border-brand-dark object-cover"
                   />
                 ))}
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-[#14161d] bg-white/10 text-[9px] font-semibold text-white">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-brand-dark bg-brand-primary text-[10px] font-semibold text-white">
                   +{COMMUNITY.contributors.length - 3}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-start space-x-6 pt-2">
+            <div className="flex flex-col gap-8 pt-4 lg:flex-row lg:items-start">
               <div
-                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full p-[2px] shadow-lg transition-transform hover:scale-105"
+                className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full p-[2px] shadow-[0_0_40px_rgba(132,29,79,0.45)] transition-transform hover:scale-105"
                 style={{
                   background: `conic-gradient(${PLATFORM_COLORS[SERIES.platform] || "#ffffff"} 0deg, rgba(255,255,255,0.15) 270deg, ${PLATFORM_COLORS[SERIES.platform] || "#ffffff"} 360deg)`,
                 }}
               >
                 <button
                   onClick={() => navigate("/series/watch")}
-                  className="flex h-full w-full items-center justify-center rounded-full bg-[#14161d] text-white transition-colors hover:bg-[#1c1f28]"
+                  className="flex h-full w-full items-center justify-center rounded-full bg-brand-dark text-white transition-colors hover:bg-brand-wine"
                 >
-                  <Play size={24} className="ml-1 fill-white" />
+                  <Play size={28} className="ml-1 fill-white" />
                 </button>
               </div>
 
-              <div className="max-w-3xl space-y-3 border-l-2 border-white/20 pl-4">
-                <p className="font-light leading-relaxed text-gray-300">
+              <div className="max-w-2xl space-y-4 border-l-2 border-brand-primary/30 pl-6">
+                <p className="text-base font-light leading-relaxed text-white/80">
                   {SERIES.synopsis}
                 </p>
+                <div className="flex flex-wrap gap-2">
+                  {SERIES.genres.map((genre) => (
+                    <span
+                      key={genre}
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white/80"
+                    >
+                      {genre}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Colonne Droite : Actions secondaires & Compte à rebours */}
-          <div className="flex h-full flex-col items-start justify-between space-y-12 lg:col-span-5 lg:h-48 lg:items-end lg:space-y-0">
-            <div className="flex items-center gap-3">
+          {/* Colonne Droite : Actions secondaires */}
+          <div className="flex flex-col items-start gap-10 lg:col-span-4 lg:items-end">
+            <div className="w-full max-w-sm space-y-5 rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md lg:text-right">
+              <p className="text-xs font-black uppercase tracking-widest text-brand-cyan">
+                Prochain épisode
+              </p>
+              <div className="space-y-2">
+                <p className="text-2xl font-black text-white">
+                  {PROGRESS.nextEpisode.code}
+                </p>
+                <p className="text-sm font-medium text-white/70">
+                  {PROGRESS.nextEpisode.title}
+                </p>
+              </div>
+              <div className="h-px bg-white/10" />
+              <div className="flex items-center justify-between text-xs text-white/50 lg:justify-end lg:gap-4">
+                <span>{PROGRESS.timeRemaining} restantes</span>
+                <span className="text-brand-primary">
+                  Saison {PROGRESS.season}
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-4">
               <button
                 aria-label="Ajouter"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:bg-white/10"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
               >
-                <Plus size={18} />
+                <Plus size={20} />
               </button>
               <button
                 aria-label="Calendrier"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:bg-white/10"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
               >
-                <Calendar size={18} />
+                <Calendar size={20} />
               </button>
               <button
                 aria-label="Message"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:bg-white/10"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
               >
-                <MessageCircle size={18} />
+                <MessageCircle size={20} />
               </button>
               <button
                 aria-label="Note"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:bg-white/10"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
               >
-                <Pencil size={18} />
+                <Pencil size={20} />
               </button>
             </div>
           </div>
         </main>
 
         {/* Carousel d'épisodes / vidéos en pied */}
-        <footer className=" border-t border-white/10 pt-6 mt-24">
-          <div className="mb-4 flex items-center space-x-2 font-bold uppercase tracking-widest">
-            <span className="text-white">Videos recentes</span>
+        <footer className="mt-20 border-t border-white/10 pt-10">
+          <div className="mb-6 flex items-center space-x-3 text-xs font-bold uppercase tracking-widest">
+            <span className="h-2 w-2 rounded-full bg-brand-primary" />
+            <span className="text-white">Vidéos récentes</span>
             <span className="text-white/30">|</span>
             <span className="cursor-pointer text-white/40 transition-colors hover:text-white">
               Plus
             </span>
           </div>
-          <div className="scrollbar-none flex space-x-4 overflow-x-auto pb-2">
+          <div className="scrollbar-none flex space-x-5 overflow-x-auto pb-2">
             {VIDEOS.slice(0, 4).map((video) => (
               <div
                 key={video.id}
-                className="group w-64 shrink-0 cursor-pointer"
+                className="group w-64 shrink-0 cursor-pointer space-y-3"
               >
-                <div className="relative aspect-video overflow-hidden rounded bg-neutral-900">
+                <div className="relative aspect-video overflow-hidden rounded-xl bg-neutral-900">
                   <img
                     src={video.thumbnail}
                     alt={video.title}
                     className="h-full w-full object-cover opacity-70 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
                   />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-                    <Play className="h-5 w-5 fill-white text-white" />
+                    <Play className="h-6 w-6 fill-white text-white" />
                   </div>
                 </div>
-                <p className="truncate font-bold text-white mt-4">
+                <p className="truncate text-xs font-bold uppercase tracking-wider text-brand-cyan">
                   {video.type}
                 </p>
-                <p className="truncate text-sm text-gray-400">{video.title}</p>
+                <p className="truncate text-sm text-white/80">{video.title}</p>
               </div>
             ))}
           </div>
@@ -1438,15 +1500,15 @@ function OutlineButton({ children }) {
 function CastingSection() {
   return (
     <section id="casting" className="max-w-7xl mx-auto scroll-mt-28">
-      <h2 className="text-lg font-black uppercase tracking-widest text-white">
+      <h2 className="text-2xl font-black uppercase tracking-widest text-white">
         Casting Principal
       </h2>
 
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {CAST.map((member) => (
           <div
             key={member.id}
-            className="group relative overflow-hidden rounded-xl  bg-white/[0.03] p-4 transition hover:border-brand-cyan/30 hover:bg-white/[0.05]"
+            className="bg-brand-dark/70 group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-5 transition hover:border-brand-cyan/30 hover:bg-black/60"
           >
             <div className="flex items-center gap-4">
               <div className="h-16 w-16 overflow-hidden rounded-full ring-2 ring-white/10 transition group-hover:ring-brand-cyan/50">
@@ -1603,8 +1665,8 @@ function TrailerVideoTile({ item }) {
 
 function TrailerSection() {
   return (
-    <section id="trailers" className="max-w-7xl mx-auto space-y-10 text-white">
-      <div className="grid gap-12 xl:grid-cols-[minmax(0,1fr)_340px]">
+    <section id="trailers" className="max-w-7xl mx-auto space-y-14 text-white">
+      <div className="grid gap-14 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="space-y-6">
           <TrailerGradientFrame>
             <div className="relative overflow-hidden rounded-[27px]">
@@ -1949,10 +2011,10 @@ function ShopCard({ item, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="group relative overflow-hidden rounded-[24px] text-left"
+      className="group relative overflow-hidden rounded-[24px] text-left transition-colors"
     >
       <GradientRing radiusClass="rounded-[24px]" thickness={1.5} />
-      <div className="relative rounded-[24px] bg-brand-dark/55 p-4 backdrop-blur">
+      <div className="relative rounded-[24px] bg-brand-dark/55 p-4 backdrop-blur transition-colors group-hover:bg-brand-dark/70">
         <div className="overflow-hidden rounded-[18px] bg-black/20">
           <img
             src={item.image}
@@ -1984,14 +2046,14 @@ function ShopCard({ item, onClick }) {
 function SimilarSeriesCard({ item, onClick }) {
   return (
     <button onClick={onClick} className="group text-left">
-      <div className="overflow-hidden rounded-[20px] border border-white/10 bg-black/20 shadow-[0_14px_30px_rgba(0,0,0,.18)]">
+      <div className="overflow-hidden rounded-[20px] border border-white/10 bg-black/20 shadow-[0_14px_30px_rgba(0,0,0,.18)] transition-colors group-hover:border-brand-cyan/40">
         <img
           src={item.image}
           alt={item.title}
           className="aspect-[2/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
         />
       </div>
-      <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white/75 group-hover:text-white">
+      <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white/75 group-hover:text-brand-cyan transition-colors">
         {item.title}
       </p>
     </button>
@@ -2001,8 +2063,8 @@ function SimilarSeriesCard({ item, onClick }) {
 function SeriesCommentItem({ comment }) {
   return (
     <GradientFrame>
-      <div className="p-6">
-        <div className="flex gap-4">
+      <div className="p-7">
+        <div className="flex gap-5">
           <div
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
             style={{
@@ -2022,23 +2084,25 @@ function SeriesCommentItem({ comment }) {
               <p className="text-xs uppercase tracking-[0.16em] text-white/70">
                 {comment.time}
               </p>
-              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-xs">
+              <span className="inline-flex items-center rounded-full border border-brand-cyan/20 bg-brand-cyan/10 px-2 py-1 text-xs text-brand-cyan">
                 {comment.reaction}
               </span>
             </div>
 
-            <p className="mt-3 text-sm leading-7">{comment.content}</p>
+            <p className="mt-4 text-sm leading-7 text-white/80">
+              {comment.content}
+            </p>
 
             <div className="mt-4 flex items-center gap-3">
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs  transition hover:bg-white/[0.07] hover:text-white">
+              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs transition hover:border-brand-cyan/30 hover:bg-brand-cyan/10 hover:text-brand-cyan">
                 J’aime ({comment.likes})
               </button>
 
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs transition hover:bg-white/[0.07] hover:text-white">
+              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs transition hover:border-brand-cyan/30 hover:bg-brand-cyan/10 hover:text-brand-cyan">
                 Répondre
               </button>
 
-              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs  transition hover:bg-white/[0.07] hover:text-white">
+              <button className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs transition hover:border-brand-cyan/30 hover:bg-brand-cyan/10 hover:text-brand-cyan">
                 Signaler
               </button>
             </div>
@@ -2060,35 +2124,35 @@ function SeriesCommentsComposer() {
 
       <GradientFrame>
         <div className="p-6">
-          <div className="rounded-[22px] border border-[#841D4F]/18 bg-[linear-gradient(90deg,rgba(132,29,79,.10),rgba(30,108,134,.04))] px-5 py-4 text-sm text-white">
+          <div className="rounded-[22px] border border-brand-primary/20 bg-gradient-to-r from-brand-primary/10 to-brand-cyan/5 px-5 py-4 text-sm text-white">
             Rejoignez la discussion ou partagez votre avis sur cette série.
           </div>
 
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-xs uppercase tracking-[0.18em]">
+              <label className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/70">
                 Pseudo
               </label>
               <input
                 placeholder="Saisir un pseudo"
-                className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none focus:border-white/25"
+                className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition focus:border-brand-cyan/40 focus:bg-white/[0.06]"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xs uppercase tracking-[0.18em]">
+              <label className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/70">
                 Email
               </label>
               <input
                 placeholder="Vous pouvez aussi ajouter un email"
-                className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none  focus:border-white/25"
+                className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition focus:border-brand-cyan/40 focus:bg-white/[0.06]"
               />
             </div>
           </div>
 
-          <div className="mt-4 rounded-[24px] border border-white/10 bg-white/[0.03]">
+          <div className="mt-6 rounded-[24px] border border-white/10 bg-white/[0.03]">
             <div className="flex flex-wrap items-center gap-4 border-b border-white/10 px-4 py-3 text-sm text-white/55">
-              <span className="font-semibold text-white/70">H1</span>
+              <span className="font-semibold text-brand-cyan">H1</span>
               <span>H2</span>
               <span>B</span>
               <span>I</span>
@@ -2100,12 +2164,12 @@ function SeriesCommentsComposer() {
             <textarea
               rows="8"
               placeholder="Ajoutez votre commentaire ici..."
-              className="w-full resize-none bg-transparent px-4 py-4 text-sm text-white outline-none"
+              className="w-full resize-none bg-transparent px-4 py-4 text-sm text-white outline-none transition focus:bg-white/[0.02]"
             />
           </div>
 
-          <div className="mt-5 flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex h-20 w-[300px] items-center rounded-2xl border border-white/10 bg-white/[0.035] px-4 text-sm text-white/60">
+          <div className="mt-6 flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex h-20 w-[300px] items-center rounded-2xl border border-white/10 bg-brand-dark/50 px-4 text-sm text-white/60">
               Captcha
             </div>
 
@@ -2195,7 +2259,7 @@ function GradientFrame({ children, className = "" }) {
 
 function SectionHeader({ title, rightLabel, onRightClick }) {
   return (
-    <div className="mb-6 flex items-end justify-between gap-4">
+    <div className="mb-8 flex items-end justify-between gap-4">
       <div className="flex items-center gap-3">
         <span className={`h-4 w-[2px] rounded-full ${ACCENT_GRADIENT}`} />
         <h2 className="text-2xl font-extrabold uppercase text-white">
@@ -2236,10 +2300,16 @@ export default function SeriesDetailsPage() {
   const activeSeason = SEASONS_DATA[activeSeasonIndex];
 
   return (
-    <div className="min-h-screen w-full bg-[#121212] font-montserrat text-gray-300">
-      <main className="">
+    <div className="relative min-h-screen w-full bg-black font-montserrat text-gray-300">
+      {/* Glows décoratifs */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute left-[-8%] top-[-5%] h-[380px] w-[380px] rounded-full bg-brand-primary/20 blur-3xl" />
+        <div className="absolute right-[-8%] top-[10%] h-[300px] w-[300px] rounded-full bg-brand-cyan/15 blur-3xl" />
+      </div>
+
+      <main className="relative z-10">
         <HeroSection />
-        <section className=" bg-[#4ca6a4]/90 text-neutral-900 px-12 py-3 font-medium tracking-wide">
+        <section className="bg-gradient-to-r from-brand-primary/80 to-brand-cyan/60 text-white/80 px-12 py-4 font-medium tracking-wide">
           <div className="max-w-7xl mx-auto">
             <p>
               <span className="font-bold">Starring:</span> Hiroyuki Sanada,
@@ -2249,12 +2319,12 @@ export default function SeriesDetailsPage() {
             </p>
           </div>
         </section>
-        <nav className="bg-[#1b1e25] border-b border-white/5 px-12 overflow-x-auto scrollbar-none">
+        <nav className="bg-black/80 border-b border-white/5 px-12 overflow-x-auto scrollbar-none backdrop-blur-md">
           <div className="max-w-7xl mx-auto flex space-x-8 whitespace-nowrap">
             {navTabs.map((tab) => (
               <button
                 key={tab.id}
-                className={`py-4 text-[11px] font-black tracking-widest relative transition-colors ${
+                className={`py-4 text-sm font-black tracking-widest relative transition-colors ${
                   tab.active
                     ? "text-white"
                     : "text-gray-400 hover:text-gray-200"
@@ -2262,7 +2332,7 @@ export default function SeriesDetailsPage() {
               >
                 {tab.label}
                 {tab.active && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4ca6a4]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-cyan" />
                 )}
               </button>
             ))}
@@ -2270,9 +2340,9 @@ export default function SeriesDetailsPage() {
         </nav>
 
         {/* --- SECTION CONTENU PRINCIPAL / ÉPISODES --- */}
-        <main className="max-w-7xl mx-auto py-20 space-y-6">
+        <main className="max-w-7xl mx-auto py-28 space-y-8">
           {/* Grille de cartes d'épisodes */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-14">
             <div className="space-y-4">
               {SEASONS_DATA.map((season, index) => {
                 const isActive = index === activeSeasonIndex;
@@ -2287,10 +2357,10 @@ export default function SeriesDetailsPage() {
                     }}
                     transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
                     className={[
-                      "w-full text-left overflow-hidden rounded-lg relative",
+                      "w-full text-left overflow-hidden rounded-2xl relative transition-colors",
                       isActive
-                        ? "shadow-lg ring-1 ring-[#4ca6a4]/50"
-                        : "bg-[#1b1e25] hover:bg-[#242832] cursor-pointer",
+                        ? "shadow-lg ring-1 ring-brand-cyan/50"
+                        : "bg-brand-dark/70 hover:bg-brand-dark/90 cursor-pointer",
                     ].join(" ")}
                   >
                     {/* Background image that fully reveals when active */}
@@ -2308,8 +2378,8 @@ export default function SeriesDetailsPage() {
                       className={[
                         "absolute inset-0 pointer-events-none",
                         isActive
-                          ? "bg-gradient-to-t from-[#14161d] via-[#14161d]/85 to-[#14161d]/40"
-                          : "bg-gradient-to-r from-[#14161d]/95 via-[#14161d]/75 to-[#14161d]/40",
+                          ? "bg-gradient-to-t from-brand-dark via-brand-dark/85 to-brand-dark/40"
+                          : "bg-gradient-to-r from-brand-dark/95 via-brand-dark/75 to-brand-dark/40",
                       ].join(" ")}
                     />
 
@@ -2331,7 +2401,7 @@ export default function SeriesDetailsPage() {
                             transition={{ duration: 0.35, delay: 0.12 }}
                             className="space-y-4"
                           >
-                            <p className="text-[10px] font-black uppercase tracking-widest text-[#4ca6a4]">
+                            <p className="text-[10px] font-black uppercase tracking-widest text-brand-cyan">
                               {season.status}
                             </p>
                             <h2 className="text-3xl font-black leading-tight text-white">
@@ -2384,7 +2454,7 @@ export default function SeriesDetailsPage() {
                       className="group cursor-pointer flex flex-col space-y-2"
                     >
                       {/* Vignette de l'épisode */}
-                      <div className="relative aspect-video w-full bg-[#20232b] rounded overflow-hidden shadow-md">
+                      <div className="relative aspect-video w-full bg-brand-dark/60 rounded-xl overflow-hidden shadow-md">
                         <img
                           src={ep.img}
                           alt={ep.title}
@@ -2394,7 +2464,7 @@ export default function SeriesDetailsPage() {
                         {/* Barre de progression optionnelle */}
                         <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
                           <div
-                            className={`h-full bg-[#4ca6a4] ${ep.progress}`}
+                            className={`h-full bg-brand-cyan ${ep.progress}`}
                           />
                         </div>
                       </div>
@@ -2409,17 +2479,14 @@ export default function SeriesDetailsPage() {
                             <MoreVertical size={14} />
                           </button>
                         </div>
-                        <h3 className="text-xs font-bold text-white tracking-wide group-hover:text-[#4ca6a4] transition-colors">
+                        <h3 className="text-xs font-bold text-white tracking-wide group-hover:text-brand-cyan transition-colors">
                           {ep.title}
                         </h3>
-                        <p className="text-[11px] text-gray-400 leading-relaxed font-light line-clamp-3">
-                          {ep.description}
-                        </p>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="col-span-full flex items-center justify-center rounded-lg border border-white/5 bg-[#1b1e25] py-12 text-sm text-white/50">
+                  <div className="col-span-full flex items-center justify-center rounded-2xl border border-white/5 bg-brand-dark/70 py-12 text-sm text-white/50">
                     Aucun épisode disponible pour {activeSeason.title}.
                   </div>
                 )}
@@ -2430,7 +2497,7 @@ export default function SeriesDetailsPage() {
 
         <CastingSection />
 
-        <div className="mt-24 max-w-7xl mx-auto">
+        <div className="mt-32 max-w-7xl mx-auto">
           <SectionHeader
             title="Videos"
             rightLabel=""
@@ -2439,7 +2506,7 @@ export default function SeriesDetailsPage() {
           <TrailerSection />
         </div>
 
-        <section className="mt-24 max-w-7xl mx-auto space-y-24">
+        <section className="mt-32 max-w-7xl mx-auto space-y-32">
           <AdvertisementBlock />
 
           <div>

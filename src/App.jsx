@@ -6,6 +6,7 @@ import NewsListPage from "./pages/NewsListPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import SeriesListPage from "./pages/SeriesListPage";
 import SeriesDetailsPage from "./pages/SeriesDetailsPage";
+import SeriesDetailsPageVariant from "./pages/SeriesDetailsPageVariant";
 import UserSpacePage from "./pages/UserSpacePage";
 import TrailersPages from "./pages/TrailersPages";
 import TrailerDetailsPage from "./pages/TrailerDetailsPage";
@@ -68,6 +69,7 @@ import CsHorrorTemplate from "./pages/CsHorrorTemplate";
 import ShogunDashboard from "./pages/ShogunDashboard";
 import AvatarSeriesDetail from "./pages/SerieDetails/AvatarSerieDetails";
 import JungleQueenDashboard from "./pages/SerieDetails/JungleQueenDashboard";
+import TalePage from "./pages/SerieDetails/TalePage";
 
 function App() {
   return (
@@ -82,6 +84,10 @@ function App() {
 
           <Route path="/series" element={<SeriesListPage />} />
           <Route path="/series-details" element={<SeriesDetailsPage />} />
+          <Route
+            path="/series-details-variant"
+            element={<SeriesDetailsPageVariant />}
+          />
 
           <Route path="/series/seasons" element={<SerieSeasonsPage />} />
           <Route
@@ -158,6 +164,7 @@ function App() {
           <Route path="/shogun" element={<ShogunDashboard />} />
           <Route path="/avatar-details" element={<AvatarSeriesDetail />} />
           <Route path="/jungle-queen" element={<JungleQueenDashboard />} />
+          <Route path="/tale" element={<TalePage />} />
 
           <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
         </Routes>

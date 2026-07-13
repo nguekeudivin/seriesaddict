@@ -60,6 +60,7 @@ export default {
       },
       fontFamily: {
         sans: ["Montserrat", "Avenir Next", "Segoe UI", "sans-serif"],
+        montserrat: ["Montserrat", "Avenir Next", "Segoe UI", "sans-serif"],
         anton: ["Anton", "sans-serif"],
       },
     },
