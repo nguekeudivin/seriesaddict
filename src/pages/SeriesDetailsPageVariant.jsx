@@ -882,7 +882,7 @@ function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-[85vh] w-full overflow-hidden rounded-2xl text-white select-none">
+    <section className="relative min-h-[85vh] w-full overflow-hidden  text-white select-none">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
@@ -899,12 +899,12 @@ function HeroSection() {
       <div className="pointer-events-none absolute -right-32 -top-32 z-0 h-[32rem] w-[32rem] rounded-full bg-brand-cyan/20 blur-[100px]" />
       <div className="pointer-events-none absolute -left-32 bottom-0 z-0 h-80 w-80 rounded-full bg-brand-primary/25 blur-[80px]" />
 
-      <div className="max-w-7xl mx-auto relative z-10 flex min-h-[85vh] flex-col justify-between  py-12 ">
+      <div className="max-w-7xl mx-auto relative z-10 flex min-h-[85vh] flex-col justify-between  py-16 ">
         {/* Contenu principal */}
-        <main className="my-auto grid grid-cols-1 items-center gap-12 pt-8 lg:grid-cols-12">
+        <main className="my-auto grid grid-cols-1 items-center gap-16 pt-12 lg:grid-cols-12">
           {/* Colonne Gauche : Infos, Titre et Description */}
-          <div className="flex flex-col space-y-8 lg:col-span-8">
-            <div className="flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-widest text-white/70">
+          <div className="flex flex-col space-y-10 lg:col-span-8">
+            <div className="flex flex-wrap items-center gap-5 text-xs font-bold uppercase tracking-widest text-white/70">
               <span className="rounded-full border border-brand-primary/40 bg-brand-primary/15 px-4 py-1.5 text-brand-primary-100">
                 {SERIES.platform}
               </span>
@@ -922,7 +922,7 @@ function HeroSection() {
               </span>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               <h1 className="text-6xl font-black leading-[0.95] tracking-tight text-white lg:text-8xl">
                 {SERIES.title}
               </h1>
@@ -931,7 +931,7 @@ function HeroSection() {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm font-medium text-white/80">
+            <div className="flex flex-wrap items-center gap-x-10 gap-y-3 text-sm font-medium text-white/80">
               <div className="flex items-center gap-2">
                 <Eye size={18} className="text-brand-cyan" />
                 <span>{SERIES.followers.toLocaleString()}</span>
@@ -961,7 +961,7 @@ function HeroSection() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-8 pt-4 lg:flex-row lg:items-start">
+            <div className="flex flex-col gap-10 pt-8 lg:flex-row lg:items-start">
               <div
                 className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full p-[2px] shadow-[0_0_40px_rgba(132,29,79,0.45)] transition-transform hover:scale-105"
                 style={{
@@ -995,28 +995,18 @@ function HeroSection() {
           </div>
 
           {/* Colonne Droite : Actions secondaires */}
-          <div className="flex flex-col items-start gap-10 lg:col-span-4 lg:items-end">
-            <div className="w-full max-w-sm space-y-5 rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md lg:text-right">
-              <p className="text-xs font-black uppercase tracking-widest text-brand-cyan">
-                Prochain épisode
-              </p>
-              <div className="space-y-2">
-                <p className="text-2xl font-black text-white">
-                  {PROGRESS.nextEpisode.code}
-                </p>
-                <p className="text-sm font-medium text-white/70">
-                  {PROGRESS.nextEpisode.title}
-                </p>
-              </div>
-              <div className="h-px bg-white/10" />
-              <div className="flex items-center justify-between text-xs text-white/50 lg:justify-end lg:gap-4">
-                <span>{PROGRESS.timeRemaining} restantes</span>
-                <span className="text-brand-primary">
-                  Saison {PROGRESS.season}
-                </span>
+          <div className="lg:col-span-4">
+            <div className="flex justify-end">
+              <div className="relative w-full max-w-[260px] overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+                <img
+                  src={SERIES.poster}
+                  alt={SERIES.title}
+                  className="aspect-[2/3] w-full object-cover"
+                />
               </div>
             </div>
-            <div className="flex flex-wrap gap-4">
+
+            <div className="flex justify-end flex-wrap gap-4 mt-6">
               <button
                 aria-label="Ajouter"
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
@@ -1045,38 +1035,45 @@ function HeroSection() {
           </div>
         </main>
 
-        {/* Carousel d'épisodes / vidéos en pied */}
-        <footer className="mt-20 border-t border-white/10 pt-10">
+        {/* Carousel des derniers épisodes */}
+        <footer className="mt-28 border-t border-white/10 pt-10">
           <div className="mb-6 flex items-center space-x-3 text-xs font-bold uppercase tracking-widest">
             <span className="h-2 w-2 rounded-full bg-brand-primary" />
-            <span className="text-white">Vidéos récentes</span>
+            <span className="text-white">Derniers épisodes</span>
             <span className="text-white/30">|</span>
             <span className="cursor-pointer text-white/40 transition-colors hover:text-white">
               Plus
             </span>
           </div>
           <div className="scrollbar-none flex space-x-5 overflow-x-auto pb-2">
-            {VIDEOS.slice(0, 4).map((video) => (
-              <div
-                key={video.id}
-                className="group w-64 shrink-0 cursor-pointer space-y-3"
-              >
-                <div className="relative aspect-video overflow-hidden rounded-xl bg-neutral-900">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="h-full w-full object-cover opacity-70 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-                    <Play className="h-6 w-6 fill-white text-white" />
+            {SEASONS_DATA.flatMap((season) => season.episodes)
+              .slice(0, 4)
+              .reverse()
+              .map((ep, idx) => (
+                <div
+                  key={`${ep.id}-${idx}`}
+                  className="group w-64 shrink-0 cursor-pointer space-y-3"
+                >
+                  <div className="relative aspect-video overflow-hidden rounded-xl bg-neutral-900">
+                    <img
+                      src={ep.img}
+                      alt={ep.title}
+                      className="h-full w-full object-cover opacity-70 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
+                      <Play className="h-6 w-6 fill-white text-white" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="mt-2 truncate text-sm font-bold uppercase tracking-wider text-brand-cyan">
+                      S5 {ep.episodeNumber}
+                    </p>
+                    <p className="truncate text-sm text-white/80 mt-1">
+                      {ep.title}
+                    </p>
                   </div>
                 </div>
-                <p className="truncate text-xs font-bold uppercase tracking-wider text-brand-cyan">
-                  {video.type}
-                </p>
-                <p className="truncate text-sm text-white/80">{video.title}</p>
-              </div>
-            ))}
+              ))}
           </div>
         </footer>
       </div>
@@ -1130,7 +1127,7 @@ const SEASONS_DATA = [
         title: "Tomorrow Is Tomorrow",
         description:
           "After Blackthorne survives a brazen assassination attempt, Toranaga realizes he must ferry his allies out of Osaka or risk certain defeat.",
-        img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&auto=format&fit=crop&q=60",
+        img: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=400&auto=format&fit=crop&q=60",
         progress: "w-0",
       },
       {
@@ -2296,6 +2293,7 @@ function PrimaryButton({ children, onClick, className = "" }) {
 }
 
 export default function SeriesDetailsPage() {
+  const navigate = useNavigate();
   const [activeSeasonIndex, setActiveSeasonIndex] = useState(0);
   const activeSeason = SEASONS_DATA[activeSeasonIndex];
 
@@ -2319,7 +2317,7 @@ export default function SeriesDetailsPage() {
             </p>
           </div>
         </section>
-        <nav className="bg-black/80 border-b border-white/5 px-12 overflow-x-auto scrollbar-none backdrop-blur-md">
+        <nav className="  px-12 overflow-x-auto scrollbar-none backdrop-blur-md">
           <div className="max-w-7xl mx-auto flex space-x-8 whitespace-nowrap">
             {navTabs.map((tab) => (
               <button
@@ -2332,7 +2330,7 @@ export default function SeriesDetailsPage() {
               >
                 {tab.label}
                 {tab.active && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-cyan" />
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-brand-primary" />
                 )}
               </button>
             ))}
@@ -2340,7 +2338,7 @@ export default function SeriesDetailsPage() {
         </nav>
 
         {/* --- SECTION CONTENU PRINCIPAL / ÉPISODES --- */}
-        <main className="max-w-7xl mx-auto py-28 space-y-8">
+        <main className="max-w-7xl mx-auto pt-20 pb-28 space-y-8">
           {/* Grille de cartes d'épisodes */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-14">
             <div className="space-y-4">

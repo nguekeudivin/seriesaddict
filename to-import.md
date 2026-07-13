@@ -4,9 +4,8 @@ A modifier
    CalendarPage
 2. Saisons d'une serie [ok]
    SerieSeasonsPage
-   A Creer
 3. Page serie seule
-
+   SeriesDetailsPageVariant
 4. Page saison seule [OK]
    SerieSeasonSinglePage
 5. Page episode seule [ok]
@@ -16,7 +15,7 @@ A modifier
 7. Page serie similaire
    SimilarTastePage
 8. Page episode avoir [ok]
-   EpisodeToWatch
+   EpisodesToWatchPageVariantC
 9. WhislistPage [ok]
 10. Calendrier Personnel de l'utilisateur [ok]
     UserCalendarPage

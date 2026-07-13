@@ -759,26 +759,6 @@ export default function CalendarPage() {
 
         <div className="h-px w-full bg-brand-cyan/25" />
       </main>
-
-      {/* Footer minimal */}
-      <footer className="pb-10">
-        <div className="mx-auto max-w-7xl px-5 text-center">
-          <div className="select-none text-2xl font-black tracking-widest">
-            <span className="text-white">SERIE</span>
-            <span
-              className={`${BRAND_GRADIENT_TEXT} bg-clip-text text-transparent`}
-            >
-              ADDICT
-            </span>
-          </div>
-          <p className="mt-1 text-[11px] tracking-wide text-white/60">
-            LE SPÉCIALISTE DES SÉRIES
-          </p>
-          <p className="mt-2 text-[10px] text-white/40">
-            © 2010–2026 • Series Addict • Tous droits réservés.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
