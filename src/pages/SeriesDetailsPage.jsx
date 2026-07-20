@@ -72,6 +72,7 @@ const GRADIENT =
 
 const SERIES = {
   title: "Stranger Things",
+  vfTitle: "Stranger Things",
   originalTitle: "Stranger Things",
   tagline: "L'été 1985 ne sera jamais le même.",
   years: "2016 - 2025",
@@ -87,6 +88,18 @@ const SERIES = {
   creators: ["Matt Duffer", "Ross Duffer"],
   studios: ["21 Laps Entertainment", "Monkey Massacre", "Netflix"],
   genres: ["Science-fiction", "Drame", "Horreur", "Mystère"],
+  tags: [
+    "Années 80",
+    "Surnaturel",
+    "Adolescence",
+    "Monde à l'envers",
+    "Nostalgie",
+    "Amitié",
+    "Pouvoirs",
+    "Enquête",
+    "Petite ville",
+    "Government Conspiracy",
+  ],
   synopsis:
     "À Hawkins, dans l'Indiana, un jeune garçon de 12 ans disparaît mystérieusement. Ses amis, sa famille et le chef de police vont vivre une enquête haletante qui les mène vers des expériences gouvernementales secrètes, des forces surnaturelles terrifiantes et une petite fille aux pouvoirs extraordinaires.",
   universe:
@@ -902,6 +915,11 @@ function HeroSection() {
             <h1 className="text-5xl font-black leading-none tracking-tight text-white lg:text-6xl">
               {SERIES.title}
             </h1>
+            {SERIES.vfTitle && SERIES.vfTitle !== SERIES.title && (
+              <p className="text-xl font-semibold text-white/70">
+                Titre VF : {SERIES.vfTitle}
+              </p>
+            )}
 
             <div className="flex items-center space-x-6 text-sm font-medium text-gray-300">
               <div className="flex items-center space-x-2">
@@ -934,7 +952,7 @@ function HeroSection() {
               <div
                 className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full p-[2px] shadow-lg transition-transform hover:scale-105"
                 style={{
-                  background: `conic-gradient(${PLATFORM_COLORS[SERIES.platform] || "#ffffff"} 0deg, rgba(255,255,255,0.15) 270deg, ${PLATFORM_COLORS[SERIES.platform] || "#ffffff"} 360deg)`,
+                  background: `conic-gradient(${BRAND.primary} 0deg, rgba(255,255,255,0.15) 270deg, ${BRAND.cyan} 360deg)`,
                 }}
               >
                 <button
@@ -946,10 +964,30 @@ function HeroSection() {
               </div>
 
               <div className="max-w-3xl space-y-3 border-l-2 border-white/20 pl-4">
+                <p className="text-sm font-semibold text-brand-cyan">
+                  Créé par {SERIES.creators.join(", ")}
+                </p>
                 <p className="font-light leading-relaxed text-gray-300">
                   {SERIES.synopsis}
                 </p>
               </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                onClick={() => navigate("/series/watch")}
+                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-white/90"
+              >
+                <Play size={18} className="fill-black" />
+                Regarder la série
+              </button>
+              <button className="group relative inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10">
+                <Heart size={18} className="text-brand-primary" />
+                Recommander à un ami
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-[10px] font-bold text-white shadow-lg">
+                  <Heart size={10} className="fill-white" />
+                </span>
+              </button>
             </div>
           </div>
 
@@ -984,37 +1022,124 @@ function HeroSection() {
           </div>
         </main>
 
-        {/* Carousel d'épisodes / vidéos en pied */}
-        <footer className=" border-t border-white/10 pt-6 mt-24">
-          <div className="mb-4 flex items-center space-x-2 font-bold uppercase tracking-widest">
-            <span className="text-white">Videos recentes</span>
-            <span className="text-white/30">|</span>
-            <span className="cursor-pointer text-white/40 transition-colors hover:text-white">
-              Plus
-            </span>
-          </div>
-          <div className="scrollbar-none flex space-x-4 overflow-x-auto pb-2">
-            {VIDEOS.slice(0, 4).map((video) => (
-              <div
-                key={video.id}
-                className="group w-64 shrink-0 cursor-pointer"
-              >
-                <div className="relative aspect-video overflow-hidden rounded bg-neutral-900">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="h-full w-full object-cover opacity-70 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-                    <Play className="h-5 w-5 fill-white text-white" />
-                  </div>
-                </div>
-                <p className="truncate font-bold text-white mt-4">
-                  {video.type}
-                </p>
-                <p className="truncate text-sm text-gray-400">{video.title}</p>
+        {/* Derniers épisodes & Prochains épisodes en deux colonnes */}
+        <footer className="border-t border-white/10 pt-6 mt-24">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {/* Derniers épisodes diffusés */}
+            <div>
+              <div className="mb-4 flex items-center space-x-2 font-bold uppercase tracking-widest">
+                <span className="text-white">Derniers épisodes diffusés</span>
               </div>
-            ))}
+              <div className="space-y-3">
+                {LAST_EPISODES.map((ep) => (
+                  <div
+                    key={ep.id}
+                    className="group flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-3 transition hover:border-brand-cyan/30 hover:bg-white/[0.05]"
+                  >
+                    <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-lg bg-neutral-900">
+                      <img
+                        src={ep.image}
+                        alt={ep.title}
+                        className="h-full w-full object-cover opacity-70 transition group-hover:scale-105 group-hover:opacity-100"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100">
+                        <Play className="h-4 w-4 fill-white text-white" />
+                      </div>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-bold text-white">
+                        {ep.title}
+                      </p>
+                      <div className="mt-1 flex items-center gap-3 text-xs text-white/50">
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar size={12} />
+                          {ep.date}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <Tv size={12} />
+                          {ep.channel}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        aria-label="Regarder"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Play size={14} className="fill-current" />
+                      </button>
+                      <button
+                        aria-label="Marquer vu"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Eye size={14} />
+                      </button>
+                      <button
+                        aria-label="Noter"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Star size={14} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Prochains épisodes à venir */}
+            <div>
+              <div className="mb-4 flex items-center space-x-2 font-bold uppercase tracking-widest">
+                <span className="text-white">Prochains épisodes</span>
+              </div>
+              <div className="space-y-3">
+                {UPCOMING_EPISODES.map((ep) => (
+                  <div
+                    key={ep.id}
+                    className="group flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-3 transition hover:border-brand-cyan/30 hover:bg-white/[0.05]"
+                  >
+                    <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-lg bg-neutral-900">
+                      <img
+                        src={ep.image}
+                        alt={ep.title}
+                        className="h-full w-full object-cover opacity-70 transition group-hover:scale-105 group-hover:opacity-100"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100">
+                        <Bell className="h-4 w-4 text-white" />
+                      </div>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-bold text-white">
+                        {ep.title}
+                      </p>
+                      <div className="mt-1 flex items-center gap-3 text-xs text-white/50">
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar size={12} />
+                          {ep.date}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <Tv size={12} />
+                          {ep.channel}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        aria-label="Alerte"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Bell size={14} />
+                      </button>
+                      <button
+                        aria-label="Calendrier"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Calendar size={14} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </footer>
       </div>
@@ -1782,6 +1907,86 @@ const SIMILAR_SERIES = [
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80",
   },
+  {
+    title: "The Umbrella Academy",
+    image:
+      "https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=700&q=80",
+  },
+  {
+    title: "Fringe",
+    image:
+      "https://images.unsplash.com/photo-1535016120720-40c64614755b?auto=format&fit=crop&w=700&q=80",
+  },
+];
+
+const SERIES_COLLECTION = {
+  title: "Stranger Things - Collection",
+  description:
+    "Toutes les saisons, spin-offs et contenus exclusifs de l'univers Stranger Things.",
+  image:
+    "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80",
+  seasons: 5,
+  totalEpisodes: 42,
+};
+
+const LAST_EPISODES = [
+  {
+    id: 1,
+    code: "S04E09",
+    title: "The Piggyback",
+    date: "1 juil. 2022",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 2,
+    code: "S04E08",
+    title: "Papa",
+    date: "1 juil. 2022",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 3,
+    code: "S04E07",
+    title: "The Massacre at Hawkins Lab",
+    date: "1 juil. 2022",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1535016120720-40c6874c3b1c?auto=format&fit=crop&w=600&q=80",
+  },
+];
+
+const UPCOMING_EPISODES = [
+  {
+    id: 1,
+    code: "S05E01",
+    title: "Le commencement de la fin",
+    date: "15 nov. 2025",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 2,
+    code: "S05E02",
+    title: "The Crawl",
+    date: "15 nov. 2025",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 3,
+    code: "S05E03",
+    title: "Turnbow Trap",
+    date: "22 nov. 2025",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=600&q=80",
+  },
 ];
 
 const SERIES_COMMENTS = [
@@ -2240,13 +2445,24 @@ export default function SeriesDetailsPage() {
       <main className="">
         <HeroSection />
         <section className=" bg-[#4ca6a4]/90 text-neutral-900 px-12 py-3 font-medium tracking-wide">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4">
             <p>
               <span className="font-bold">Starring:</span> Hiroyuki Sanada,
               Cosmo Jarvis, Anna Sawai &nbsp;•&nbsp;{" "}
               <span className="font-bold">Creators:</span> Rachel Kondo, Justin
               Marks
             </p>
+            <div className="flex flex-wrap items-center gap-2">
+              {SERIES.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center rounded-full bg-black/15 px-3 py-1 text-xs font-semibold text-neutral-900 transition hover:bg-black/25"
+                >
+                  <Hash size={10} className="mr-1" />
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </section>
         <nav className="bg-[#1b1e25] border-b border-white/5 px-12 overflow-x-auto scrollbar-none">
@@ -2283,7 +2499,7 @@ export default function SeriesDetailsPage() {
                     onClick={() => setActiveSeasonIndex(index)}
                     initial={false}
                     animate={{
-                      height: isActive ? 300 : 96,
+                      height: isActive ? 360 : 110,
                     }}
                     transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
                     className={[
@@ -2293,83 +2509,75 @@ export default function SeriesDetailsPage() {
                         : "bg-[#1b1e25] hover:bg-[#242832] cursor-pointer",
                     ].join(" ")}
                   >
-                    {/* Background image that fully reveals when active */}
-                    <motion.div
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url('${season.img}')` }}
-                      initial={false}
-                      animate={{
-                        opacity: isActive ? 1 : 0.55,
-                        scale: isActive ? 1 : 1.08,
-                      }}
-                      transition={{ duration: 0.5, ease: "easeInOut" }}
-                    />
-                    <div
-                      className={[
-                        "absolute inset-0 pointer-events-none",
-                        isActive
-                          ? "bg-gradient-to-t from-[#14161d] via-[#14161d]/85 to-[#14161d]/40"
-                          : "bg-gradient-to-r from-[#14161d]/95 via-[#14161d]/75 to-[#14161d]/40",
-                      ].join(" ")}
-                    />
+                    {isActive ? (
+                      <div className="relative z-10 flex h-full gap-5 p-5">
+                        {/* Portrait image */}
+                        <div className="relative w-32 shrink-0 overflow-hidden rounded-lg">
+                          <div className="aspect-[2/3] h-full">
+                            <img
+                              src={season.img}
+                              alt={season.title}
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        </div>
 
-                    <div
-                      className={[
-                        "relative z-10 h-full",
-                        isActive
-                          ? "flex flex-col justify-end p-5"
-                          : "flex items-center p-4",
-                      ].join(" ")}
-                    >
-                      <AnimatePresence mode="wait" initial={false}>
-                        {isActive ? (
-                          <motion.div
-                            key="active"
-                            initial={{ opacity: 0, y: 18 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.35, delay: 0.12 }}
-                            className="space-y-4"
-                          >
-                            <p className="text-[10px] font-black uppercase tracking-widest text-[#4ca6a4]">
-                              {season.status}
+                        {/* Text content */}
+                        <motion.div
+                          key="active"
+                          initial={{ opacity: 0, y: 18 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.35, delay: 0.12 }}
+                          className="flex flex-1 flex-col justify-end space-y-3"
+                        >
+                          <p className="text-[10px] font-black uppercase tracking-widest text-[#4ca6a4]">
+                            {season.status}
+                          </p>
+                          <h2 className="text-3xl font-black leading-tight text-white">
+                            {season.title}
+                          </h2>
+                          <p className="text-sm font-medium text-white/70">
+                            {season.subtitle}
+                          </p>
+                          {season.description.map((paragraph, idx) => (
+                            <p
+                              key={idx}
+                              className="text-xs leading-relaxed text-white/60"
+                            >
+                              {paragraph}
                             </p>
-                            <h2 className="text-3xl font-black leading-tight text-white">
-                              {season.title}
-                            </h2>
-                            <p className="text-sm font-medium text-white/70">
-                              {season.subtitle}
-                            </p>
-                            {season.description.map((paragraph, idx) => (
-                              <p
-                                key={idx}
-                                className="text-xs leading-relaxed text-white/60"
-                              >
-                                {paragraph}
-                              </p>
-                            ))}
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            key="inactive"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="flex w-full items-center justify-between"
-                          >
-                            <div>
-                              <span className="text-base font-bold text-white drop-shadow">
-                                {season.title}
-                              </span>
-                              <p className="text-sm font-medium text-white/70">
-                                {season.subtitle}
-                              </p>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                          ))}
+                        </motion.div>
+                      </div>
+                    ) : (
+                      <motion.div
+                        key="inactive"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="relative z-10 flex h-full items-center gap-4 p-4"
+                      >
+                        {/* Portrait thumbnail */}
+                        <div className="relative h-[78px] w-14 shrink-0 overflow-hidden rounded">
+                          <img
+                            src={season.img}
+                            alt={season.title}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <span className="text-base font-bold text-white drop-shadow">
+                            {season.title}
+                          </span>
+                          <p className="text-sm font-medium text-white/70">
+                            {season.subtitle}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
                   </motion.button>
                 );
               })}
@@ -2464,8 +2672,47 @@ export default function SeriesDetailsPage() {
               rightLabel="Toutes les recos"
               onRightClick={() => navigate("/series")}
             />
-            <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-              {SIMILAR_SERIES.map((item) => (
+            {/* Première ligne : collection (col-span-3) + 3 séries similaires */}
+            <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6 mb-5">
+              <div className="col-span-2 sm:col-span-3 lg:col-span-3">
+                <div className="group relative overflow-hidden rounded-[20px] border border-white/10 bg-black/20 shadow-[0_14px_30px_rgba(0,0,0,.18)] transition-colors group-hover:border-brand-cyan/40 h-full">
+                  <div className="relative aspect-[16/10] h-full">
+                    <img
+                      src={SERIES_COLLECTION.image}
+                      alt={SERIES_COLLECTION.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-brand-cyan">
+                        Collection
+                      </p>
+                      <h3 className="mt-2 text-xl font-bold text-white">
+                        {SERIES_COLLECTION.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-white/60">
+                        {SERIES_COLLECTION.description}
+                      </p>
+                      <div className="mt-3 flex items-center gap-4 text-xs text-white/50">
+                        <span>{SERIES_COLLECTION.seasons} saisons</span>
+                        <span>•</span>
+                        <span>{SERIES_COLLECTION.totalEpisodes} épisodes</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {SIMILAR_SERIES.slice(0, 3).map((item) => (
+                <SimilarSeriesCard
+                  key={item.title}
+                  item={item}
+                  onClick={() => navigate("/series")}
+                />
+              ))}
+            </div>
+            {/* Deuxième ligne : 5 autres séries similaires */}
+            <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+              {SIMILAR_SERIES.slice(3, 8).map((item) => (
                 <SimilarSeriesCard
                   key={item.title}
                   item={item}

@@ -393,19 +393,15 @@ function EpisodeRow({ episode, isLast }) {
         !isLast && "border-b border-white/10",
       ].join(" ")}
     >
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-white/5">
+      <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-xl bg-white/5">
         <img
           src={episode.poster}
           alt={episode.title}
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 grid place-items-center bg-black/40">
-          <span className="text-lg font-bold text-white drop-shadow">
-            {episode.number}
-          </span>
-        </div>
       </div>
       <div className="min-w-0 flex-1">
+        <h5 className="font-semibold text-brand-cyan"> E{episode.number}</h5>
         <h4 className="truncate font-semibold text-white">{episode.title}</h4>
         <div className="mt-1 flex items-center gap-3 text-xs text-white/60">
           <span className="inline-flex items-center gap-1">

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ChevronLeft,
   Check,
@@ -6,8 +7,14 @@ import {
   Trophy,
   HeartCrack,
   Sparkles,
-  Calendar,
+  CalendarDays,
   Play,
+  TrendingUp,
+  Tv,
+  Clapperboard,
+  Send,
+  Pencil,
+  MessageCircle,
 } from "lucide-react";
 
 const BRAND = {
@@ -17,9 +24,9 @@ const BRAND = {
   dark: "#011921",
 };
 
-const GRADIENT = `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.cyan})`;
+const GRADIENT = `linear-gradient(90deg, ${BRAND.cyan}, ${BRAND.primary})`;
 const ACCENT_GRADIENT =
-  "bg-gradient-to-r from-brand-primary via-brand-wine to-brand-cyan";
+  "bg-gradient-to-r from-brand-cyan via-brand-primary to-brand-wine";
 
 const MEMBER = {
   name: "Alexandre Martin",
@@ -29,28 +36,109 @@ const MEMBER = {
 const WATCH_HISTORY = [
   {
     date: "10 juillet 2026",
-    items: [{ id: 1, title: "Breaking Bad", episode: "S03E07" }],
+    day: "Vendredi",
+    items: [
+      {
+        id: 1,
+        title: "Breaking Bad",
+        episode: "S03E07",
+        time: "22h15",
+        rating: 5,
+        progress: 100,
+        platform: "Netflix",
+        image:
+          "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?auto=format&fit=crop&w=300&q=80",
+      },
+    ],
   },
   {
     date: "9 juillet 2026",
-    items: [{ id: 2, title: "The Bear", episode: "S02E05" }],
+    day: "Jeudi",
+    items: [
+      {
+        id: 2,
+        title: "The Bear",
+        episode: "S02E05",
+        time: "21h40",
+        rating: 4,
+        progress: 100,
+        platform: "Disney+",
+        image:
+          "https://images.unsplash.com/photo-1556910103-1c02745a30bf?auto=format&fit=crop&w=300&q=80",
+      },
+    ],
   },
   {
     date: "8 juillet 2026",
+    day: "Mercredi",
     items: [
-      { id: 3, title: "Dark", episode: "S01E03" },
-      { id: 4, title: "Severance", episode: "S01E08" },
+      {
+        id: 3,
+        title: "Dark",
+        episode: "S01E03",
+        time: "20h00",
+        rating: 5,
+        progress: 100,
+        platform: "Netflix",
+        image:
+          "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=300&q=80",
+      },
+      {
+        id: 4,
+        title: "Severance",
+        episode: "S01E08",
+        time: "23h00",
+        rating: null,
+        progress: 68,
+        platform: "Apple TV+",
+        image:
+          "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=300&q=80",
+      },
     ],
   },
   {
     date: "7 juillet 2026",
-    items: [{ id: 5, title: "The Last Of Us", episode: "S01E06" }],
+    day: "Mardi",
+    items: [
+      {
+        id: 5,
+        title: "The Last Of Us",
+        episode: "S01E06",
+        time: "21h00",
+        rating: 4,
+        progress: 100,
+        platform: "Prime Video",
+        image:
+          "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=300&q=80",
+      },
+    ],
   },
   {
     date: "6 juillet 2026",
+    day: "Lundi",
     items: [
-      { id: 6, title: "Stranger Things", episode: "S04E09" },
-      { id: 7, title: "House Of The Dragon", episode: "S02E04" },
+      {
+        id: 6,
+        title: "Stranger Things",
+        episode: "S04E09",
+        time: "19h30",
+        rating: 4,
+        progress: 100,
+        platform: "Netflix",
+        image:
+          "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=300&q=80",
+      },
+      {
+        id: 7,
+        title: "House Of The Dragon",
+        episode: "S02E04",
+        time: "22h30",
+        rating: null,
+        progress: 45,
+        platform: "HBO Max",
+        image:
+          "https://images.unsplash.com/photo-1535905557558-afc4877a26fc?auto=format&fit=crop&w=300&q=80",
+      },
     ],
   },
 ];
@@ -59,6 +147,7 @@ const PERSONAL_STATS = {
   year: "2026",
   episodesWatched: 156,
   hoursWatched: 89,
+  streakDays: 12,
   favoriteGenre: "Science-fiction",
   favoriteSeries: "Dark",
 };
@@ -132,10 +221,14 @@ function GradientRing({
   );
 }
 
-function SectionHeader({ title }) {
+function SectionHeader({ title, icon: Icon }) {
   return (
     <div className="mb-4 flex items-center gap-3">
-      <span className={`h-5 w-[3px] ${ACCENT_GRADIENT} rounded-full`} />
+      {Icon && (
+        <div className="grid h-8 w-8 place-items-center rounded-full bg-white/10">
+          <Icon className="h-4 w-4 text-brand-cyan" />
+        </div>
+      )}
       <h2 className="text-lg font-semibold tracking-wide text-white">
         {title}
       </h2>
@@ -143,39 +236,38 @@ function SectionHeader({ title }) {
   );
 }
 
-function StatCard({ label, value, sublabel, icon: Icon }) {
+function StatPill({ label, value, sublabel, icon: Icon }) {
   return (
     <div className="group relative overflow-hidden rounded-[20px]">
       <GradientRing radiusClass="rounded-[20px]" thickness={1.5} hoverGlow />
-      <div className="relative rounded-[20px] bg-brand-dark/55 p-6 backdrop-blur">
-        <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
-          <Icon className="h-5 w-5 text-brand-cyan" />
+      <div className="relative rounded-[20px] bg-brand-dark/55 p-4 backdrop-blur">
+        <div className="flex items-center gap-3">
+          <div className="grid h-10 w-10 place-items-center rounded-full bg-white/10">
+            <Icon className="h-5 w-5 text-brand-cyan" />
+          </div>
+          <div>
+            <p className="text-2xl font-extrabold leading-none text-white">
+              {value}
+            </p>
+            <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-white/50">
+              {label}
+            </p>
+          </div>
         </div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-white/50">
-          {label}
-        </p>
-        <p className="mt-1 text-2xl font-extrabold text-white">{value}</p>
-        {sublabel && <p className="mt-1 text-sm text-white/60">{sublabel}</p>}
+        {sublabel && <p className="mt-2 text-xs text-white/60">{sublabel}</p>}
       </div>
     </div>
   );
 }
 
-function MemoryCard({ item }) {
+function MemoryRow({ item }) {
   const Icon = item.icon;
 
   return (
     <div className="group relative overflow-hidden rounded-[20px]">
       <GradientRing radiusClass="rounded-[20px]" thickness={1.5} hoverGlow />
-      <div className="relative rounded-[20px] bg-brand-dark/55 p-5 backdrop-blur transition-colors duration-300 group-hover:bg-brand-dark/65">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/50">
-              {item.label}
-            </p>
-            <p className="mt-2 text-lg font-bold text-white">{item.value}</p>
-            <p className="mt-1 text-sm text-white/60">{item.detail}</p>
-          </div>
+      <div className="relative rounded-[20px] bg-brand-dark/55 p-4 backdrop-blur transition-colors duration-300 group-hover:bg-brand-dark/65">
+        <div className="flex items-center gap-4">
           <div
             className={[
               "flex h-11 w-11 shrink-0 items-center justify-center rounded-full",
@@ -184,27 +276,150 @@ function MemoryCard({ item }) {
           >
             <Icon className={["h-5 w-5", item.accent].join(" ")} />
           </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/50">
+              {item.label}
+            </p>
+            <p className="truncate text-base font-bold text-white">
+              {item.value}
+            </p>
+            <p className="truncate text-xs text-white/60">{item.detail}</p>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
+function HistoryCard({ item, seriesRatings, onRate, seriesReviews, onReview }) {
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const currentRating = seriesRatings[item.id] || item.rating || 0;
+  const currentReview = seriesReviews[item.id];
+
+  return (
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur transition hover:bg-white/[0.07]">
+      <div className="flex items-center gap-4">
+        <div className="relative h-36 w-24 shrink-0 overflow-hidden rounded-lg bg-brand-dark">
+          <img
+            src={item.image}
+            alt={item.title}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+            <Play className="h-6 w-6 text-white" />
+          </div>
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <p className="truncate font-bold text-white">{item.title}</p>
+            <span className="shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-white/70">
+              {item.platform}
+            </span>
+          </div>
+          <p className="text-sm text-brand-cyan">{item.episode}</p>
+          <div className="mt-1 flex items-center gap-2">
+            <span className="text-xs text-white/40">{item.time}</span>
+            {item.progress < 100 && (
+              <span className="text-xs text-yellow-400">
+                {item.progress} % vu
+              </span>
+            )}
+          </div>
+          {item.progress < 100 && (
+            <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
+              <div
+                className="h-full rounded-full bg-yellow-400"
+                style={{ width: `${item.progress}%` }}
+              />
+            </div>
+          )}
+          <div className="mt-3 flex items-center gap-2">
+            <button
+              aria-label="Noter"
+              className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+            >
+              <MessageCircle size={14} />
+            </button>
+            <button
+              aria-label="Noter"
+              className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+            >
+              <Pencil size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Review form */}
+      {showReviewForm && (
+        <div className="mt-3">
+          <textarea
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+            placeholder={`Donnez votre avis sur ${item.title}...`}
+            rows={2}
+            className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white placeholder-white/40 outline-none transition focus:border-brand-cyan/50"
+          />
+          <div className="mt-2 flex justify-end gap-2">
+            <button
+              onClick={() => setShowReviewForm(false)}
+              className="rounded-full px-3 py-1.5 text-xs font-semibold text-white/50 transition hover:text-white"
+            >
+              Annuler
+            </button>
+            <button
+              onClick={() => {
+                if (reviewText.trim()) {
+                  onReview(item.id, reviewText.trim());
+                  setShowReviewForm(false);
+                }
+              }}
+              className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-black transition hover:scale-[1.02]"
+            >
+              <Send className="h-3 w-3" />
+              Publier
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Display submitted review */}
+      {currentReview && !showReviewForm && (
+        <div className="mt-2 rounded-lg border border-brand-cyan/20 bg-brand-cyan/5 px-3 py-2">
+          <p className="text-xs italic text-white/70">"{currentReview}"</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function WatchHistoryPage() {
+  const [seriesRatings, setSeriesRatings] = useState({});
+  const [seriesReviews, setSeriesReviews] = useState({});
+
+  const rateSeries = (id, rating) => {
+    setSeriesRatings((prev) => ({ ...prev, [id]: rating }));
+  };
+
+  const reviewSeries = (id, review) => {
+    setSeriesReviews((prev) => ({ ...prev, [id]: review }));
+  };
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute left-[-8%] top-[-5%] h-[380px] w-[380px] rounded-full bg-brand-primary/20 blur-3xl" />
-        <div className="absolute right-[-8%] top-[10%] h-[300px] w-[300px] rounded-full bg-brand-cyan/15 blur-3xl" />
+        <div className="absolute right-[-10%] top-[-8%] h-[420px] w-[420px] rounded-full bg-brand-cyan/20 blur-3xl" />
+        <div className="absolute bottom-[-5%] left-[-5%] h-[320px] w-[320px] rounded-full bg-brand-primary/15 blur-3xl" />
       </div>
 
       <main className="relative z-10 mx-auto max-w-7xl px-5 py-8">
-        <div className="mb-8 flex items-center gap-4">
+        <div className="mb-6 flex items-center gap-4">
           <button className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 transition hover:bg-white/5">
             <ChevronLeft className="h-5 w-5" />
           </button>
           <div className="flex items-center gap-4">
-            <div className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-brand-primary to-brand-cyan text-xl font-bold text-white">
+            <div className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-brand-cyan to-brand-primary text-xl font-bold text-white">
               {MEMBER.avatar}
             </div>
             <div>
@@ -218,97 +433,98 @@ export default function WatchHistoryPage() {
           </div>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+        <section className="mb-8">
+          <div className="mb-4 flex items-center gap-3">
+            <span className={`h-5 w-[3px] ${ACCENT_GRADIENT} rounded-full`} />
+            <h2 className="text-lg font-semibold tracking-wide text-white">
+              Profil du spectateur
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <StatPill
+              label="Épisodes"
+              value={PERSONAL_STATS.episodesWatched}
+              sublabel="cette année"
+              icon={Check}
+            />
+            <StatPill
+              label="Heures"
+              value={PERSONAL_STATS.hoursWatched}
+              sublabel="devant l'écran"
+              icon={Clock}
+            />
+            <StatPill
+              label="Série"
+              value={PERSONAL_STATS.favoriteSeries}
+              sublabel="favorite"
+              icon={Tv}
+            />
+            <StatPill
+              label="Genre"
+              value={PERSONAL_STATS.favoriteGenre}
+              sublabel="préféré"
+              icon={Clapperboard}
+            />
+          </div>
+        </section>
+
+        <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
           <section>
-            <SectionHeader title="Timeline" />
-            <div className="relative">
-              <div className="absolute left-[19px] top-0 h-full w-px bg-gradient-to-b from-brand-primary via-brand-cyan to-transparent" />
-              <ul className="space-y-8">
-                {WATCH_HISTORY.map((day) => (
-                  <li key={day.date} className="relative pl-14">
-                    <div className="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/50 backdrop-blur">
-                      <Calendar className="h-4 w-4 text-brand-cyan" />
-                    </div>
-                    <div>
-                      <p className="mb-3 text-sm font-semibold text-white/80">
-                        {day.date}
-                      </p>
-                      <div className="space-y-3">
-                        {day.items.map((item) => (
-                          <div
-                            key={item.id}
-                            className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur transition hover:bg-white/[0.07]"
-                          >
-                            <div className="grid h-9 w-9 place-items-center rounded-full bg-brand-primary/15 text-brand-primary">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <div className="flex-1">
-                              <p className="font-bold text-white">
-                                {item.title}
-                              </p>
-                              <p className="text-sm text-white/60">
-                                {item.episode}
-                              </p>
-                            </div>
-                            <button className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-white/40 transition hover:bg-white/10 hover:text-white">
-                              <Play className="h-4 w-4" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <SectionHeader title="Activité récente" icon={CalendarDays} />
+            <div className="space-y-6">
+              {WATCH_HISTORY.map((day) => (
+                <div key={day.date}>
+                  <div className="mb-3 flex items-center gap-3">
+                    <span className="rounded-full bg-brand-primary/15 px-3 py-1 text-xs font-bold text-brand-primary">
+                      {day.day}
+                    </span>
+                    <span className="text-sm text-white/50">{day.date}</span>
+                    <div className="flex-1 border-b border-white/10" />
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {day.items.map((item) => (
+                      <HistoryCard
+                        key={item.id}
+                        item={item}
+                        seriesRatings={seriesRatings}
+                        onRate={rateSeries}
+                        seriesReviews={seriesReviews}
+                        onReview={reviewSeries}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 
           <aside className="space-y-8">
             <section>
-              <SectionHeader title="Statistiques personnelles" />
+              <SectionHeader title="Tendance" icon={TrendingUp} />
               <div className="rounded-[24px] border border-white/10 bg-white/5 p-6 backdrop-blur">
-                <p className="mb-6 text-sm font-semibold text-white/70">
-                  Cette année :
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  <StatCard
-                    label="Épisodes"
-                    value={PERSONAL_STATS.episodesWatched}
-                    sublabel="regardés"
-                    icon={Check}
-                  />
-                  <StatCard
-                    label="Heures"
-                    value={PERSONAL_STATS.hoursWatched}
-                    sublabel="passées"
-                    icon={Clock}
-                  />
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="text-sm text-white/70">Rythme actuel</span>
+                  <span className="text-2xl font-extrabold text-brand-cyan">
+                    {PERSONAL_STATS.streakDays}
+                  </span>
                 </div>
-                <div className="mt-4 space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-white/50">Genre préféré</span>
-                    <span className="font-semibold text-brand-cyan">
-                      {PERSONAL_STATS.favoriteGenre}
-                    </span>
-                  </div>
-                  <div className="h-px bg-white/10" />
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-white/50">
-                      Série favorite
-                    </span>
-                    <span className="font-semibold text-white">
-                      {PERSONAL_STATS.favoriteSeries}
-                    </span>
-                  </div>
+                <p className="mb-4 text-sm text-white/50">
+                  jours consécutifs avec au moins un épisode regardé
+                </p>
+                <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-brand-cyan to-brand-primary"
+                    style={{ width: "72%" }}
+                  />
                 </div>
               </div>
             </section>
 
             <section>
-              <SectionHeader title="Souvenirs" />
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              <SectionHeader title="Souvenirs" icon={Sparkles} />
+              <div className="space-y-3">
                 {MEMORIES.map((memory) => (
-                  <MemoryCard key={memory.key} item={memory} />
+                  <MemoryRow key={memory.key} item={memory} />
                 ))}
               </div>
             </section>

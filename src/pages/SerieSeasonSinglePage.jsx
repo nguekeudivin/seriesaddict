@@ -13,6 +13,9 @@ import {
   Trophy,
   TrendingUp,
   Filter,
+  Send,
+  Pencil,
+  HeartIcon,
 } from "lucide-react";
 import GradientRing from "../components/GradientRing";
 
@@ -23,6 +26,8 @@ const SERIES = {
   title: "STRANGER THINGS",
   poster:
     "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+  landscape:
+    "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80",
 };
 
 const SEASON = {
@@ -225,10 +230,10 @@ function EpisodeCard({ episode, hideSpoilers }) {
     <div className="group relative overflow-hidden rounded-[28px]">
       <GradientRing radiusClass="rounded-[28px]" thickness={1.5} hoverGlow />
       <div className="relative flex flex-col gap-5 rounded-[28px] bg-brand-dark/55 p-5 backdrop-blur sm:flex-row sm:items-start">
-        <div className="relative mx-auto w-40 shrink-0 overflow-hidden rounded-2xl shadow-lg sm:mx-0 sm:w-44">
-          <div className="aspect-[2/3] w-full">
+        <div className="relative w-full shrink-0 overflow-hidden rounded-2xl shadow-lg sm:w-64">
+          <div className="h-48 w-full">
             <img
-              src={SERIES.poster}
+              src={SERIES.landscape}
               alt={episode.title}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             />
@@ -340,6 +345,10 @@ export default function SerieSeasonSinglePage() {
   const [filterUnwatched, setFilterUnwatched] = useState(false);
   const [filterPopular, setFilterPopular] = useState(false);
   const [filterTopRated, setFilterTopRated] = useState(false);
+  const [seasonRating, setSeasonRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [seasonComment, setSeasonComment] = useState("");
+  const [submittedReview, setSubmittedReview] = useState(null);
 
   const progress = Math.round(
     (SEASON.watchedEpisodes / SEASON.episodeCount) * 100,
@@ -428,6 +437,27 @@ export default function SerieSeasonSinglePage() {
                 <p className="mt-6 max-w-3xl text-sm leading-relaxed text-white/80 sm:text-base lg:text-[15px]">
                   {SEASON.synopsis}
                 </p>
+
+                <div className="flex  flex-wrap gap-4 mt-4">
+                  <button
+                    aria-label="Ajouter"
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
+                  >
+                    <HeartIcon size={20} />
+                  </button>
+                  <button
+                    aria-label="Message"
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
+                  >
+                    <MessageCircle size={20} />
+                  </button>
+                  <button
+                    aria-label="Note"
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
+                  >
+                    <Pencil size={20} />
+                  </button>
+                </div>
               </div>
 
               <aside className="space-y-6">

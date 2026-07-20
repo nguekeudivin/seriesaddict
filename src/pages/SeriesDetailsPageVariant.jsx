@@ -42,6 +42,7 @@ import {
   Bookmark,
   Share2,
   Send,
+  HeartIcon,
 } from "lucide-react";
 import ProductCard from "../components/product-card";
 
@@ -72,6 +73,7 @@ const GRADIENT =
 
 const SERIES = {
   title: "Stranger Things",
+  vfTitle: "Les choses étranges",
   originalTitle: "Stranger Things",
   tagline: "L'été 1985 ne sera jamais le même.",
   years: "2016 - 2025",
@@ -87,6 +89,18 @@ const SERIES = {
   creators: ["Matt Duffer", "Ross Duffer"],
   studios: ["21 Laps Entertainment", "Monkey Massacre", "Netflix"],
   genres: ["Science-fiction", "Drame", "Horreur", "Mystère"],
+  tags: [
+    "Années 80",
+    "Surnaturel",
+    "Adolescence",
+    "Monde à l'envers",
+    "Nostalgie",
+    "Amitié",
+    "Pouvoirs",
+    "Enquête",
+    "Petite ville",
+    "Government Conspiracy",
+  ],
   synopsis:
     "À Hawkins, dans l'Indiana, un jeune garçon de 12 ans disparaît mystérieusement. Ses amis, sa famille et le chef de police vont vivre une enquête haletante qui les mène vers des expériences gouvernementales secrètes, des forces surnaturelles terrifiantes et une petite fille aux pouvoirs extraordinaires.",
   universe:
@@ -903,11 +917,8 @@ function HeroSection() {
         {/* Contenu principal */}
         <main className="my-auto grid grid-cols-1 items-center gap-16 pt-12 lg:grid-cols-12">
           {/* Colonne Gauche : Infos, Titre et Description */}
-          <div className="flex flex-col space-y-10 lg:col-span-8">
+          <div className="flex flex-col  lg:col-span-8">
             <div className="flex flex-wrap items-center gap-5 text-xs font-bold uppercase tracking-widest text-white/70">
-              <span className="rounded-full border border-brand-primary/40 bg-brand-primary/15 px-4 py-1.5 text-brand-primary-100">
-                {SERIES.platform}
-              </span>
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan" />
                 {SERIES.years}
@@ -922,16 +933,16 @@ function HeroSection() {
               </span>
             </div>
 
-            <div className="space-y-6">
+            <div className="mt-6">
               <h1 className="text-6xl font-black leading-[0.95] tracking-tight text-white lg:text-8xl">
                 {SERIES.title}
               </h1>
-              <p className="max-w-xl text-lg font-light italic text-brand-cyan-100">
-                {SERIES.tagline}
+              <p className="mt-4 text-xl font-semibold text-white/70">
+                {SERIES.vfTitle}
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-10 gap-y-3 text-sm font-medium text-white/80">
+            <div className="mt-8 flex flex-wrap items-center gap-x-10 gap-y-3 text-sm font-medium text-white/80">
               <div className="flex items-center gap-2">
                 <Eye size={18} className="text-brand-cyan" />
                 <span>{SERIES.followers.toLocaleString()}</span>
@@ -961,11 +972,11 @@ function HeroSection() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-10 pt-8 lg:flex-row lg:items-start">
-              <div
+            <div className="mt-8 flex flex-col gap-10  lg:flex-row lg:items-start">
+              {/* <div
                 className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full p-[2px] shadow-[0_0_40px_rgba(132,29,79,0.45)] transition-transform hover:scale-105"
                 style={{
-                  background: `conic-gradient(${PLATFORM_COLORS[SERIES.platform] || "#ffffff"} 0deg, rgba(255,255,255,0.15) 270deg, ${PLATFORM_COLORS[SERIES.platform] || "#ffffff"} 360deg)`,
+                  background: `conic-gradient(${BRAND.primary} 0deg, rgba(255,255,255,0.15) 270deg, ${BRAND.cyan} 360deg)`,
                 }}
               >
                 <button
@@ -974,9 +985,12 @@ function HeroSection() {
                 >
                   <Play size={28} className="ml-1 fill-white" />
                 </button>
-              </div>
+              </div> */}
 
               <div className="max-w-2xl space-y-4 border-l-2 border-brand-primary/30 pl-6">
+                <p className="text-sm font-semibold text-brand-cyan">
+                  Créé par {SERIES.creators.join(", ")}
+                </p>
                 <p className="text-base font-light leading-relaxed text-white/80">
                   {SERIES.synopsis}
                 </p>
@@ -991,6 +1005,23 @@ function HeroSection() {
                   ))}
                 </div>
               </div>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3 pt-2">
+              <button
+                onClick={() => navigate("/series/watch")}
+                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] hover:bg-white/90"
+              >
+                <Play size={18} className="fill-black" />
+                Regarder la série
+              </button>
+              <button className="group relative inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10">
+                <Heart size={18} className="text-brand-primary" />
+                Recommander à un ami
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-[10px] font-bold text-white shadow-lg">
+                  <Heart size={10} className="fill-white" />
+                </span>
+              </button>
             </div>
           </div>
 
@@ -1011,7 +1042,7 @@ function HeroSection() {
                 aria-label="Ajouter"
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-brand-cyan/50 hover:bg-white/10 hover:text-brand-cyan"
               >
-                <Plus size={20} />
+                <HeartIcon size={20} />
               </button>
               <button
                 aria-label="Calendrier"
@@ -1035,45 +1066,143 @@ function HeroSection() {
           </div>
         </main>
 
-        {/* Carousel des derniers épisodes */}
+        {/* Derniers épisodes & Prochains épisodes en deux colonnes */}
         <footer className="mt-28 border-t border-white/10 pt-10">
-          <div className="mb-6 flex items-center space-x-3 text-xs font-bold uppercase tracking-widest">
-            <span className="h-2 w-2 rounded-full bg-brand-primary" />
-            <span className="text-white">Derniers épisodes</span>
-            <span className="text-white/30">|</span>
-            <span className="cursor-pointer text-white/40 transition-colors hover:text-white">
-              Plus
-            </span>
-          </div>
-          <div className="scrollbar-none flex space-x-5 overflow-x-auto pb-2">
-            {SEASONS_DATA.flatMap((season) => season.episodes)
-              .slice(0, 4)
-              .reverse()
-              .map((ep, idx) => (
-                <div
-                  key={`${ep.id}-${idx}`}
-                  className="group w-64 shrink-0 cursor-pointer space-y-3"
-                >
-                  <div className="relative aspect-video overflow-hidden rounded-xl bg-neutral-900">
-                    <img
-                      src={ep.img}
-                      alt={ep.title}
-                      className="h-full w-full object-cover opacity-70 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
-                      <Play className="h-6 w-6 fill-white text-white" />
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {/* Derniers épisodes diffusés */}
+            <div>
+              <div className="mb-4 flex items-center space-x-2 font-bold uppercase tracking-widest">
+                <span className="text-white">Derniers épisodes diffusés</span>
+              </div>
+              <div className="space-y-3">
+                {LAST_EPISODES.map((ep) => (
+                  <div
+                    key={ep.id}
+                    className="group flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-3 transition hover:border-brand-cyan/30 hover:bg-white/[0.05]"
+                  >
+                    <div className="relative h-24 w-36 shrink-0 overflow-hidden rounded-lg bg-neutral-900">
+                      <img
+                        src={ep.image}
+                        alt={ep.title}
+                        className="h-full w-full object-cover opacity-70 transition group-hover:scale-105 group-hover:opacity-100"
+                      />
+
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="border border-white/50 w-12 h-12 rounded-full flex items-center justify-center">
+                          <Play className="h-4 w-4 fill-white text-white" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-bold text-white">
+                        {ep.title}
+                      </p>
+                      <div className="mt-1.5">
+                        <span className="rounded bg-brand-cyan/20 px-1.5 py-0.5 text-xs text-brand-cyan">
+                          {ep.code}
+                        </span>
+                      </div>
+                      <div className="mt-1 flex items-center gap-3 text-xs text-white/50">
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar size={12} />
+                          {ep.date}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <Tv size={12} />
+                          {ep.channel}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        aria-label="Marquer vu"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Eye size={14} />
+                      </button>
+                      <button
+                        aria-label="Noter"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <HeartIcon size={14} />
+                      </button>
+                      <button
+                        aria-label="Noter"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <MessageCircle size={14} />
+                      </button>
+                      <button
+                        aria-label="Noter"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Pencil size={14} />
+                      </button>
                     </div>
                   </div>
-                  <div>
-                    <p className="mt-2 truncate text-sm font-bold uppercase tracking-wider text-brand-cyan">
-                      S5 {ep.episodeNumber}
-                    </p>
-                    <p className="truncate text-sm text-white/80 mt-1">
-                      {ep.title}
-                    </p>
+                ))}
+              </div>
+            </div>
+
+            {/* Prochains épisodes à venir */}
+            <div>
+              <div className="mb-4 flex items-center space-x-2 font-bold uppercase tracking-widest">
+                <span className="text-white">Prochains épisodes</span>
+              </div>
+              <div className="space-y-3">
+                {UPCOMING_EPISODES.map((ep) => (
+                  <div
+                    key={ep.id}
+                    className="group flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-3 transition hover:border-brand-cyan/30 hover:bg-white/[0.05]"
+                  >
+                    <div className="relative h-24 w-36 shrink-0 overflow-hidden rounded-lg bg-neutral-900">
+                      <img
+                        src={ep.image}
+                        alt={ep.title}
+                        className="h-full w-full object-cover opacity-70 transition group-hover:scale-105 group-hover:opacity-100"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100">
+                        <Bell className="h-4 w-4 text-white" />
+                      </div>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-bold text-white">
+                        {ep.title}
+                      </p>
+                      <div className="mt-1.5">
+                        <span className="rounded bg-brand-cyan/20 px-1.5 py-0.5 text-xs text-brand-cyan">
+                          {ep.code}
+                        </span>
+                      </div>
+                      <div className="mt-1 flex items-center gap-3 text-xs text-white/50">
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar size={12} />
+                          {ep.date}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <Tv size={12} />
+                          {ep.channel}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        aria-label="Alerte"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Bell size={14} />
+                      </button>
+                      <button
+                        aria-label="Calendrier"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+                      >
+                        <Calendar size={14} />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
           </div>
         </footer>
       </div>
@@ -1082,7 +1211,7 @@ function HeroSection() {
 }
 
 const navTabs = [
-  { id: "Saisons", label: "SAISONS", active: true },
+  { id: "Accueil", label: "ACCUEIL", active: true },
   { id: "News", label: "NEWS", active: false },
   { id: "Community", label: "COMMUNAUTE", active: false },
   { id: "Avis", label: "AVIS", active: false },
@@ -1841,6 +1970,91 @@ const SIMILAR_SERIES = [
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80",
   },
+  {
+    title: "The Umbrella Academy",
+    image:
+      "https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=700&q=80",
+  },
+  {
+    title: "Fringe",
+    image:
+      "https://images.unsplash.com/photo-1535016120720-40c6874c3b1c?auto=format&fit=crop&w=700&q=80",
+  },
+];
+
+const SERIES_COLLECTION = {
+  title: "Univers Stranger Things",
+  description: "Les séries et spin-offs liés à l'univers Stranger Things.",
+  image:
+    "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80",
+  series: [
+    "Stranger Things",
+    "Stranger Things: Tokyo",
+    "Stranger Things: The First Shadow",
+    "Stranger Things: Tales from Hawkins",
+    "Stranger Things: The Nina Project",
+    "Stranger Things: Hawkins Chronicles",
+  ],
+};
+
+const LAST_EPISODES = [
+  {
+    id: 1,
+    code: "S04E09",
+    title: "The Piggyback",
+    date: "1 juil. 2022",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 2,
+    code: "S04E08",
+    title: "Papa",
+    date: "1 juil. 2022",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 3,
+    code: "S04E07",
+    title: "The Massacre at Hawkins Lab",
+    date: "1 juil. 2022",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1535016120720-40c6874c3b1c?auto=format&fit=crop&w=600&q=80",
+  },
+];
+
+const UPCOMING_EPISODES = [
+  {
+    id: 1,
+    code: "S05E01",
+    title: "Le commencement de la fin",
+    date: "15 nov. 2025",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 2,
+    code: "S05E02",
+    title: "The Crawl",
+    date: "15 nov. 2025",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 3,
+    code: "S05E03",
+    title: "Turnbow Trap",
+    date: "22 nov. 2025",
+    channel: "Netflix",
+    image:
+      "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=600&q=80",
+  },
 ];
 
 const SERIES_COMMENTS = [
@@ -2345,13 +2559,18 @@ export default function SeriesDetailsPage() {
       <main className="relative z-10">
         <HeroSection />
         <section className="bg-gradient-to-r from-brand-primary/80 to-brand-cyan/60 text-white/80 px-12 py-4 font-medium tracking-wide">
-          <div className="max-w-7xl mx-auto">
-            <p>
-              <span className="font-bold">Starring:</span> Hiroyuki Sanada,
-              Cosmo Jarvis, Anna Sawai &nbsp;•&nbsp;{" "}
-              <span className="font-bold">Creators:</span> Rachel Kondo, Justin
-              Marks
-            </p>
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-2">
+              {SERIES.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-white/90 transition hover:bg-black/25"
+                >
+                  <Hash size={10} className="mr-1" />
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </section>
         <nav className="  px-12 overflow-x-auto scrollbar-none backdrop-blur-md">
@@ -2377,8 +2596,8 @@ export default function SeriesDetailsPage() {
         {/* --- SECTION CONTENU PRINCIPAL / ÉPISODES --- */}
         <main className="max-w-7xl mx-auto pt-20 pb-28 space-y-8">
           {/* Grille de cartes d'épisodes */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-14">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-14">
+            <div className="space-y-4 col-span-2">
               {SEASONS_DATA.map((season, index) => {
                 const isActive = index === activeSeasonIndex;
                 return (
@@ -2388,7 +2607,7 @@ export default function SeriesDetailsPage() {
                     onClick={() => setActiveSeasonIndex(index)}
                     initial={false}
                     animate={{
-                      height: isActive ? 300 : 96,
+                      height: isActive ? 300 : 110,
                     }}
                     transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
                     className={[
@@ -2398,53 +2617,39 @@ export default function SeriesDetailsPage() {
                         : "bg-brand-dark/70 hover:bg-brand-dark/90 cursor-pointer",
                     ].join(" ")}
                   >
-                    {/* Background image that fully reveals when active */}
-                    <motion.div
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url('${season.img}')` }}
-                      initial={false}
-                      animate={{
-                        opacity: isActive ? 1 : 0.55,
-                        scale: isActive ? 1 : 1.08,
-                      }}
-                      transition={{ duration: 0.5, ease: "easeInOut" }}
-                    />
-                    <div
-                      className={[
-                        "absolute inset-0 pointer-events-none",
-                        isActive
-                          ? "bg-gradient-to-t from-brand-dark via-brand-dark/85 to-brand-dark/40"
-                          : "bg-gradient-to-r from-brand-dark/95 via-brand-dark/75 to-brand-dark/40",
-                      ].join(" ")}
-                    />
+                    {isActive ? (
+                      <div className="relative z-10 flex h-full gap-5 p-5">
+                        {/* Portrait image */}
+                        <div className="relative w-44 shrink-0 overflow-hidden rounded-lg">
+                          <div className="aspect-[2/3] h-full">
+                            <img
+                              src={season.img}
+                              alt={season.title}
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        </div>
 
-                    <div
-                      className={[
-                        "relative z-10 h-full",
-                        isActive
-                          ? "flex flex-col justify-end p-5"
-                          : "flex items-center p-4",
-                      ].join(" ")}
-                    >
-                      <AnimatePresence mode="wait" initial={false}>
-                        {isActive ? (
-                          <motion.div
-                            key="active"
-                            initial={{ opacity: 0, y: 18 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.35, delay: 0.12 }}
-                            className="space-y-4"
-                          >
-                            <p className="text-[10px] font-black uppercase tracking-widest text-brand-cyan">
-                              {season.status}
-                            </p>
-                            <h2 className="text-3xl font-black leading-tight text-white">
-                              {season.title}
-                            </h2>
-                            <p className="text-sm font-medium text-white/70">
-                              {season.subtitle}
-                            </p>
+                        {/* Text content */}
+                        <motion.div
+                          key="active"
+                          initial={{ opacity: 0, y: 18 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          //exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.35, delay: 0.12 }}
+                          className="flex flex-1 flex-col justify-end space-y-3 overflow-auto"
+                        >
+                          <p className="text-[10px] font-black uppercase tracking-widest text-brand-cyan">
+                            {season.status}
+                          </p>
+                          <h2 className="text-3xl font-black leading-tight text-white">
+                            {season.title}
+                          </h2>
+                          <p className="text-sm font-medium text-white/70">
+                            {season.subtitle}
+                          </p>
+                          <div className="h-[100px] space-y-3">
                             {season.description.map((paragraph, idx) => (
                               <p
                                 key={idx}
@@ -2453,34 +2658,42 @@ export default function SeriesDetailsPage() {
                                 {paragraph}
                               </p>
                             ))}
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            key="inactive"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="flex w-full items-center justify-between"
-                          >
-                            <div>
-                              <span className="text-base font-bold text-white drop-shadow">
-                                {season.title}
-                              </span>
-                              <p className="text-sm font-medium text-white/70">
-                                {season.subtitle}
-                              </p>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                          </div>
+                        </motion.div>
+                      </div>
+                    ) : (
+                      <motion.div
+                        key="inactive"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="relative z-10 flex h-full items-center gap-4 p-4"
+                      >
+                        {/* Portrait thumbnail */}
+                        <div className="relative h-[78px] w-14 shrink-0 overflow-hidden rounded">
+                          <img
+                            src={season.img}
+                            alt={season.title}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <span className="text-base font-bold text-white drop-shadow">
+                            {season.title}
+                          </span>
+                          <p className="text-sm font-medium text-white/70">
+                            {season.subtitle}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
                   </motion.button>
                 );
               })}
             </div>
 
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-3">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {activeSeason.episodes.length > 0 ? (
                   activeSeason.episodes.map((ep) => (
@@ -2510,9 +2723,6 @@ export default function SeriesDetailsPage() {
                           <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
                             {ep.episodeNumber}
                           </span>
-                          <button className="text-gray-500 hover:text-white transition-colors">
-                            <MoreVertical size={14} />
-                          </button>
                         </div>
                         <h3 className="text-xs font-bold text-white tracking-wide group-hover:text-brand-cyan transition-colors">
                           {ep.title}
@@ -2566,8 +2776,100 @@ export default function SeriesDetailsPage() {
               rightLabel="Toutes les recos"
               onRightClick={() => navigate("/series")}
             />
-            <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-              {SIMILAR_SERIES.map((item) => (
+            {/* Première ligne : collection (col-span-3) + 3 séries similaires */}
+            <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6 mb-5">
+              <div className="col-span-2 sm:col-span-3 lg:col-span-3">
+                <motion.div
+                  className="group relative overflow-hidden rounded-[20px] border border-white/10 bg-black/20 shadow-[0_14px_30px_rgba(0,0,0,.18)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cyan/50 hover:bg-white/[0.03] hover:shadow-[0_20px_50px_rgba(6,182,212,0.15)] h-full cursor-pointer"
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 5,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 via-transparent to-purple-500/10 opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
+                  <motion.div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                    initial={{ x: "-100%" }}
+                    animate={{ x: ["-100%", "100%"] }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 4,
+                      ease: "linear",
+                    }}
+                  />
+                  <div className="relative aspect-[16/10] h-full">
+                    <img
+                      src={SERIES_COLLECTION.image}
+                      alt={SERIES_COLLECTION.title}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <div className="flex items-center gap-2">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-cyan">
+                          Collection
+                        </p>
+                        <Sparkles className="h-3 w-3 animate-pulse text-brand-cyan" />
+                      </div>
+                      <h3 className="mt-2 text-xl font-bold text-white transition-transform duration-300 group-hover:translate-x-1">
+                        {SERIES_COLLECTION.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-white/60">
+                        {SERIES_COLLECTION.description}
+                      </p>
+                      <div className="mt-3 text-xs text-white/50">
+                        <span>{SERIES_COLLECTION.series.length} séries</span>
+                      </div>
+                      <div className="relative mt-2">
+                        <div
+                          className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 [&::-webkit-scrollbar]:hidden"
+                          style={{
+                            scrollbarWidth: "none",
+                            msOverflowStyle: "none",
+                          }}
+                        >
+                          {SERIES_COLLECTION.series.map((s) => (
+                            <span
+                              key={s}
+                              className="shrink-0 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/80 backdrop-blur-sm transition hover:border-brand-cyan/30 hover:bg-brand-cyan/10 hover:text-brand-cyan"
+                            >
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black/80 to-transparent" />
+                      </div>
+                      <div className="mt-4 flex items-center text-sm font-semibold text-brand-cyan">
+                        <span>Explorer l'univers</span>
+                        <motion.span
+                          className="ml-2 inline-block"
+                          animate={{ x: [0, 4, 0] }}
+                          transition={{
+                            repeat: Infinity,
+                            duration: 1.5,
+                            ease: "easeInOut",
+                          }}
+                        >
+                          <ArrowRight className="h-4 w-4" />
+                        </motion.span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+              {SIMILAR_SERIES.slice(0, 3).map((item) => (
+                <SimilarSeriesCard
+                  key={item.title}
+                  item={item}
+                  onClick={() => navigate("/series")}
+                />
+              ))}
+            </div>
+            {/* Deuxième ligne : 5 autres séries similaires */}
+            <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+              {SIMILAR_SERIES.slice(3, 8).map((item) => (
                 <SimilarSeriesCard
                   key={item.title}
                   item={item}

@@ -51,7 +51,6 @@ import MemberSerithequePage from "./pages/MemberSerithequePage";
 import MemberListesPage from "./pages/MemberListesPage";
 import MemberFriendsPage from "./pages/MemberFriendsPage";
 import WatchHistoryPage from "./pages/WatchHistoryPage";
-import WatchHistoryPageB from "./pages/WatchHistoryPageB";
 import NouvellesPage from "./pages/NouvellesPage";
 import ContactPage from "./pages/ContactPage";
 import TeamPage from "./pages/TeamPage";
@@ -62,7 +61,6 @@ import PrivacyPage from "./pages/PrivacyPage";
 import SingleEpisodePage from "./pages/SingleEpisodePage";
 import SeriesHubPage from "./pages/SeriesHubPage";
 import EpisodesToWatchPage from "./pages/EpisodesToWatchPage";
-import EpisodesToWatchPageVariantC from "./pages/EpisodesToWatchPageVariantC";
 import WishlistPage from "./pages/WishlistPage";
 import MovieDetail from "./pages/MovieDetails";
 import CsHorrorTemplate from "./pages/CsHorrorTemplate";
@@ -126,7 +124,6 @@ function App() {
           <Route path="/user/seritheque" element={<MemberSerithequePage />} />
           <Route path="/user/listes" element={<MemberListesPage />} />
           <Route path="/user/history" element={<WatchHistoryPage />} />
-          <Route path="/user/history-b" element={<WatchHistoryPageB />} />
           <Route path="/my/calendar" element={<UserCalendarPage />} />
           <Route path="/user/amis" element={<MemberFriendsPage />} />
           <Route path="/my/watchlist" element={<WishlistPage />} />
@@ -146,11 +143,6 @@ function App() {
           <Route path="/presse" element={<PressePage />} />
           <Route path="/recommandations" element={<SimilarTastePage />} />
           <Route path="/episodes-a-voir" element={<EpisodesToWatchPage />} />
-
-          <Route
-            path="/episodes-a-voir-c"
-            element={<EpisodesToWatchPageVariantC />}
-          />
 
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/equipe" element={<TeamPage />} />
