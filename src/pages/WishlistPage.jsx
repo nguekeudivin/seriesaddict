@@ -15,6 +15,7 @@ import {
   TrendingUp,
   UserPlus,
   Users,
+  X,
 } from "lucide-react";
 import { MemberTabsNav } from "./UserSpaceElements";
 
@@ -36,7 +37,7 @@ const BRAND_GRADIENT_TEXT = "bg-gradient-to-r from-brand-primary to-brand-cyan";
 /* =========================================================
    MOCK DATA — MA WISHLIST (25 séries)
 ========================================================= */
-const WISHLIST_SERIES = [
+const WISHLIST_SERIES_INITIAL = [
   {
     id: "w1",
     title: "Dark",
@@ -631,10 +632,24 @@ function QuickActions({ onLibrary, onSchedule, onInvite }) {
   );
 }
 
-function WishlistCard({ item, onOpen, onLibrary, onSchedule, onInvite }) {
+function WishlistCard({
+  item,
+  onOpen,
+  onLibrary,
+  onSchedule,
+  onInvite,
+  onRemove,
+}) {
   return (
     <div className="group relative overflow-hidden rounded-[26px] border border-white/8 bg-black/20">
       <div className="relative aspect-[2/3] overflow-hidden">
+        <button
+          title="Retirer de la wishlist"
+          onClick={onRemove}
+          className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/45 text-white/80 ring-1 ring-white/15 backdrop-blur-sm transition-all duration-300 hover:bg-brand-primary/80 hover:text-white"
+        >
+          <X className="h-4 w-4" />
+        </button>
         <img
           src={item.image}
           alt={item.title}
@@ -798,9 +813,14 @@ export default function WishlistPage() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("all");
+  const [wishlist, setWishlist] = useState(WISHLIST_SERIES_INITIAL);
+
+  const handleRemove = (id) => {
+    setWishlist((prev) => prev.filter((item) => item.id !== id));
+  };
 
   const filteredWishlist = useMemo(() => {
-    return WISHLIST_SERIES.filter((item) => {
+    return wishlist.filter((item) => {
       const matchesQuery =
         item.title.toLowerCase().includes(query.toLowerCase()) ||
         item.genres.join(" ").toLowerCase().includes(query.toLowerCase());
@@ -816,7 +836,7 @@ export default function WishlistPage() {
 
       return matchesQuery && matchesFilter;
     });
-  }, [query, filter]);
+  }, [query, filter, wishlist]);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -870,7 +890,7 @@ export default function WishlistPage() {
         <section>
           <SectionHeader
             title="MA WISHLIST"
-            subtitle={`${WISHLIST_SERIES.length} séries enregistrées — prêtes à être ajoutées à ta médiathèque.`}
+            subtitle={`${wishlist.length} séries enregistrées — prêtes à être ajoutées à ta médiathèque.`}
             rightLabel="GÉRER"
             onRightClick={() => navigate("/my/watchlist/manage")}
           />
@@ -913,6 +933,7 @@ export default function WishlistPage() {
                 onLibrary={() => navigate("/user/add-serie")}
                 onSchedule={() => navigate("/calendar")}
                 onInvite={() => navigate("/members")}
+                onRemove={() => handleRemove(item.id)}
               />
             ))}
           </div>

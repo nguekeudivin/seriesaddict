@@ -890,10 +890,55 @@ function HorizontalCarousel({ children, gap = "gap-5" }) {
 }
 
 // ============================================================
+// Star Rating Component
+// ============================================================
+function StarRating({ maxStars = 10, onRate, initialRating = 0 }) {
+  const [rating, setRating] = useState(initialRating);
+  const [hover, setHover] = useState(0);
+
+  const handleClick = (value) => {
+    setRating(value);
+    if (onRate) onRate(value);
+  };
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center gap-0.5">
+        {Array.from({ length: maxStars }, (_, i) => i + 1).map((star) => (
+          <button
+            key={star}
+            onClick={() => handleClick(star)}
+            onMouseEnter={() => setHover(star)}
+            onMouseLeave={() => setHover(0)}
+            className="transition-transform duration-150 hover:scale-125"
+            aria-label={`Noter ${star} sur ${maxStars}`}
+          >
+            <Star
+              size={16}
+              className={
+                (hover || rating) >= star
+                  ? "fill-brand-yellow text-brand-yellow"
+                  : "text-white/25 hover:text-white/50"
+              }
+            />
+          </button>
+        ))}
+      </div>
+      <span className="text-xs text-white/50">
+        {rating > 0
+          ? `Votre note : ${rating}/${maxStars}`
+          : "Cliquez pour noter cette série"}
+      </span>
+    </div>
+  );
+}
+
+// ============================================================
 // Hero + Navigation
 // ============================================================
 function HeroSection() {
   const navigate = useNavigate();
+  const [userRating, setUserRating] = useState(0);
 
   return (
     <section className="relative min-h-[85vh] w-full overflow-hidden  text-white select-none">
@@ -955,6 +1000,18 @@ function HeroSection() {
                 />
                 <span className="text-white">{SERIES.communityScore}</span>
                 <span className="text-white/50">· 15 000 votes</span>
+              </div>
+              <div className="h-5 w-px bg-white/20" />
+              <div className="flex items-center gap-2">
+                <Tv size={18} className="text-brand-cyan" />
+                <span className="text-white">{SERIES.seasons}</span>
+                <span className="text-white/50">saisons</span>
+              </div>
+              <div className="h-5 w-px bg-white/20" />
+              <div className="flex items-center gap-2">
+                <Film size={18} className="text-brand-cyan" />
+                <span className="text-white">{SERIES.episodes}</span>
+                <span className="text-white/50">épisodes</span>
               </div>
 
               <div className="flex items-center -space-x-2">
@@ -1062,6 +1119,15 @@ function HeroSection() {
               >
                 <Pencil size={20} />
               </button>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <div className="w-full max-w-[260px] rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                <p className="mb-2 text-xs font-bold uppercase tracking-widest text-white/60">
+                  Noter cette série
+                </p>
+                <StarRating maxStars={10} onRate={setUserRating} />
+              </div>
             </div>
           </div>
         </main>

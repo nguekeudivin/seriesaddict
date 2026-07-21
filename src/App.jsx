@@ -63,6 +63,7 @@ import SeriesHubPage from "./pages/SeriesHubPage";
 import EpisodesToWatchPage from "./pages/EpisodesToWatchPage";
 import WishlistPage from "./pages/WishlistPage";
 import MovieDetail from "./pages/MovieDetails";
+import ActorPage from "./pages/ActorPage";
 import CsHorrorTemplate from "./pages/CsHorrorTemplate";
 import ShogunDashboard from "./pages/ShogunDashboard";
 import AvatarSeriesDetail from "./pages/SerieDetails/AvatarSerieDetails";
@@ -152,6 +153,7 @@ function App() {
           <Route path="/donnees-personnelles" element={<PrivacyPage />} />
 
           <Route path="/movies-details" element={<MovieDetail />} />
+          <Route path="/actor" element={<ActorPage />} />
           <Route path="/cs-horror-templates" element={<CsHorrorTemplate />} />
           <Route path="/shogun" element={<ShogunDashboard />} />
           <Route path="/avatar-details" element={<AvatarSeriesDetail />} />
